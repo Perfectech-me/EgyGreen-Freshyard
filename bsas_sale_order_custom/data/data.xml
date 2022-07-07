@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+
+        <record id="port_loading_sequence" forcecreate="1" model="ir.sequence">
+            <field name="name">Port Loading Sequence</field>
+            <field name="code">port.loading.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</odoo>

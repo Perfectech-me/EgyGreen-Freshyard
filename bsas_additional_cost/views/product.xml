@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+
+
+
+        <record id="form_view_product_template_inherit" model="ir.ui.view">
+            <field name="name">name.product.template.inherit.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_policy']" position="after">
+                    <field name="additional_service"/>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+        <record id="form_view_product_product_inherit" model="ir.ui.view">
+            <field name="name">name.product.product.inherit.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_policy']" position="after">
+                    <field name="additional_service"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
