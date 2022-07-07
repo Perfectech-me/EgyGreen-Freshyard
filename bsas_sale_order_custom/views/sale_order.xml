@@ -25,8 +25,6 @@
             </xpath>
 
 
-
-
             <xpath expr="//field[@name='payment_term_id']" position="before">
                 <field name="deprture_date" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
             </xpath>
@@ -55,15 +53,9 @@
                 <field name="origin_country_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
 
             </xpath>
-                    <button name="action_quotation_send" type="object"
-                            string="Send PRO-FORMA Invoice2222" groups="sale.group_proforma_sales"
-                            attrs="{'invisible': ['|', ('state', '=', 'draft'), ('invoice_count','&gt;=',1)]}" context="{'proforma': True}"/>
-
-
             <xpath expr="//button[@name='action_quotation_send'][3]" position="attributes">
                 <attribute name="attrs">{'invisible': ['|', ('state', 'in', ['draft','pro_quotation']), ('invoice_count','&gt;=',1)]}</attribute>
             </xpath>
-
 
         </field>
     </record>
