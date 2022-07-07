@@ -1,0 +1,18 @@
+<odoo>
+    <record id="cashed_wizard" model="ir.ui.view">
+        <field name="name">Cheque</field>
+        <field name="model">cashed.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cheque Details">
+                <group>
+                    <field name="bank_account_id" widget="selection"/>
+                    <field name="date" />
+                </group>
+                <footer>
+                    <button string="Submit" name="cashed_wizard" type="object"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

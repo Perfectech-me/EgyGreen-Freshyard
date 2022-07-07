@@ -1,0 +1,6 @@
+<openerp>
+    <data>
+        <!-- Migration for "project_service_profiling". Can be skipped if that module is not in use. -->
+        <function model="crm.routing.users" name="_migrate_from_project_issue_profiling"/>
+    </data>
+</openerp>
