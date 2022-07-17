@@ -1,0 +1,65 @@
+<odoo>
+  <data>
+
+
+    <record id="form_view_inherit_sale_order" model="ir.ui.view">
+        <field name="name">name.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='state']" position="replace">
+              <field name="state" widget="statusbar" statusbar_visible="pro_quotation,draft,sent,sale"/>
+            </xpath>
+
+          <xpath expr="//button[@id='action_confirm']" position="before">
+            <button name="button_quotation"  string="Quotation" class="btn-primary" type="object" states="pro_quotation"/>
+            <button name="button_set_to_proforma_quotation"  string="Set To Proforma Quotation"
+                    attrs="{'invisible':[('state','=', 'pro_quotation')]}"
+                     type="object" />
+
+          </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="order_category" widget="radio" options="{'horizontal': true}"/>
+                <field name="export_type" widget="radio" options="{'horizontal': true}" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+            </xpath>
+
+
+            <xpath expr="//field[@name='payment_term_id']" position="before">
+                <field name="deprture_date" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='commitment_date']" position="attributes">
+                <attribute name="attrs">{'required':[('order_category','=', 'Export')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <label for="discharge_country_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                <div>
+                    <group>
+                        <field name="discharge_country_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}" nolabel="1"/>
+                        <field name="discharge_city_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}" nolabel="1" domain="[('country_id','=',discharge_country_id)]"/>
+                    </group>
+                </div>
+
+                <label for="final_destination_country_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                <div>
+                    <group>
+                        <field name="final_destination_country_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}" nolabel="1"/>
+                        <field name="final_destination_city_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}" nolabel="1" domain="[('country_id','=',final_destination_country_id)]"/>
+                    </group>
+                </div>
+                <field name="port_loading_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                <field name="shipping_type" readonly="1" force_save="1" attrs="{'invisible':[('order_category','!=', 'Export')]}"/>
+                <field name="origin_country_id" attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send'][3]" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('state', 'in', ['draft','pro_quotation']), ('invoice_count','&gt;=',1)]}</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+  </data>
+</odoo>
