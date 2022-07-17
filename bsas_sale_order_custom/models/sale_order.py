@@ -21,6 +21,9 @@ class SaleOrderInherit(models.Model):
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, tracking=3, default='pro_quotation')
 
+
+
+
     partner_id = fields.Many2one(
         'res.partner', string='Customer', readonly=True,
         states={'pro_quotation': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]},
@@ -44,7 +47,7 @@ class SaleOrderInherit(models.Model):
     export_type = fields.Selection(string="Export Type", selection=[('fresh', 'fresh'),('frozen','frozen'), ('food_products', 'Food Products'), ],default='fresh')
 
     shipping_type = fields.Selection(string="Shipping Type", selection=[('Air', 'Air'), ('Ocean', 'Ocean'),('Land', 'Land')],default='Air')
-    deprture_date = fields.Date(string="Deprture Date (ATD)")
+    deprture_date = fields.Date(string="Departure Date (ADT)")
 
     discharge_country_id = fields.Many2one(comodel_name="res.country", string="Place Of Discharge")
     discharge_city_id = fields.Many2one(comodel_name="res.country.state")
