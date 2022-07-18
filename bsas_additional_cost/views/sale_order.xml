@@ -10,8 +10,8 @@
                     <xpath expr="//field[@name='order_line']" position="after">
                         <button name="button_add_product_additional_cost" type="object" string="Add All Product Additional Cost"
                         attrs="{'invisible':[('state','in', ['sale','done','cancel'])]}"/>
-                        <button name="button_remove_product_additional_cost" type="object" string="Remove Product Additional Cost"
-                        attrs="{'invisible':[('state','in', ['sale','done','cancel'])]}"/>
+<!--                        <button name="button_remove_product_additional_cost" type="object" string="Remove Product Additional Cost"-->
+<!--                        attrs="{'invisible':[('state','in', ['sale','done','cancel'])]}"/>-->
                     </xpath>
 
                     <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">

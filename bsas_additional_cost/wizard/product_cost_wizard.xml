@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+
+        <record id="form_product_additional_cost_view" model="ir.ui.view">
+            <field name="name">name.product.additional.cost.form</field>
+            <field name="model">product.additional.cost</field>
+            <field name="arch" type="xml">
+                <form string="Product additional Cost">
+                    <sheet>
+                        <label for="product_ids" string="Product Additional Cost"/>
+                        <field name="product_ids" domain="[('additional_service','=',True)]"/>
+                        <footer>
+                            <button string="Confirm" class="btn-primary" name="button_add_product_additional_cost" type="object"
+                                    data-hotkey="q"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_product_additional_cost" model="ir.actions.act_window">
+            <field name="name">Product additional Cost</field>
+            <field name="res_model">product.additional.cost</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

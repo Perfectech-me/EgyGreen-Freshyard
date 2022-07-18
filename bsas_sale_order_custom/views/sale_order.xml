@@ -8,6 +8,14 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
 
+
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
                 <xpath expr="//field[@name='commitment_date']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
@@ -15,8 +23,11 @@
                  <xpath expr="//label[@for='commitment_date']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <xpath expr="//div[@name='commitment_date_div']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+
+                <xpath expr="//group[@name='sale_shipping']" position="replace">
+                    <group>
+
+                    </group>
                 </xpath>
 
 
@@ -36,9 +47,21 @@
 
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
+
                     <field name="order_category" widget="radio" options="{'horizontal': true}"/>
                     <field name="export_type" widget="radio" options="{'horizontal': true}"
                            attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+
+                    <field name="partner_notify_ids">
+                        <tree>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                    <field name="partner_consignee_ids">
+                        <tree>
+                            <field name="name"/>
+                        </tree>
+                    </field>
                 </xpath>
 
                 <xpath expr="//field[@name='payment_term_id']" position="before">

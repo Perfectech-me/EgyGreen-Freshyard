@@ -59,6 +59,28 @@ class SaleOrderInherit(models.Model):
 
     origin_country_id = fields.Many2one(comodel_name="res.country", string="Country Of Origin")
 
+    partner_notify_ids = fields.Many2many(comodel_name="res.partner", relation="notify_id", column1="notify_col1", column2="notify_col2", string="Notify")
+    partner_consignee_ids = fields.Many2many(comodel_name="res.partner", relation="consignee_id", column1="consignee_col1", column2="consignee_col2", string="consignee")
+
+    @api.onchange('partner_id')
+    def _get_partner_notify_ids(self):
+        for rec in self:
+            invoice_list=[]
+            consignee_list=[]
+            rec.partner_notify_ids=False
+            rec.partner_consignee_ids=False
+            for line in rec.partner_id.child_ids:
+                if line.type=='invoice':
+                    invoice_list.append(line.id)
+                if line.type=='delivery':
+                    consignee_list.append(line.id)
+
+            return {
+                'domain': {'partner_notify_ids': [('id', 'in', invoice_list)],'partner_consignee_ids': [('id', 'in', consignee_list)]}
+            }
+
+
+
     @api.onchange('order_category')
     def _set_order_category_fields(self):
         for rec in self:

@@ -4,12 +4,13 @@
     'author': "Mohamed Salah",
     'category': 'Sales',
     'version': '15',
-    'depends': ['base','sale','sale_management'],
+    'depends': ['base','sale','sale_management','purchase'],
 
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/sale_order.xml',
         'views/product.xml',
+        'wizard/product_cost_wizard.xml',
     ],
     'license': 'LGPL-3',
 
