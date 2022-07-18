@@ -13,10 +13,10 @@ class account_cheque(models.Model):
 
     _rec_name = 'sequence'
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin', 'utm.mixin']
-    sequence = fields.Char(string='ٍSequence', required=True, copy=False, store=True, index=True,
-                           default=lambda self: self.env['ir.sequence'].next_by_code('cheque'), )
-    # sequence = fields.Char('', size=32, required=True, readonly=True, default=lambda self: _('New'),
-    #                        tracking=True)
+    # sequence = fields.Char(string='ٍSequence', required=True, copy=False, store=True, index=True,
+    #                        default=lambda self: self.env['ir.sequence'].next_by_code('cheque'))
+    sequence = fields.Char('ٍSequence', size=32, required=True, readonly=True, default=lambda self: _('New'),
+                           tracking=True)
 
     def _get_report_base_filename(self):
         return self.name
