@@ -11,12 +11,12 @@ class account_cheque(models.Model):
     _name = 'account.cheque'
     _description = 'Account Cheque'
 
-    _rec_name = 'name'
+    _rec_name = 'sequence'
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin', 'utm.mixin']
-    sequence = fields.Char(string='', required=True, copy=False, store=True, index=True,
+    sequence = fields.Char(string='ٍSequence', required=True, copy=False, store=True, index=True,
                            default=lambda self: self.env['ir.sequence'].next_by_code('cheque'), )
-    sequence = fields.Char('', size=32, required=True, readonly=True, default=lambda self: _('New'),
-                           tracking=True)
+    # sequence = fields.Char('', size=32, required=True, readonly=True, default=lambda self: _('New'),
+    #                        tracking=True)
 
     def _get_report_base_filename(self):
         return self.name
@@ -29,7 +29,7 @@ class account_cheque(models.Model):
         return super(account_cheque, self).create(waltz)
     type = fields.Selection(string="", selection=[('incoming', 'incoming'), ('outgoing', 'outgoing'), ],
                             required=True, )
-    name = fields.Char(string="", required=True, )
+    name = fields.Char(string="Name", required=True, )
     bank_account_id = fields.Many2one(comodel_name="account.account", string="Bank Account", required=True, )
     payer_user_id = fields.Many2one(comodel_name="res.partner", string="Payer", required=False, )
     payee_user_id = fields.Many2one(comodel_name="res.partner", string="Payee", required=False, )
