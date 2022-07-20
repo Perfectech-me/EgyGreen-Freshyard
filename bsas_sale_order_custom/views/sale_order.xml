@@ -52,12 +52,16 @@
                     <field name="export_type" widget="radio" options="{'horizontal': true}"
                            attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
 
-                    <field name="partner_notify_ids">
+
+                   <field name="partner_notify_filters_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="partner_notify_ids" domain="[('id', 'in', partner_notify_filters_ids)]">
                         <tree>
                             <field name="name"/>
                         </tree>
                     </field>
-                    <field name="partner_consignee_ids">
+
+                    <field name="partner_consignee_filters_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="partner_consignee_ids" domain="[('id', 'in', partner_consignee_filters_ids)]">
                         <tree>
                             <field name="name"/>
                         </tree>

@@ -60,24 +60,46 @@ class SaleOrderInherit(models.Model):
     origin_country_id = fields.Many2one(comodel_name="res.country", string="Country Of Origin")
 
     partner_notify_ids = fields.Many2many(comodel_name="res.partner", relation="notify_id", column1="notify_col1", column2="notify_col2", string="Notify")
+    partner_notify_filters_ids = fields.Many2many(comodel_name="res.partner", relation="notify_filter_id", column1="notify_filter_col1", column2="notify_filter_col2",compute="_get_partner_notify_filters")
+
     partner_consignee_ids = fields.Many2many(comodel_name="res.partner", relation="consignee_id", column1="consignee_col1", column2="consignee_col2", string="consignee")
+    partner_consignee_filters_ids = fields.Many2many(comodel_name="res.partner", relation="consignee_filters_id", column1="consignee_filters_col1", column2="consignee_filters_col2",compute="_get_partner_notify_filters")
 
-    @api.onchange('partner_id')
-    def _get_partner_notify_ids(self):
+
+    @api.depends('partner_id')
+    def _get_partner_notify_filters(self):
         for rec in self:
-            invoice_list=[]
+            partner_notify_filters=[]
             consignee_list=[]
-            rec.partner_notify_ids=False
-            rec.partner_consignee_ids=False
-            for line in rec.partner_id.child_ids:
-                if line.type=='invoice':
-                    invoice_list.append(line.id)
-                if line.type=='delivery':
-                    consignee_list.append(line.id)
+            rec.partner_notify_filters_ids=False
+            rec.partner_consignee_filters_ids=False
+            if rec.partner_id.child_ids:
+                for line in rec.partner_id.child_ids:
+                    if line.type == 'invoice':
+                        partner_notify_filters.append(line.id)
+                    if line.type == 'delivery':
+                        consignee_list.append(line.id)
 
-            return {
-                'domain': {'partner_notify_ids': [('id', 'in', invoice_list)],'partner_consignee_ids': [('id', 'in', consignee_list)]}
-            }
+
+                rec.partner_notify_filters_ids=partner_notify_filters
+                rec.partner_consignee_filters_ids=consignee_list
+
+    # @api.onchange('partner_id')
+    # def _get_partner_notify_ids(self):
+    #     for rec in self:
+    #         invoice_list=[]
+    #         consignee_list=[]
+    #         rec.partner_notify_ids=False
+    #         rec.partner_consignee_ids=False
+    #         for line in rec.partner_id.child_ids:
+    #             if line.type=='invoice':
+    #                 invoice_list.append(line.id)
+    #             if line.type=='delivery':
+    #                 consignee_list.append(line.id)
+    #
+    #         return {
+    #             'domain': {'partner_notify_ids': [('id', 'in', invoice_list)],'partner_consignee_ids': [('id', 'in', consignee_list)]}
+    #         }
 
 
 
