@@ -17,6 +17,7 @@ class PurchaseWizard(models.TransientModel):
         p = self.env['purchase.order'].search([
             ('id', '=', self.purchase_id.id)
         ])
+        # p.button_confirm()
         for s in self.order_lines:
             print('ososos',s)
 
@@ -33,6 +34,18 @@ class PurchaseWizard(models.TransientModel):
         for s in p:
             print('ssss', s)
             #
+            # s._add_supplier_to_product()
+            # Deal with double validation process
+            # if s._approval_allowed():
+            s.write({'state': 'draft'})
+            p.button_confirm()
+            # Deal with double validation process
+            # if p._approval_allowed():
+            #     p.button_approve()
+            # else:
+            #  order.write({'state': 'to_approve'})
+            # if s.partner_id not in s.message_partner_ids:
+            #     s.message_subscribe([s.partner_id.id])
             return s.write({'state': 'purchase'})
 
 

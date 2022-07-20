@@ -31,22 +31,33 @@ class ResPartner(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    state =fields.Selection(selection_add=[('new','New'),('purchase',)])
+    state =fields.Selection(selection_add=[('to_approve','To Approve'),('purchase',)])
 
-    def button_confirm(self):
-        res = super(PurchaseOrder, self).button_confirm()
-        self.write({
-            'state': 'to approve',
-
-        })
-        return res
-    def button_approve(self,force=False):
-        res = super(PurchaseOrder, self).button_approve(force=force)
+    def button_to_confirm(self):
+        # self.write({
+        #     'state': 'to approve',
+        #
+        # })
+        # return res
+        for order in self:
+            if order.state in ['draft', 'sent']:
+                order.state='to_approve'
+            # order._add_supplier_to_product()
+            # Deal with double validation process
+            # if order._approval_allowed():
+            #     order.button_approve()
+            # else:
+            #  order.write({'state': 'to_approve'})
+            # if order.partner_id not in order.message_partner_ids:
+            #     order.message_subscribe([order.partner_id.id])
+        return True
+    def button_to_approve(self):
+        # res = super(PurchaseOrder, self).button_approve(force=force)
 
 
 
         view_id = self.env.ref('purchase_extra.wizard_view_form').id
-        name = _('Add a shipping method')
+        name = _(' ')
         # if self.env.context.get('carrier_recompute'):
         #     name = _('Update shipping cost')
         #     carrier = self.carrier_id
