@@ -35,12 +35,16 @@
 
 
                 <xpath expr="//field[@name='state']" position="replace">
-                    <field name="state" widget="statusbar" statusbar_visible="pro_quotation,draft,sent,sale"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pro_quotation,to_approve,draft,sent,sale"/>
                 </xpath>
 
                 <xpath expr="//button[@id='action_confirm']" position="before">
                     <button name="button_quotation" string="Quotation" class="btn-primary" type="object"
                             states="pro_quotation"/>
+
+                    <button name="button_to_approve" string="To Approve" class="btn-primary" type="object"
+                            states="to_approve" groups="bsas_sale_order_custom.sale_approve_credit_limit"/>
+
                     <button name="button_set_to_proforma_quotation" string="Set To Proforma Quotation"
                             attrs="{'invisible':[('state','=', 'pro_quotation')]}"
                             type="object"/>

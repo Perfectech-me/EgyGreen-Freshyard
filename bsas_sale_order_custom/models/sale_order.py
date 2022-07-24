@@ -14,6 +14,7 @@ class SaleOrderInherit(models.Model):
     state = fields.Selection([
 
         ('pro_quotation', 'Proforma Quotation'),
+        ('to_approve', 'TO Approve'),
         ('draft', 'Quotation'),
         ('sent', 'Quotation Sent'),
         ('sale', 'Sales Order'),
@@ -26,20 +27,20 @@ class SaleOrderInherit(models.Model):
 
     partner_id = fields.Many2one(
         'res.partner', string='Customer', readonly=True,
-        states={'pro_quotation': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+        states={'pro_quotation': [('readonly', False)],'to_approve': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         required=True, change_default=True, index=True, tracking=1,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", )
 
     pricelist_id = fields.Many2one(
         'product.pricelist', string='Pricelist', check_company=True,  # Unrequired company
-        required=True, readonly=True, states={'pro_quotation': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+        required=True, readonly=True, states={'pro_quotation': [('readonly', False)],'to_approve': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", tracking=1,
         help="If you change the pricelist, only newly added lines will be affected.")
 
     validity_date = fields.Date(string='Expiration', readonly=True, copy=False,
-                                states={'pro_quotation': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+                                states={'pro_quotation': [('readonly', False)],'to_approve': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]},
                                 default=_default_validity_date)
-    date_order = fields.Datetime(string='Order Date', required=True, readonly=True, index=True, states={'pro_quotation': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]}, copy=False, default=fields.Datetime.now, help="Creation date of draft/sent orders,\nConfirmation date of confirmed orders.")
+    date_order = fields.Datetime(string='Order Date', required=True, readonly=True, index=True, states={'pro_quotation': [('readonly', False)],'to_approve': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]}, copy=False, default=fields.Datetime.now, help="Creation date of draft/sent orders,\nConfirmation date of confirmed orders.")
 
     order_category = fields.Selection(string="Order Catrgory", selection=[('Export', 'Export'), ('Local', 'Local'),
                                                                           ],default='Export' )
@@ -84,23 +85,6 @@ class SaleOrderInherit(models.Model):
                 rec.partner_notify_filters_ids=partner_notify_filters
                 rec.partner_consignee_filters_ids=consignee_list
 
-    # @api.onchange('partner_id')
-    # def _get_partner_notify_ids(self):
-    #     for rec in self:
-    #         invoice_list=[]
-    #         consignee_list=[]
-    #         rec.partner_notify_ids=False
-    #         rec.partner_consignee_ids=False
-    #         for line in rec.partner_id.child_ids:
-    #             if line.type=='invoice':
-    #                 invoice_list.append(line.id)
-    #             if line.type=='delivery':
-    #                 consignee_list.append(line.id)
-    #
-    #         return {
-    #             'domain': {'partner_notify_ids': [('id', 'in', invoice_list)],'partner_consignee_ids': [('id', 'in', consignee_list)]}
-    #         }
-
 
 
     @api.onchange('order_category')
@@ -118,7 +102,19 @@ class SaleOrderInherit(models.Model):
 
     def button_quotation(self):
         for rec in self:
-            rec.state = 'draft'
+            rec.state = 'to_approve'
+
+
+    def button_to_approve(self):
+        for rec in self:
+            return {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'approve.credit.limit',
+                'views': [(False, 'form')],
+                'view_id': False,
+                'target': 'new',
+            }
 
     @api.onchange('port_loading_id')
     def _get_shipping_type(self):
