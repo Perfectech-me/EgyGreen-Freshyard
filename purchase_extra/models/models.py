@@ -187,6 +187,17 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     bill_description=fields.Text('Bill Description')
+    vendor_invoice=fields.Selection([('copy', 'Copy'), ('original', 'Original')],
+                              string='Vendor Invoice', default='copy')
+    bill_type=fields.Selection([('actual', 'Actual'), ('estimate', 'Estimate')],
+                              string='Bill Type', default='estimate')
+
+
+    @api.onchange('invoice_line_ids')
+    def _bill_type(self):
+        for rec in self:
+            rec.bill_type='actual'
+
 
     @api.model_create_multi
     def create(self, vals_list):

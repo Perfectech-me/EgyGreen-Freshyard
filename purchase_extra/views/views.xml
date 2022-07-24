@@ -65,6 +65,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='ref']" position="after">
                     <field name="bill_description"  attrs="{'column_invisible': [('move_type', 'in', ('out_invoice', 'out_refund', 'out_receipt'))]}" />
+                    <field name="bill_type"  attrs="{'column_invisible': [('move_type', 'in', ('out_invoice', 'out_refund', 'out_receipt'))]}" />
+                    <field name="vendor_invoice"  attrs="{'invisible': ['|',('move_type', 'in', ('out_invoice', 'out_refund', 'out_receipt')),('state','=','draft')]}" />
 
                 </xpath>
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="before">
