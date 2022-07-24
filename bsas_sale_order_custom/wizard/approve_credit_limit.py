@@ -19,7 +19,7 @@ class ApproveCreditLimit(models.TransientModel):
                 balance +=move_line.balance
             lines.append((0, 0, {
                 'product_id': line.product_id.id,
-                'cost': product_cost,
+                'cost': line.price_unit,
                 'service_provider_partner_id': line.service_provider_partner_id.id,
                 'balance':balance,
             }))
