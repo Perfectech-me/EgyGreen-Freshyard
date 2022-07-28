@@ -4,7 +4,7 @@
 from odoo import models, fields, api, _
 from odoo import http
 from odoo.http import request
-from odoo.exceptions import UserError, Warning
+from odoo.exceptions import ValidationError
 import werkzeug.urls
 
 class res_pertner(models.Model):
@@ -93,27 +93,28 @@ class sale_order(models.Model):
                 'customer_due_amt' : supplier_amount_due
             })
 
-    @api.onchange('partner_id')
-    def check_customer_blocking(self):
-        if self.partner_id:
-            partner_id = self.env['res.partner'].search([('id', '=', self.partner_id.id)], limit=1)
-            if partner_id.Blocking_limit != 0.0 and partner_id.Blocking_limit < partner_id.customer_due_amt:
-                return {
-                    'warning': {'title': ('Warning'), 'message': (_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt))), },
-                }
+    # @api.onchange('partner_id')
+    # def check_customer_blocking(self):
+    #     if self.partner_id:
+    #         partner_id = self.env['res.partner'].search([('id', '=', self.partner_id.id)], limit=1)
+    #         if partner_id.Blocking_limit != 0.0 and partner_id.Blocking_limit < partner_id.customer_due_amt:
+    #             return {
+    #                 'warning': {'title': ('Warning'), 'message': (_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt))), },
+    #             }
 
-    # @api.model
-    # def create(self, vals):
-    #     partner_id= False
-    #     if 'partner_id' in vals:
-    #         partner_id = self.env['res.partner'].browse(vals['partner_id'])
-    #
-    #     if partner_id.Blocking_limit != 0.0:
-    #         if partner_id.Blocking_limit < partner_id.customer_due_amt:
-    #             raise Warning(_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt)))
-    #
-    #     result = super(sale_order, self).create(vals)
-    #     return result
+    @api.model
+    def create(self, vals):
+        partner_id= False
+        if 'partner_id' in vals:
+            partner_id = self.env['res.partner'].browse(vals['partner_id'])
+
+        if partner_id.Blocking_limit != 0.0:
+            if partner_id.Blocking_limit < partner_id.customer_due_amt:
+                
+                raise ValidationError(_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt)))
+
+        result = super(sale_order, self).create(vals)
+        return result
 
     @api.onchange('partner_id')
     def onchange_partner_id(self):
