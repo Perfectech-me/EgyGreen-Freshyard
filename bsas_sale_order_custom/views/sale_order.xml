@@ -53,9 +53,10 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
 
                     <field name="order_category" widget="radio" options="{'horizontal': true}"/>
-                    <field name="export_type" widget="radio" options="{'horizontal': true}"
-                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                    <field name="export_type" widget="radio" options="{'horizontal': true}"/>
+<!--                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>-->
 
+                    <field name="product_type" widget="radio" />
 
                    <field name="partner_notify_filters_ids" widget="many2many_tags" invisible="1"/>
                     <field name="partner_notify_ids" domain="[('id', 'in', partner_notify_filters_ids)]">

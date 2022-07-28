@@ -42,10 +42,15 @@ class SaleOrderInherit(models.Model):
                                 default=_default_validity_date)
     date_order = fields.Datetime(string='Order Date', required=True, readonly=True, index=True, states={'pro_quotation': [('readonly', False)],'to_approve': [('readonly', False)],'draft': [('readonly', False)], 'sent': [('readonly', False)]}, copy=False, default=fields.Datetime.now, help="Creation date of draft/sent orders,\nConfirmation date of confirmed orders.")
 
-    order_category = fields.Selection(string="Order Catrgory", selection=[('Export', 'Export'), ('Local', 'Local'),
-                                                                          ],default='Export' )
+    order_category = fields.Selection(string="Order Catrgory", selection=[
+                                                                            ('International', 'International'),
+                                                                            ('Local', 'Local'),
+                                                                            ('Export', 'Export'),
+                                                                          ],default='International' )
 
     export_type = fields.Selection(string="Export Type", selection=[('fresh', 'fresh'),('frozen','frozen'), ('food_products', 'Food Products'), ],default='fresh')
+    product_type = fields.Selection(string="Product Type", selection=[
+        ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
 
     shipping_type = fields.Selection(string="Shipping Type", selection=[('Air', 'Air'), ('Ocean', 'Ocean'),('Land', 'Land')],default='Air')
     deprture_date = fields.Date(string="Departure Date (ADT)")
@@ -87,17 +92,17 @@ class SaleOrderInherit(models.Model):
 
 
 
-    @api.onchange('order_category')
-    def _set_order_category_fields(self):
-        for rec in self:
-            rec.deprture_date=False
-            rec.discharge_country_id=False
-            rec.discharge_city_id=False
-            rec.final_destination_country_id=False
-            rec.final_destination_city_id=False
-            rec.port_loading_id=False
-            rec.origin_country_id=False
-            rec.export_type=False
+    # @api.onchange('order_category')
+    # def _set_order_category_fields(self):
+    #     for rec in self:
+    #         rec.deprture_date=False
+    #         rec.discharge_country_id=False
+    #         rec.discharge_city_id=False
+    #         rec.final_destination_country_id=False
+    #         rec.final_destination_city_id=False
+    #         rec.port_loading_id=False
+    #         rec.origin_country_id=False
+    #         rec.export_type=False
 
 
     def button_quotation(self):
