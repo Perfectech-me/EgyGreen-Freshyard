@@ -93,14 +93,10 @@ class sale_order(models.Model):
                 'customer_due_amt' : supplier_amount_due
             })
 
-    # @api.onchange('partner_id')
-    # def check_customer_blocking(self):
-    #     if self.partner_id:
-    #         partner_id = self.env['res.partner'].search([('id', '=', self.partner_id.id)], limit=1)
-    #         if partner_id.Blocking_limit != 0.0 and partner_id.Blocking_limit < partner_id.customer_due_amt:
-    #             return {
-    #                 'warning': {'title': ('Warning'), 'message': (_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt))), },
-    #             }
+    @api.constrains("total_receivable", "partner_id",'amount_total')
+    def _check_Blocking_limit(self):
+        if self.partner_id.Blocking_limit <= (self.total_receivable+self.amount_total):
+            raise ValidationError(_("The Customer is in blocking stage "))
 
     @api.model
     def create(self, vals):
@@ -110,9 +106,7 @@ class sale_order(models.Model):
 
         if partner_id.Blocking_limit != 0.0:
             if partner_id.Blocking_limit < partner_id.customer_due_amt:
-                
                 raise ValidationError(_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt)))
-
         result = super(sale_order, self).create(vals)
         return result
 
@@ -227,5 +221,5 @@ class sale_order(models.Model):
                             res = super(sale_order, self).action_confirm()
                         return True
                     else:
-                        raise UserError(_('You have been put on hold due to exceeding your credit limit. Please contact administration for further guidance. \n Thank You'))
+                        raise ValidationError(_('You have been put on hold due to exceeding your credit limit. Please contact administration for further guidance. \n Thank You'))
                         return False
