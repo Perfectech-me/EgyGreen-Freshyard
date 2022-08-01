@@ -1,25 +1,38 @@
 <odoo>
     <data>
 
-            <record id="form_view_sale_order_inherit" model="ir.ui.view">
-                <field name="name">name.sale.order.inherit.form</field>
-                <field name="model">sale.order</field>
-                <field name="inherit_id" ref="sale.view_order_form"/>
-                <field name="arch" type="xml">
+        <record id="form_view_sale_order_inherit" model="ir.ui.view">
+            <field name="name">name.sale.order.inherit.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
 
-                    <xpath expr="//field[@name='order_line']" position="after">
-                        <button name="button_add_product_additional_cost" type="object" string="Add All Product Additional Cost"
-                        attrs="{'invisible':[('state','in', ['sale','done','cancel'])]}"/>
-<!--                        <button name="button_remove_product_additional_cost" type="object" string="Remove Product Additional Cost"-->
-<!--                        attrs="{'invisible':[('state','in', ['sale','done','cancel'])]}"/>-->
-                    </xpath>
+                <xpath expr="//field[@name='order_line']" position="after">
+                    <button name="button_add_product_additional_cost" type="object"
+                            string="Add All Product Additional Cost"
+                            attrs="{'invisible':[('state','in', ['sale','done','cancel'])]}"/>
+                    <!--                        <button name="button_remove_product_additional_cost" type="object" string="Remove Product Additional Cost"-->
+                    <!--                        attrs="{'invisible':[('state','in', ['sale','done','cancel'])]}"/>-->
+                </xpath>
 
-                    <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
-                        <field name="service_provider_partner_id" domain="[('supplier_rank','&gt;', 0)]" optional="hide"/>
-                    </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+                    <field name="partners_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="service_provider_partner_id"
+                           domain="[('id','in',partners_ids),('supplier_rank','&gt;', 0)]" optional="hide"/>
+                </xpath>
+                <xpath expr="//group[@name='order_details']" position="inside">
+                    <field name="partner_shipping_ids" widget="many2many_tags" domain="[('shipping_company','=',True)]" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+                    <field name="partner_clearance_ids" widget="many2many_tags" domain="[('clearance_company','=',True)]" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+                    <field name="partner_insurance_ids" widget="many2many_tags" domain="[('insurance_company','=',True)]" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+                    <field name="container_number" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+                    <field name="free_duamrage" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+                    <field name="cold_treatment" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}" widget="radio" options="{'horizontal': true}"/>
+                    <field name="genest" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}" widget="radio" options="{'horizontal': true}"/>
 
-                </field>
-            </record>
+                </xpath>
+
+            </field>
+        </record>
 
     </data>
 </odoo>

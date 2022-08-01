@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'views/sale_order.xml',
         'views/product.xml',
+        'views/partner.xml',
         'wizard/product_cost_wizard.xml',
     ],
     'license': 'LGPL-3',
