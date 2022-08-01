@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+
+
+        <template id="report_invoice_inherit_template" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@id='informations']//div[@name='reference']" position="after">
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.bl_awb" name="bl_awb">
+                    <strong>BL/AWB:</strong>
+                    <p class="m-0" t-field="o.bl_awb"/>
+                </div>
+            </xpath>
+
+
+            <xpath expr="//table[@name='invoice_line_table']//th[@name='th_description']" position="after">
+                <th name="container_equipment_number" class="text-left"><span>Container/Equipment Number</span></th>
+            </xpath>
+
+
+            <xpath expr="//table[@name='invoice_line_table']//td[@name='account_invoice_line_name']" position="after">
+                <td name="container_equipment_number_value"><span t-field="line.container_equipment_number"
+                                                                  t-options="{'widget': 'text'}"/></td>
+            </xpath>
+
+        </template>
+
+
+    </data>
+</odoo>
