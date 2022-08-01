@@ -71,6 +71,7 @@
                             <field name="name"/>
                         </tree>
                     </field>
+                    <field name="refuse_reason" readonly="1" force_save="1" attrs="{'invisible':['|',('refuse_reason','=', ''),('state','!=', 'cancel')],}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='payment_term_id']" position="before">
@@ -129,6 +130,53 @@
 
             </field>
         </record>
+
+
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="form_view_sale_order_additional_cost" model="ir.ui.view">
+            <field name="name">name.sale.order.inherit.additional.cost</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="bsas_additional_cost.form_view_sale_order_inherit"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//button[@name='button_add_product_additional_cost']" position="after">-->
+<!--                    <field name="order_category" />-->
+<!--                </xpath>-->
+                <xpath expr="//button[@name='button_add_product_additional_cost']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('order_category','=','Local'),('state','in', ['sale','done','cancel'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']//tree//field[@name='service_provider_partner_id']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('parent.order_category','=','Local')]}</attribute>
+                    </xpath>
+
+
+                <xpath expr="//group[@name='order_details']" position="inside">
+                    <field name="packing_place_id" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+
+                    <field name="notify_partner_line"  attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}">
+                        <tree editable="bottom" create="false">
+                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <field name="notify_po"/>
+                        </tree>
+                    </field>
+
+                    <field name="consignee_partner_line" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}">
+                        <tree editable="bottom" create="false">
+                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <field name="consignee_po"/>
+                        </tree>
+                    </field>
+                    <field name="loading_date" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+                    <field name="shipment_line_id" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+
+
+                </xpath>
+
+
+            </field>
+        </record>
+
 
 
     </data>

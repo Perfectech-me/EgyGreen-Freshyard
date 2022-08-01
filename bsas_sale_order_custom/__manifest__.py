@@ -12,7 +12,9 @@
         'views/sale_order.xml',
         'views/port_loading.xml',
         'views/purchase_order.xml',
+        'views/shipment_line.xml',
         'wizard/approve_credit_limit.xml',
+        'wizard/refuse_credit_limit.xml',
     ],
     'license': 'LGPL-3',
 

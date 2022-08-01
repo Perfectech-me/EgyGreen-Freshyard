@@ -22,7 +22,7 @@ class SaleOrderInherit(models.Model):
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, tracking=3, default='pro_quotation')
 
-
+    refuse_reason = fields.Text(string="Refuse Reason")
 
 
     partner_id = fields.Many2one(
@@ -70,6 +70,11 @@ class SaleOrderInherit(models.Model):
 
     partner_consignee_ids = fields.Many2many(comodel_name="res.partner", relation="consignee_id", column1="consignee_col1", column2="consignee_col2", string="consignee")
     partner_consignee_filters_ids = fields.Many2many(comodel_name="res.partner", relation="consignee_filters_id", column1="consignee_filters_col1", column2="consignee_filters_col2",compute="_get_partner_notify_filters")
+    packing_place_id = fields.Many2one(comodel_name="res.partner", string="Packing Place")
+    notify_partner_line = fields.One2many(comodel_name="res.partner.notify", inverse_name="sale_id",string="Notify Partner PO")
+    consignee_partner_line = fields.One2many(comodel_name="res.partner.consignee", inverse_name="sale_id",string="Consignee Partner PO")
+    loading_date = fields.Date(string="Loading Date")
+    shipment_line_id = fields.Many2one(comodel_name="shipment.line", string="Shipment Line")
 
 
     @api.depends('partner_id')
@@ -91,18 +96,6 @@ class SaleOrderInherit(models.Model):
                 rec.partner_consignee_filters_ids=consignee_list
 
 
-
-    # @api.onchange('order_category')
-    # def _set_order_category_fields(self):
-    #     for rec in self:
-    #         rec.deprture_date=False
-    #         rec.discharge_country_id=False
-    #         rec.discharge_city_id=False
-    #         rec.final_destination_country_id=False
-    #         rec.final_destination_city_id=False
-    #         rec.port_loading_id=False
-    #         rec.origin_country_id=False
-    #         rec.export_type=False
 
 
     def button_quotation(self):
@@ -130,3 +123,40 @@ class SaleOrderInherit(models.Model):
     def button_set_to_proforma_quotation(self):
         for rec in self:
             rec.state='pro_quotation'
+
+
+
+    @api.onchange('partner_notify_ids')
+    def _get_notify_partner_line(self):
+        lines = [(5, 0, 0)]
+        if self.partner_notify_ids:
+            for lin in self.partner_notify_ids:
+                lines.append((0,0,{
+                    'partner_id':lin._origin.id,
+                }))
+        self.update({'notify_partner_line':lines})
+
+    @api.onchange('partner_consignee_ids')
+    def _get_notify_partner_line(self):
+        lines = [(5, 0, 0)]
+        if self.partner_consignee_ids:
+            for lin in self.partner_consignee_ids:
+                lines.append((0, 0, {
+                    'partner_id': lin._origin.id,
+                }))
+        self.update({'consignee_partner_line': lines})
+
+
+class ResPartnerNotify(models.Model):
+    _name = 'res.partner.notify'
+
+    partner_id = fields.Many2one(comodel_name="res.partner", string="Name")
+    notify_po = fields.Text(string="Notify Po")
+    sale_id = fields.Many2one(comodel_name="sale.order" )
+
+class ResPartnerConsignee(models.Model):
+    _name = 'res.partner.consignee'
+
+    partner_id = fields.Many2one(comodel_name="res.partner", string="Name")
+    consignee_po = fields.Text(string="Consignee Po")
+    sale_id = fields.Many2one(comodel_name="sale.order" )

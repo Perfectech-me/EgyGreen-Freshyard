@@ -14,12 +14,12 @@ class ApproveCreditLimit(models.TransientModel):
             balance=0.0
             account_move_line=self.env['account.move.line'].search([('full_reconcile_id', '=', False), ('balance', '!=', 0), ('account_id.reconcile', '=', True),('parent_state', '=', 'posted'),('account_id.internal_type', 'in', ['payable','receivable']),('partner_id', '=', line.service_provider_partner_id.id)])
             if line.product_id.additional_service:
-                product_cost = line.product_id.list_price
+                product_cost = line.price_unit
             for move_line in account_move_line:
                 balance +=move_line.balance
             lines.append((0, 0, {
                 'product_id': line.product_id.id,
-                'cost': line.price_unit,
+                'cost': product_cost,
                 'service_provider_partner_id': line.service_provider_partner_id.id,
                 'balance':balance,
             }))
@@ -50,7 +50,18 @@ class ApproveCreditLimit(models.TransientModel):
 
     def button_refuse(self):
         sale_order = self.env['sale.order'].browse(self._context.get('active_ids'))
-        sale_order.state='cancel'
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'refuse.credit.limit',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+            'context':{'default_sale_id':sale_order.id}
+        }
+
+
+
 
 
 class SaleOrderProduct(models.TransientModel):
