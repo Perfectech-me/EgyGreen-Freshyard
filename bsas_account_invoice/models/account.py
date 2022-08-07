@@ -17,13 +17,15 @@ class AccountMoveInherit(models.Model):
     form13amount = fields.Float(string="From13 Amount")
 
     @api.constrains('bl_awb','form13number')
-    def _check_bl_awb(self):
-        for rec in self.search([('id','!=',self.id)]):
-            if rec.bl_awb==self.bl_awb:
-                raise ValidationError(("bl_awb Must Be Unique And Exist in Invoice "+str(rec.name)))
+    def _check_bl_awb_form13number(self):
+        for rec in self.search([('id','!=',self.id),('move_type' ,'=', 'out_invoice')]):
 
-            if rec.form13number==self.form13number:
-                raise ValidationError(("From13 Number Must Be Unique And Exist in Invoice "+str(rec.name)))
+            if self.move_type=='out_invoice':
+                if rec.bl_awb==self.bl_awb:
+                    raise ValidationError(("bl_awb Must Be Unique And Exist in Invoice "+str(rec.name)))
+
+                if rec.form13number==self.form13number :
+                    raise ValidationError(("From13 Number Must Be Unique And Exist in Invoice "+str(rec.name)))
 
 class AccountMoveLineInherit(models.Model):
     _inherit = 'account.move.line'
@@ -41,5 +43,5 @@ class AccountMoveLineInherit(models.Model):
     def _check_bl_awb(self):
         for rec in self:
             for line in rec.search([('id', '!=', rec.id)]):
-                if line.container_equipment_number == rec.container_equipment_number and rec.is_storable==line.is_storable==True:
+                if line.container_equipment_number == rec.container_equipment_number and rec.is_storable==line.is_storable==True and rec.move_id.move_type == 'out_invoice':
                     raise ValidationError(("container/Equipment Number Must Be Unique And Exist in Invoice " + str(line.move_id.name)))

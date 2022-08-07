@@ -7,27 +7,27 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
-
+<!--                ('move_type', '=', 'out_invoice')-->
                 <xpath expr="//group[@id='header_right_group']" position="inside">
-                    <field name="bl_awb" required="1"/>
-                    <field name="inspection1_partner_id"/>
-                    <field name="inspection2_partner_id"/>
-                    <field name="insurance_customer_id"/>
-                    <label for="other_cost"/>
+                    <field name="bl_awb" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="inspection1_partner_id" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="inspection2_partner_id" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="insurance_customer_id" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <label for="other_cost" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
 
-                    <div>
+                    <div attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}">
                         <field name="other_cost" class="oe_inline"/>
                         -
                         <field name="other_cost_partner_id" class="oe_inline"/>
                     </div>
-                    <field name="form13number"/>
-                    <field name="form13date"/>
-                    <field name="form13amount"/>
+                    <field name="form13number" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="form13date" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="form13amount" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='name']" position="after">
                     <field name="is_storable" invisible="1"/>
-                    <field name="container_equipment_number" attrs="{'required':[('is_storable','=',True)]}"/>
+                    <field name="container_equipment_number" attrs="{'required':[('parent.move_type', '=', 'out_invoice'),('is_storable','=',True)],'invisible':[('parent.move_type', '!=', 'out_invoice')]}"/>
                 </xpath>
 
 
