@@ -5,7 +5,6 @@ class PurchaseOrderInherit(models.Model):
     order_category = fields.Selection(string="Order Catrgory", selection=[
         ('International', 'International'),
         ('Local', 'Local'),
-        ('Export', 'Export'),
     ], default='International')
 
     export_type = fields.Selection(string="Export Type", selection=[('fresh', 'fresh'), ('frozen', 'frozen'),

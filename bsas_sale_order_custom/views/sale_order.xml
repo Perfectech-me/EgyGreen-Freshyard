@@ -9,6 +9,27 @@
             <field name="arch" type="xml">
 
 
+                <xpath expr="//group[@name='sale_info']//field[@name='invoice_status']" position="after">
+                    <field name="bank_ids" readonly="1" force_save="1">
+                        <tree>
+                            <field name="bank_id"/>
+                            <field name="acc_number"/>
+                        </tree>
+                    </field>
+                </xpath>
+
+
+
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sales_person_user_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
                 <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
@@ -16,19 +37,12 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
-                <xpath expr="//field[@name='commitment_date']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
 
                  <xpath expr="//label[@for='commitment_date']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                    <attribute name="string">ETA</attribute>
+                    <attribute name="attrs">{'required':[('order_category','in', ['Export','International'])]}</attribute>
                 </xpath>
 
-                <xpath expr="//group[@name='sale_shipping']" position="replace">
-                    <group>
-
-                    </group>
-                </xpath>
 
 
 
@@ -74,52 +88,40 @@
                     <field name="refuse_reason" readonly="1" force_save="1" attrs="{'invisible':['|',('refuse_reason','=', ''),('state','!=', 'cancel')],}"/>
                 </xpath>
 
-                <xpath expr="//field[@name='payment_term_id']" position="before">
-                    <label for="commitment_date" string="Delivery Date"/>
-                    <div name="commitment_date_div" class="o_row">
-                        <field name="commitment_date" attrs="{'required':[('order_category','=', 'Export')]}"/>
-                        <span name="expected_date_span" class="text-muted">Expected:
-                            <field name="expected_date" widget="date"/>
-                        </span>
-                    </div>
-                    <field name="deprture_date"
-                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
-                </xpath>
-
 
 
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <label for="discharge_country_id"
-                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
                     <div>
                         <group>
                             <field name="discharge_country_id"
-                                   attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
                                    nolabel="1"/>
                             <field name="discharge_city_id"
-                                   attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
                                    nolabel="1" domain="[('country_id','=',discharge_country_id)]"/>
                         </group>
                     </div>
 
                     <label for="final_destination_country_id"
-                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
                     <div>
                         <group>
                             <field name="final_destination_country_id"
-                                   attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
                                    nolabel="1"/>
                             <field name="final_destination_city_id"
-                                   attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
                                    nolabel="1" domain="[('country_id','=',final_destination_country_id)]"/>
                         </group>
                     </div>
                     <field name="port_loading_id"
-                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
                     <field name="shipping_type" readonly="1" force_save="1"
-                           attrs="{'invisible':[('order_category','!=', 'Export')]}"/>
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])]}"/>
                     <field name="origin_country_id"
-                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
 
                 </xpath>
                 <xpath expr="//button[@name='action_quotation_send'][3]" position="attributes">

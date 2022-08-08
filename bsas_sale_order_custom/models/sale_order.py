@@ -48,12 +48,12 @@ class SaleOrderInherit(models.Model):
                                                                             ('Export', 'Export'),
                                                                           ],default='International' )
 
-    export_type = fields.Selection(string="Export Type", selection=[('fresh', 'fresh'),('frozen','frozen'), ('food_products', 'Food Products'), ],default='fresh')
+    export_type = fields.Selection(string="Export Type", selection=[('fresh', 'Fresh'),('frozen','Frozen'), ('food_products', 'Food Products'),('other','Other') ],default='fresh')
     product_type = fields.Selection(string="Product Type", selection=[
         ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
 
     shipping_type = fields.Selection(string="Shipping Type", selection=[('Air', 'Air'), ('Ocean', 'Ocean'),('Land', 'Land')],default='Air')
-    deprture_date = fields.Date(string="Departure Date (ADT)")
+    deprture_date = fields.Date(string="Departure Date (EDT)")
 
     discharge_country_id = fields.Many2one(comodel_name="res.country", string="Place Of Discharge")
     discharge_city_id = fields.Many2one(comodel_name="res.country.state")
@@ -75,7 +75,18 @@ class SaleOrderInherit(models.Model):
     consignee_partner_line = fields.One2many(comodel_name="res.partner.consignee", inverse_name="sale_id",string="Consignee Partner PO")
     loading_date = fields.Date(string="Loading Date")
     shipment_line_id = fields.Many2one(comodel_name="shipment.line", string="Shipment Line")
+    sales_person_user_id = fields.Many2one(comodel_name="sales.person.users", string="Sales Person")
+    bank_ids = fields.Many2many(comodel_name="res.partner.bank",string="Bank Accounts")
 
+
+
+    @api.onchange('partner_id')
+    def _get_partner_bank(self):
+        for rec in self:
+            bank=[]
+            for line in rec.partner_id.bank_ids:
+                bank.append(line.id)
+            rec.bank_ids=bank
 
     @api.depends('partner_id')
     def _get_partner_notify_filters(self):
@@ -160,3 +171,24 @@ class ResPartnerConsignee(models.Model):
     partner_id = fields.Many2one(comodel_name="res.partner", string="Name")
     consignee_po = fields.Text(string="Consignee Po")
     sale_id = fields.Many2one(comodel_name="sale.order" )
+
+
+
+
+class SaleAdvancePaymentInvInherit(models.TransientModel):
+    _inherit = 'sale.advance.payment.inv'
+    def create_invoices(self):
+        res=super(SaleAdvancePaymentInvInherit, self).create_invoices()
+        sale_orders = self.env['sale.order'].browse(self._context.get('active_ids', []))
+        if sale_orders:
+            for sale in sale_orders:
+                if sale.invoice_ids:
+                    for inv in sale.invoice_ids:
+                        if not inv.invoice_person_user_id:
+                            inv.invoice_person_user_id=sale.sales_person_user_id.id
+                        if not inv.bank_ids:
+                            inv.bank_ids=sale.bank_ids.ids
+
+
+
+        return res
