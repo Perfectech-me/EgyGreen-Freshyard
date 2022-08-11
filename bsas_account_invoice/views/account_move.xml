@@ -10,19 +10,19 @@
 <!--                ('move_type', '=', 'out_invoice')-->
                 <xpath expr="//group[@id='header_right_group']" position="inside">
                     <field name="bl_awb" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
-                    <field name="inspection1_partner_id" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
-                    <field name="inspection2_partner_id" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
-                    <field name="insurance_customer_id" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
-                    <label for="other_cost" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="inspection1_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="inspection2_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="insurance_customer_id" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <label for="other_cost" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
 
-                    <div attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}">
-                        <field name="other_cost" class="oe_inline"/>
+                    <div attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}" class="o_row">
+                        <field name="other_cost" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
                         -
-                        <field name="other_cost_partner_id" class="oe_inline"/>
+                        <field name="other_cost_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
                     </div>
-                    <field name="form13number" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
-                    <field name="form13date" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
-                    <field name="form13amount" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="form13number" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="form13date" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="form13amount" attrs="{'required':[('move_type', '=', 'out_invoice')],'invisible':[('move_type', '!=', 'out_invoice')]}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='name']" position="after">
