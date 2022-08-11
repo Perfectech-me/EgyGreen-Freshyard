@@ -41,7 +41,7 @@
                             </table>
 
                             <table class="table table-condensed"
-                                   style="border:8px solid black;width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
+                                   style="width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
                                 <thead>
 
                                     <tr>

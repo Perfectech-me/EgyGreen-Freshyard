@@ -46,7 +46,7 @@ class account_cheque(models.Model):
     cheque_given_date = fields.Date(string="Cheque Given Date", required=False, )
     cheque_receive_date = fields.Date(string="", required=False, )
     cheque_return_date = fields.Date(string="", required=False, )
-    journal_id = fields.Many2one(comodel_name="account.journal", string="Journal",  compute='get_journal'  )
+    journal_id = fields.Many2one(comodel_name="account.journal", string="Journal"  )
     credit_account_id = fields.Many2one(comodel_name="account.account", string="Credit Account", required=True, )
     debit_account_id = fields.Many2one(comodel_name="account.account", string="Debit Account", required=True, )
     cheq_under_collection_account_id = fields.Many2one(comodel_name="account.account",
@@ -82,17 +82,17 @@ class account_cheque(models.Model):
         # return res
 
         # self.company_id= self.env.company
-    def get_journal(self):
-        res = {}
-
-        x = self.env['res.config.settings'].search([], order='id desc',
-                                                   limit=1)
-        print(self.env.company)
-        self.journal_id = [(6, 0, [])]
-        for rec in x:
-            self.journal_id += rec.incoming_chq_journal
-            # print("asdasd",rec.incoming_chq_journal)
-        return self.journal_id
+    # def get_journal(self):
+    #     res = {}
+    #
+    #     x = self.env['res.config.settings'].search([], order='id desc',
+    #                                                limit=1)
+    #     print(self.env.company)
+    #     self.journal_id = [(6, 0, [])]
+    #     for rec in x:
+    #         self.journal_id += rec.incoming_chq_journal
+    #         # print("asdasd",rec.incoming_chq_journal)
+    #     return self.journal_id
         # dom'multiple_assets_per_line': False}
         # a.type {'id': 41, 'message_is_follower': False, 'message_follower_ids': [102], 'message_partner_ids': [], 'message_ids': [109], 'has_message': True, 'message_unread': False, 'message_unread_counter': 0, 'message_needaction': False, 'message_needaction_counter': 0, 'message_has_error': False, 'message_has_error_counter': 0, 'message_attachment_count': 0, 'message_main_attachment_id': False, 'website_message_ids': [], 'message_has_sms_error': False, 'name': 'Undistributed Profits/Losses', 'currency_id': False, 'code': '999999', 'deprecated': False, 'used': False, 'user_type_id': (12, 'Current Year Earnings'), 'internal_type': 'other', 'internal_group': 'equity', 'reconcile': False, 'tax_ids': [], 'note': False, 'company_id': (1, 'Egygreen AgroExport'), 'tag_ids': [], 'group_id': False, 'root_id': (57057, '99'), 'allowed_journal_ids': [], 'opening_debit': 0.0, 'opening_credit': 0.0, 'opening_balance': 0.0, 'is_off_balance': False, 'current_balance': 0.0, 'related_taxes_amount': 0, '__last_update': datetime.datetime(2022, 7, 13, 0, 2, 13, 516501), 'display_name': '999999 Undistributed Profits/Losses', 'create_uid': (1, 'OdooBot'), 'create_date': datetime.datetime(2022, 7, 13, 0, 2, 13, 516501), 'write_uid': (1, 'OdooBot'), 'write_date': datetime.datetime(2022, 7, 13, 0, 2, 13, 516501), 'exclude_provision_currency_ids': [], 'exclude_from_aged_reports': False, 'asset_model': False, 'create_asset': 'no', 'can_create_asset': False, 'form_view_ref': False, 'asset_type': False, 'multiple_assets_per_line': False}
         # CHQ/000011
@@ -557,6 +557,7 @@ class account_cheque(models.Model):
                 'default_type': 'incoming',
                 'default_credit_account_id': x.incoming_chq_credit_account_id.id,
                 'default_debit_account_id': x.incoming_chq_debit_account_id.id,
+                'default_journal_id':x.incoming_chq_journal.id,
                 'default_cheq_under_collection_account_id': x.chq_under_coll_account_id.id,
                 # cheq_under_collection_account_id
 
@@ -581,6 +582,7 @@ class account_cheque(models.Model):
                 'default_type': 'outgoing',
                 'default_credit_account_id': x.outgoing_chq_credit_account_id.id,
                 'default_debit_account_id': x.outgoing_chq_debit_account_id.id,
+                'default_journal_id': x.outgoing_chq_journal.id,
                 'default_cheq_under_collection_account_id': x.chq_under_coll_account_id.id,
             }
         }
@@ -691,6 +693,8 @@ class ResConfigSettings(models.TransientModel):
                                                 required=False, )
     incoming_chq_journal= fields.Many2one(comodel_name="account.journal", string="Incoming Cheque Journal",
                                                      required=False, )
+    outgoing_chq_journal = fields.Many2one(comodel_name="account.journal", string="Outgoing Cheque Journal",
+                                           required=False, )
 
     @api.model
     def get_values(self):
@@ -698,14 +702,21 @@ class ResConfigSettings(models.TransientModel):
         params = self.env['ir.config_parameter'].sudo()
         incoming_chq_credit_account_id = params.get_param('incoming_chq_credit_account_id', default=False)
         incoming_chq_debit_account_id = params.get_param('incoming_chq_debit_account_id', default=False)
+        incoming_chq_journal=params.get_param('incoming_chq_journal',default=False)
         outgoing_chq_credit_account_id = params.get_param('outgoing_chq_credit_account_id', default=False)
         outgoing_chq_debit_account_id = params.get_param('outgoing_chq_debit_account_id', default=False)
+        outgoing_chq_journal=params.get_param('outgoing_chq_journal',default=False)
+
         chq_under_coll_account_id = params.get_param('chq_under_coll_account_id', default=False)
         res.update(
             incoming_chq_credit_account_id=int(incoming_chq_credit_account_id),
             incoming_chq_debit_account_id=int(incoming_chq_debit_account_id),
+            incoming_chq_journal=int(incoming_chq_journal),
+
             outgoing_chq_credit_account_id=int(outgoing_chq_credit_account_id),
             outgoing_chq_debit_account_id=int(outgoing_chq_debit_account_id),
+            outgoing_chq_journal=int(outgoing_chq_journal),
+
             chq_under_coll_account_id=int(chq_under_coll_account_id),
         )
         return res
@@ -717,14 +728,22 @@ class ResConfigSettings(models.TransientModel):
 
         incoming_chq_credit_account_id = self.incoming_chq_credit_account_id.id
         incoming_chq_debit_account_id = self.incoming_chq_debit_account_id.id
+        incoming_chq_journal = self.incoming_chq_journal.id
+
+
         outgoing_chq_credit_account_id = self.outgoing_chq_credit_account_id.id
         outgoing_chq_debit_account_id = self.outgoing_chq_debit_account_id.id
+        outgoing_chq_journal = self.outgoing_chq_journal.id
         chq_under_coll_account_id = self.chq_under_coll_account_id.id
 
         param.set_param('incoming_chq_credit_account_id', incoming_chq_credit_account_id)
         param.set_param('incoming_chq_debit_account_id', incoming_chq_debit_account_id)
+        param.set_param('incoming_chq_journal', incoming_chq_journal)
+
         param.set_param('outgoing_chq_credit_account_id', outgoing_chq_credit_account_id)
         param.set_param('outgoing_chq_debit_account_id', outgoing_chq_debit_account_id)
+        param.set_param('outgoing_chq_journal', outgoing_chq_journal)
+
         param.set_param('chq_under_coll_account_id', chq_under_coll_account_id)
 
 

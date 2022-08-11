@@ -54,6 +54,13 @@
                                 <field name="outgoing_chq_debit_account_id"/>
                             </div>
                         </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="incoming_chq_journal"/>
+                                <field name="incoming_chq_journal"/>
+                            </div>
+                        </div>
 
 
                     </div>
