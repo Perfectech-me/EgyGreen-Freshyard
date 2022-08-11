@@ -53,7 +53,7 @@ class SaleOrderInherit(models.Model):
         ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
 
     shipping_type = fields.Selection(string="Shipping Type", selection=[('Air', 'Air'), ('Ocean', 'Ocean'),('Land', 'Land')],default='Air')
-    deprture_date = fields.Date(string="Departure Date (EDT)")
+    deprture_date = fields.Date(string="departure date(ETD)")
 
     discharge_country_id = fields.Many2one(comodel_name="res.country", string="Place Of Discharge")
     discharge_city_id = fields.Many2one(comodel_name="res.country.state")
@@ -148,7 +148,7 @@ class SaleOrderInherit(models.Model):
         self.update({'notify_partner_line':lines})
 
     @api.onchange('partner_consignee_ids')
-    def _get_notify_partner_line(self):
+    def _get_consignee_partner_line(self):
         lines = [(5, 0, 0)]
         if self.partner_consignee_ids:
             for lin in self.partner_consignee_ids:
