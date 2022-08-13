@@ -17,10 +17,13 @@
                  </xpath>
 
 
-                <xpath expr="//span[@name='expected_date_span']" position="attributes">
+<!--                <xpath expr="//span[@name='expected_date_span']" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>-->
+<!--                </xpath>-->
+
+                <xpath expr="//group[@name='sale_shipping']" position="attributes">
                     <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>
                 </xpath>
-
 
 
                  <xpath expr="//field[@name='payment_term_id']" position="before">
