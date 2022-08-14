@@ -13,10 +13,10 @@ class account_cheque(models.Model):
 
     _rec_name = 'sequence'
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin', 'utm.mixin']
-    # sequence = fields.Char(string='ٍSequence', required=True, copy=False, store=True, index=True,
-    #                        default=lambda     self: self.env['ir.sequence'].next_by_code('cheque'))
-    sequence = fields.Char('ٍSequence', size=32, required=True, readonly=True, default=lambda self: _('New'),
-                           tracking=True)
+    sequence = fields.Char(string='ٍSequence', required=True, copy=False, store=True, index=True,
+                           default=lambda     self: self.env['ir.sequence'].next_by_code('cheque'))
+    # sequence = fields.Char('ٍSequence', size=32, required=True, readonly=True, default=lambda self: _('New'),
+    #                        tracking=True)
 
     def _get_report_base_filename(self):
         return self.name
@@ -238,7 +238,8 @@ class account_cheque(models.Model):
             self.status = 'done'
             x = self.payer_user_id
             debit = self.bank_account_id
-            credit = self.debit_account_id
+            credit = self.cheq_under_collection_account_id
+            print("self.debit_account_id",self.debit_account_id.name,"self.debit_account_id",self.credit_account_id.name)
 
             self.journal_items_count += 2
             self.current_state_date = datetime.today().strftime('%Y-%m-%d')
