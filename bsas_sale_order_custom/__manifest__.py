@@ -3,7 +3,7 @@
     'name': "Sale Order Customize",
     'category': 'Sales',
     'version': '15.0',
-    'depends': ['base','sale','sale_management','bi_customer_limit','bsas_additional_cost','purchase'],
+    'depends': ['base','sale','sale_management','bi_customer_limit','bsas_additional_cost','purchase','sale_stock'],
 
     'data': [
         'security/ir.model.access.csv',
