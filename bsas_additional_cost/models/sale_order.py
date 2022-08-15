@@ -84,8 +84,12 @@ class ProductTemplateInherit(models.Model):
     clearance_product = fields.Boolean(string="Clearance Product")
     insurance_product = fields.Boolean(string="Insurance Product")
     other_product = fields.Boolean(string="Other")
-
     partners_ids = fields.Many2many(comodel_name="res.partner",string="Partners",compute='compute_partners_ids')
+
+    temperature = fields.Char(string="Temperature")
+    humidity = fields.Char(string="Humidity")
+    ventilation = fields.Char(string="Ventilation")
+
 
 
     @api.onchange('additional_service')

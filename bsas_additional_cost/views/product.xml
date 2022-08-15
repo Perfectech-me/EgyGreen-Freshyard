@@ -23,6 +23,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_policy']" position="after">
                     <field name="additional_service"/>
+                    <field name="temperature"/>
+                    <field name="humidity"/>
+                    <field name="ventilation"/>
 
                 </xpath>
 
@@ -53,6 +56,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_policy']" position="after">
                     <field name="additional_service"/>
+                     <field name="temperature"/>
+                    <field name="humidity"/>
+                    <field name="ventilation"/>
                 </xpath>
                 <xpath expr="//page[@name='general_information']//group[1]" position="inside">
                     <group string="Service Type" attrs="{'invisible':[('additional_service','=',False)]}">
