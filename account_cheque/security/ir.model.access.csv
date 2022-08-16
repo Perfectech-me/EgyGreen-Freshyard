@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_account.cheque,account_account.cheque,model_account_cheque,,1,1,1,1
 access_cheque.wizard,account_cheque.wizard,model_cheque_wizard,,1,1,1,1
+access_cashed_wizard,access_cashed_wizard,model_cashed_wizard,,1,1,1,1

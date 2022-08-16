@@ -189,7 +189,7 @@
                                 </group>
                                 <group>
                                     <field name="debit_account_id"/>
-                                    <field name="company_id" domain="[('id', 'in', allowed_company_ids)]"/>
+                                    <field name="company_id" domain="[('id', 'in', allowed_company_ids)]" />
                                 </group>
                             </group>
                         </page>

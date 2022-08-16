@@ -41,7 +41,7 @@ class account_cheque(models.Model):
     chq_no = fields.Char(string="Cheque Number", required=True, )
     cheque_date = fields.Date(string="Cheque Date", required=True, )
     payer_bank = fields.Text(string="Payer Bank", required=False, )
-    company_id = fields.Many2one(comodel_name="res.company", string="Company", required=False)
+    company_id = fields.Many2one(comodel_name="res.company", string="Company", required=False,default=lambda self: self.env.company.id)
     amount = fields.Float(string="Amount", required=True, )
     cheque_given_date = fields.Date(string="Cheque Given Date", required=False, )
     cheque_receive_date = fields.Date(string="", required=False, )
@@ -61,25 +61,26 @@ class account_cheque(models.Model):
     current_state_date = fields.Date(string="Current State Date", required=False, default=datetime.today().date())
     journal_items_count = fields.Integer(string="", required=False, )
     attachment = fields.Many2many('ir.attachment')
+    current_state_date = fields.Date(string="Current State Date", required=False, default=datetime.today().date())
 
-    # def check_company(self):
-    #
-    #     # for r in com:
-    #     #     print(r,"sssss")
-    #     res={}
-    #     for rec in self:
-    #         rec.company_id = ""
-    #
-    #         com = self.env['res.company'].browse(self._context.get('allowed_company_ids')).ids
-    #         domain = [('id', 'in', com)]
-    #         res['domain'] = {'company_id': domain}
-    #     #     print(rec)
-        # print(self.env['res.company'].search([]))
-        #
-        # for rec in self.env.company:
-        #     print('rec',rec)
-        #     # for r in rec.:
-        # return res
+    def check_company(self):
+
+        # for r in com:
+        #     print(r,"sssss")
+        res={}
+        for rec in self:
+            rec.company_id = ""
+
+            com = self.env['res.company'].browse(self._context.get('allowed_company_ids')).ids
+            domain = [('id', 'in', com)]
+            res['domain'] = {'company_id': domain}
+        #     print(rec)
+        print(self.env['res.company'].search([]))
+
+        for rec in self.env.company:
+            print('rec',rec)
+            # for r in rec.:
+        return res
 
         # self.company_id= self.env.company
     # def get_journal(self):
@@ -234,11 +235,12 @@ class account_cheque(models.Model):
 
     def set_cashed(self):
         if self.type == 'incoming':
-            print("hahahhahahaaaaay")
             self.status = 'done'
             x = self.payer_user_id
             debit = self.bank_account_id
-            credit = self.cheq_under_collection_account_id
+            credit = self.debit_account_id
+            if(self.journal_items_count==4):
+               credit = self.cheq_under_collection_account_id
             print("self.debit_account_id",self.debit_account_id.name,"self.debit_account_id",self.credit_account_id.name)
 
             self.journal_items_count += 2
@@ -532,6 +534,7 @@ class account_cheque(models.Model):
         x = self.env['account.move'].search([('cheque_id', '=', self.id)], )
         for rec in x:
             if rec.state == 'draft':
+                print(rec.state)
                 rec.unlink()
             else:
                 raise ValidationError('This Cheque Cannot be Canceled Because of its Posted JE')
@@ -590,91 +593,102 @@ class account_cheque(models.Model):
 
     no_of_days_to_reminder = fields.Integer(string="No Of Days Before Due Date To Reminder ", default=7)
 
-    @api.model
+    @api.onchange('current_state_date')
     def fire_notification_1(self):
         x = self.search([('type', '=', 'incoming'), ])
         today = fields.Date.today()
+        users = self.env['res.users'].search([])
+        print("hiiiiii")
+
         for record in x:
-            x = (record.cheque_date - today).days
-            if x == record.no_of_days_to_reminder:
-                print(record.create_uid.name)
-                print('yalla ')
-                self.env['mail.message'].create({
-                    'message_type': "notification",
-                    "subtype": self.env.ref("mail.mt_comment").id,
-                    'subject': "Hi %s" % record.create_uid.name,
-                    'body': "Your Cheque Will be Due in %s Days !" % x,
-                    'needaction_partner_ids': [(6, 0, [record.create_uid.partner_id.id])],
-                    'model': 'account.cheque',
-                    'res_id': record.id,
-                })
-                mails_send = self.env['mail.mail'].create({
-                    'subject': "Cheque System Reminder",
-                    'auto_delete': False,
-                    'body_html': """ <![CDATA[
-            <p>Dear ${object.create_uid.partner_id.name}
-            </p>
-            </br>
-            <p>Your Cheque No : ${object.chq_no} Will be Due in ${object.no_of_days_to_reminder} Days !
-            </p>
+            m = (record.cheque_date - today).days
+            print(m, record.no_of_days_to_reminder, "record.no_of_days_to_reminder")
+            if m == record.no_of_days_to_reminder:
+                for user in users:
+                    if user.has_group('account_cheque.group_cheque_notification'):
+                        record.activity_schedule('account_cheque.schdule_activity_manager_id', record.cheque_date,
+                                                 user_id=user.id,
+                                                 summary="Your Cheque Will be Due in %s Days !" % m)
 
-                    ]]>"""
-                    ,
-                    'notification': False,
-                    'email_from': 'faxes00.company@gmail.com' or '',
-                    'email_to': record.create_uid.partner_id.email or '',
-                })
+    #     self.env['mail.message'].create({
+            #         'message_type': "notification",
+            #         "subtype": self.env.ref("mail.mt_comment").id,
+            #         'subject': "Hi %s" % record.create_uid.name,
+            #         'body': "Your Cheque Will be Due in %s Days !" % x,
+            #         'needaction_partner_ids': [(6, 0, [record.create_uid.partner_id.id])],
+            #         'model': 'account.cheque',
+            #         'res_id': record.id,
+            #     })
+            #     mails_send = self.env['mail.mail'].create({
+            #         'subject': "Cheque System Reminder",
+            #         'auto_delete': False,
+            #         'body_html': """ <![CDATA[
+            # <p>Dear ${object.create_uid.partner_id.name}
+            # </p>
+            # </br>
+            # <p>Your Cheque No : ${object.chq_no} Will be Due in ${object.no_of_days_to_reminder} Days !
+            # </p>
+            #
+            #         ]]>"""
+            #         ,
+            #         'notification': False,
+            #         'email_from': 'faxes00.company@gmail.com' or '',
+            #         'email_to': record.create_uid.partner_id.email or '',
+            #     })
+            #
+            #     mails_send.send()
 
-                mails_send.send()
 
 
-
-    @api.model
+    @api.onchange('current_state_date')
     def fire_notification_2(self):
         x = self.search([('type', '=', 'outgoing'), ])
         today = fields.Date.today()
         users = self.env['res.users'].search([])
+        print("hiiiiii")
 
         for record in x:
             m = (record.cheque_date - today).days
+            print(m,record.no_of_days_to_reminder,"record.no_of_days_to_reminder")
             if m == record.no_of_days_to_reminder:
                 for user in users:
-                    if user.has_group('account.group_account_manager'):
-                        record.activity_schedule('account_cheque.schdule_activity_manager_id', record.date_order,
+                    if user.has_group('account_cheque.group_cheque_notification'):
+                        print('hiiil')
+                        record.activity_schedule('account_cheque.schdule_activity_manager_id', record.cheque_date,
                                               user_id=user.id,
                                               summary="Your Cheque Will be Due in %s Days !" % m)
 
                 print(record.create_uid.name)
                 print('yalla ')
-                self.env['mail.message'].create({
-                    'message_type': "notification",
-                    "subtype": self.env.ref("mail.mt_comment").id,
-                    'subject': "Hi %s" % record.create_uid.name,
-                    'body': "Your Cheque Will be Due in %s Days !" % m,
-                    'needaction_partner_ids': [(6, 0, [record.create_uid.partner_id.id])],
-                    'model': 'account.cheque',
-                    'res_id': record.id,
-                })
-
-                # Find the e-mail template
-                mails_send = self.env['mail.mail'].create({
-                    'subject': "Cheque System Reminder",
-                    'auto_delete': False,
-                    'body_html': """ <![CDATA[
-                            <p>Dear ${object.create_uid.partner_id.name}
-                            </p>
-                            </br>
-                            <p>Your Cheque No : ${object.chq_no} Will be Due in ${object.no_of_days_to_reminder} Days !
-                            </p>
-
-                                    ]]>"""
-                    ,
-                    'notification': False,
-                    'email_from': 'faxes00.company@gmail.com' or '',
-                    'email_to': record.create_uid.partner_id.email or '',
-                })
-
-                mails_send.send()
+                # self.env['mail.message'].create({
+                #     'message_type': "notification",
+                #     "subtype": self.env.ref("mail.mt_comment").id,
+                #     'subject': "Hi %s" % record.create_uid.name,
+                #     'body': "Your Cheque Will be Due in %s Days !" % m,
+                #     'needaction_partner_ids': [(6, 0, [record.create_uid.partner_id.id])],
+                #     'model': 'account.cheque',
+                #     'res_id': record.id,
+                # })
+                #
+                # # Find the e-mail template
+                # mails_send = self.env['mail.mail'].create({
+                #     'subject': "Cheque System Reminder",
+                #     'auto_delete': False,
+                #     'body_html': """ <![CDATA[
+                #             <p>Dear ${object.create_uid.partner_id.name}
+                #             </p>
+                #             </br>
+                #             <p>Your Cheque No : ${object.chq_no} Will be Due in ${object.no_of_days_to_reminder} Days !
+                #             </p>
+                #
+                #                     ]]>"""
+                #     ,
+                #     'notification': False,
+                #     'email_from': 'faxes00.company@gmail.com' or '',
+                #     'email_to': record.create_uid.partner_id.email or '',
+                # })
+                #
+                # mails_send.send()
 
 
 class ResConfigSettings(models.TransientModel):

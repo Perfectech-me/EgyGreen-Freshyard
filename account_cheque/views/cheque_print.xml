@@ -1,115 +1,47 @@
 <odoo>
     <template id="print_cheque1">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="o">
-                <t>
-                    <div class="page">
-                        <font face="KacstOne">
-<!--                            <h1 align="center">Report Date :-->
-<!--                                <td>-->
-<!--                                    <t t-esc="o.get_today()" t-field-options='{"format": "d/M/yy"}'/>-->
-<!--                                </td>-->
-<!--                            </h1>-->
-                            <table  class="table table-condensed"
-                                   style="width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
-                                <tbody>
-<!--                                    <tr style="white-space: nowrap;">-->
-<!--                                        <td align="right">From :</td>-->
-<!--                                        <td style="text-align: right;">-->
-<!--                                            <t t-esc="o.from_date" t-field-options='{"format": "d/M/yy"}'/>-->
-<!--                                        </td>-->
-
-<!--                                        <td align="right">To :</td>-->
-<!--                                        <td style="text-align: right">-->
-<!--                                            <t t-esc="o.to_date"-->
-<!--                                               t-field-options='{"format": "d/M/yy"}'/>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
-                                    <tr style="white-space: nowrap;">
-<!--                                        <td align="right">Payee :</td>-->
-<!--                                        <td style="text-align: right;">-->
-<!--                                            <t t-esc="o.payee_user_id.name"/>-->
-<!--                                        </td>-->
-<!--                                        <td align="right">Status :</td>-->
-<!--                                            <td style="text-align: right;">-->
-<!--                                                <t t-esc="o.chq_no"/>-->
-<!--                                            </td>-->
-                                    </tr>
+            <div t-attf-class="header " t-att-style="report_header_style">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
 
 
-                                </tbody>
-                            </table>
+                    <br/>
+                    <div class="float-right"  dir="rtl" name="company_info">
+                        <div class="col text-right font-weight-bold" name="cheque_date">
+                            <span t-field="o.cheque_date"/>
+                        </div>
+                        <br/>
+                        <br/>
 
-                            <table class="table table-condensed"
-                                   style="width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
-                                <thead>
+                        <div class="col text-right font-weight-bold" style="padding-right:60px" name="payee">
+                            <span t-field="o.payee_user_id"/>
 
-                                    <tr>
-<!--                                        <td class="tg-hmp3">Payee</td>-->
-<!--                                        <td class="tg-hmp3">Ch.NO</td>-->
-<!--                                        <td class="tg-hmp3">Amount</td>-->
-<!--                                        <td class="tg-hmp3">Ch Given Date</td>-->
-<!--                                        <td class="tg-hmp3">Due Date</td>-->
-<!--                                        <td class="tg-hmp3">Bank Account</td>-->
-<!--                                        <td class="tg-hmp3">State</td>-->
-<!--                                        <td class="tg-hmp3">State Date</td>-->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <t t-set="total_amount" t-value="0"/>
-                                    <t t-foreach="o" t-as="rec">
-                                        <t t-set="total_amount" t-value="(total_amount+rec.amount)"/>
-                                        <tr>
-                                            <td style="text-align:right;"><span t-esc="rec.payee_user_id.name"/></td>
-<!--                                            <td class="td-lrbotborder">-->
-<!--                                                <span t-field="rec.payee_user_id.name" style=" font-size:13px;"/>-->
-<!--                                                <td class="td-lrbotborder">-->
-<!--                                                    <span t-esc="rec.chq_no" style=" font-size:13px;"/>-->
-<!--                                                    <td class="td-lrbotborder">-->
-<!--                                                        <span t-esc="rec.amount"-->
-<!--                                                              style=" font-size:13px;"/>-->
-<!--                                                        <td class="td-lrbotborder">-->
-<!--                                                            <span t-esc="rec.cheque_given_date"-->
-<!--                                                                  style=" font-size:13px;"/>-->
-<!--                                                            <td class="td-lrbotborder">-->
-<!--                                                                <span t-esc="rec.cheque_date"-->
-<!--                                                                      style=" font-size:13px;"/>-->
-<!--                                                                <td class="td-lrbotborder">-->
-<!--                                                                    <span t-field="rec.bank_account_id"-->
-<!--                                                                          style=" font-size:13px;"/>-->
-<!--                                                                    <td class="td-lrbotborder">-->
-<!--                                                                        <span t-field="rec.status"-->
-<!--                                                                              style=" font-size:13px;"/>-->
-<!--                                                                        <td class="td-lrbotborder">-->
-<!--                                                                            <span t-field="rec.current_state_date"-->
-<!--                                                                                  style=" font-size:13px;"/>-->
-<!--                                                                        </td>-->
-<!--                                                                    </td>-->
-<!--                                                                </td>-->
-<!--                                                            </td>-->
-<!--                                                        </td>-->
-<!--                                                    </td>-->
-<!--                                                </td>-->
-<!--                                            </td>-->
-                                        </tr>
+                        </div>
+                    <br/>
+                        <div class="col text-right" style="padding-right:60px" name="num_to_words_ar" >
+                            <span class="font-weight-bold">فقط: </span>
+                            <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>
+                            <span class="font-weight-bold"> لاغير</span>
 
-                                        <tr>
-                                            <td style="text-align:center;"><span t-esc="(total_amount,2)"/></td>
-                                        </tr>
-                                    </t>
-                                    <tr>
+                        </div>
 
-
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </font>
+                        <div class="col text-right" name="amount" >
+                            <span t-field="o.amount"/>
+                        </div>
+<!--                        <div class="col text-right" name="company_vat" t-if="company.vat">-->
+<!--                            <t t-esc="'رقم التسجيل الضريبى'"/>: <span dir="ltr" class="text-left" t-field="company.vat"/>-->
+<!--                        </div>-->
+<!--                        <div class="col text-right" name="company_phone" t-if="company.phone">-->
+<!--                            <t t-esc="'تليفون'"/>: <span t-field="company.phone"/>-->
+<!--                        </div>-->
                     </div>
 
-                </t>
-            </t>
-        </t>
+<!--                </t>-->
+
+
+            </div>
+
+
+
     </template>
     <template id="print_cheque">
         <t t-call="web.html_container">
