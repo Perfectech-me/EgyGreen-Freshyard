@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <record id="sale_approve_credit_limit" model="res.groups">
+            <field name="name">Sale To Approve</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+        </record>
+    </data>
+</odoo>

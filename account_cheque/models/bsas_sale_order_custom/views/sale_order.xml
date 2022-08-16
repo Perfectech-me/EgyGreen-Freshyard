@@ -1,0 +1,210 @@
+<odoo>
+    <data>
+
+
+        <record id="form_view_inherit_sale_order" model="ir.ui.view">
+            <field name="name">name.sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                 <xpath expr="//label[@for='commitment_date']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>
+                 </xpath>
+
+                <xpath expr="//field[@name='commitment_date']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>
+                 </xpath>
+
+
+                <xpath expr="//group[@name='sale_shipping']//span[@class='text-muted']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>
+                </xpath>
+
+
+                 <xpath expr="//field[@name='payment_term_id']" position="before">
+                    <label for="commitment_date" string="Delivery Date(ETA)" attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
+                    <div name="commitment_date_div" class="o_row">
+                        <field name="commitment_date" attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
+                        <span name="expected_date_span" class="text-muted" attrs="{'invisible':[('order_category','not in', ['Export','International'])]}">Expected:
+                            <field name="expected_date" widget="date"/>
+                        </span>
+                    </div>
+                    <field name="deprture_date" string="Departure Date(ETD)"
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
+                </xpath>
+
+
+
+
+
+                <xpath expr="//group[@name='sale_info']//field[@name='invoice_status']" position="after">
+                    <field name="bank_ids" readonly="1" force_save="1">
+                        <tree>
+                            <field name="bank_id"/>
+                            <field name="acc_number"/>
+                        </tree>
+                    </field>
+                </xpath>
+
+
+
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sales_person_user_id" required="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+
+
+
+
+
+
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="pro_quotation,to_approve,draft,sent,sale"/>
+                </xpath>
+
+                <xpath expr="//button[@id='action_confirm']" position="before">
+                    <button name="button_quotation" string="Quotation" class="btn-primary" type="object"
+                            states="pro_quotation"/>
+
+                    <button name="button_to_approve" string="To Approve" class="btn-primary" type="object"
+                            states="to_approve" groups="bsas_sale_order_custom.sale_approve_credit_limit"/>
+
+                    <button name="button_set_to_proforma_quotation" string="Set To Proforma Quotation"
+                            attrs="{'invisible':[('state','=', 'pro_quotation')]}"
+                            type="object"/>
+
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+
+                    <field name="order_category" widget="radio" options="{'horizontal': true}"/>
+                    <field name="export_type" widget="radio" options="{'horizontal': true}"/>
+<!--                           attrs="{'invisible':[('order_category','!=', 'Export')],'required':[('order_category','=', 'Export')]}"/>-->
+
+                    <field name="product_type" widget="radio" />
+
+                   <field name="partner_notify_filters_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="partner_notify_ids" domain="[('id', 'in', partner_notify_filters_ids)]" force_save="1">
+                        <tree>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+
+                    <field name="partner_consignee_filters_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="partner_consignee_ids" domain="[('id', 'in', partner_consignee_filters_ids)]" force_save="1">
+                        <tree>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                    <field name="refuse_reason" readonly="1" force_save="1" attrs="{'invisible':['|',('refuse_reason','=', ''),('state','!=', 'cancel')],}"/>
+                </xpath>
+
+
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <label for="discharge_country_id"
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
+                    <div>
+                        <group>
+                            <field name="discharge_country_id"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
+                                   nolabel="1"/>
+                            <field name="discharge_city_id"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
+                                   nolabel="1" domain="[('country_id','=',discharge_country_id)]"/>
+                        </group>
+                    </div>
+
+                    <label for="final_destination_country_id"
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
+                    <div>
+                        <group>
+                            <field name="final_destination_country_id"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
+                                   nolabel="1"/>
+                            <field name="final_destination_city_id"
+                                   attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"
+                                   nolabel="1" domain="[('country_id','=',final_destination_country_id)]"/>
+                        </group>
+                    </div>
+                    <field name="port_loading_id"
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
+                    <field name="shipping_type" readonly="1" force_save="1"
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])]}"/>
+                    <field name="origin_country_id"
+                           attrs="{'invisible':[('order_category','not in', ['Export','International'])],'required':[('order_category','in', ['Export','International'])]}"/>
+
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send'][3]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('state', 'in', ['draft','pro_quotation']),
+                        ('invoice_count','&gt;=',1)]}
+                    </attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="form_view_sale_order_additional_cost" model="ir.ui.view">
+            <field name="name">name.sale.order.inherit.additional.cost</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="bsas_additional_cost.form_view_sale_order_inherit"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//button[@name='button_add_product_additional_cost']" position="after">-->
+<!--                    <field name="order_category" />-->
+<!--                </xpath>-->
+                <xpath expr="//button[@name='button_add_product_additional_cost']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('order_category','=','Local'),('state','in', ['sale','done','cancel'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']//tree//field[@name='service_provider_partner_id']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('parent.order_category','=','Local')]}</attribute>
+                    </xpath>
+
+
+                <xpath expr="//group[@name='order_details']" position="inside">
+                    <field name="packing_place_id" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+
+                    <field name="notify_partner_line"  attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}">
+                        <tree editable="bottom" create="false">
+                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <field name="notify_po"/>
+                        </tree>
+                    </field>
+
+                    <field name="consignee_partner_line" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}">
+                        <tree editable="bottom" create="false">
+                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <field name="consignee_po"/>
+                        </tree>
+                    </field>
+                    <field name="loading_date" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+                    <field name="shipment_line_id" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
+
+
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>
