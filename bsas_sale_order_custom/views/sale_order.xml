@@ -8,6 +8,9 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
 
+
+
+
                  <xpath expr="//label[@for='commitment_date']" position="attributes">
                     <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>
                  </xpath>
@@ -16,10 +19,6 @@
                     <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>
                  </xpath>
 
-
-<!--                <xpath expr="//group[@name='sale_shipping']//div[@name='commitment_date_div']" position="attributes">-->
-<!--                    <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>-->
-<!--                </xpath>-->
 
                 <xpath expr="//group[@name='sale_shipping']//span[@class='text-muted']" position="attributes">
                     <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>

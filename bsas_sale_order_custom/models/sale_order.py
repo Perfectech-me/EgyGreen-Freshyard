@@ -79,7 +79,6 @@ class SaleOrderInherit(models.Model):
     bank_ids = fields.Many2many(comodel_name="res.partner.bank",string="Bank Accounts")
 
 
-
     @api.onchange('partner_id')
     def _get_partner_bank(self):
         for rec in self:
