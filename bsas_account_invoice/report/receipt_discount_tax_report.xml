@@ -1,0 +1,271 @@
+<odoo>
+    <data>
+
+        <report id="bill_discount_report" string="إيصال خصم لصالح مصلحة الضرائب" model="account.move"
+                report_type="qweb-pdf"
+                file="bsas_account_invoice.discount_report_template"
+                name="bsas_account_invoice.discount_report_template"
+        />
+
+
+        <template id="discount_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;">
+
+
+                            <div style="width:100%;float:left;text-align:left">
+                                <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
+                                     style="max-height: 100px;"/>
+                            </div>
+                            <center>
+                                <h4><span style="border-bottom: 2px solid black">إيصال خصم لصالحه مصلحة الضرائب</span></h4>
+                            </center>
+
+                        </div>
+                        <div class="page">
+                            <div style="width:100%">
+                                <table style="width:100%;border-width:0px;border-color:black;font-size:12px;"
+                                       class="table table-sm table-bordered oe_inline">
+
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:22%;">
+                                            <span style="float:left">Tax Payer Name :</span>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;width:53%;">
+                                            <center>
+                                                <span t-field="o.partner_id.tax_commercial_payer_name"/>
+                                            </center>
+                                        </td>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:25%;">
+                                            <span style="float:right">: إسم الممول</span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:22%;">
+                                            <span style="float:left">Tax Card Number :</span>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;width:53%;">
+                                            <center>
+                                                <span t-field="o.partner_id.vat"/>
+                                            </center>
+                                        </td>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:25%;">
+                                            <span style="float:right">: رقم البطاقة الضريبية</span>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:22%;">
+                                            <span style="float:left">Tax Commission File No :</span>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;width:53%;">
+                                            <center>
+                                                <span t-field="o.partner_id.tax_commission_file_no"/>
+                                            </center>
+                                        </td>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:25%;">
+                                            <span style="float:right">: رقم الملف الضريبية</span>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:22%;">
+                                            <span style="float:left">Tax Commission Name :</span>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;width:53%;">
+                                            <center>
+                                                <span t-field="o.partner_id.tax_commercial_name"/>
+                                            </center>
+                                        </td>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:25%;">
+                                            <span style="float:right">: إسم المأمورية</span>
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+                                <br/>
+                                <br/>
+                                <center>
+                                    <table style="width:80%;border-width:1px;border-color:black;font-size:12px;"
+                                           class="table table-sm table-bordered oe_inline" dir="rtl">
+
+                                        <tr>
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;background-color:#d9d9d9;">
+                                                <center>
+                                                    <span>البيان / Explanation
+                                                    </span>
+                                                </center>
+                                            </td>
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;background-color:#d9d9d9;">
+                                                <center>
+                                                    <span>القيمة / Value</span>
+                                                </center>
+                                            </td>
+
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <span style="float:right;text-align:right">المبلغ المستقطع لصالح مصلحة
+                                                    الضرائب
+                                                </span>
+                                            </td>
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <center><span t-field="o.without_holding_amount"/>  جنية مصري </center>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <span style="float:right;text-align:right">
+                                                    رقم الفاتورة
+                                                </span>
+                                            </td>
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <t t-if="o.name">
+                                                    <center><span t-field="o.name"/></center>
+                                                </t>
+                                            </td>
+
+
+
+                                        </tr>
+                                        <tr>
+
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <span style="float:right;text-align:right">
+                                                    نسبة الخصم %
+                                                </span>
+                                            </td>
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <center><span t-field="o.rate_without_holding"/> % </center>
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <span style="float:right;text-align:right">
+                                                    إجمالي مبلغ التعامل
+                                                </span>
+                                            </td>
+                                            <td colspan="1"
+                                                style="border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                                <center><span t-esc="o.amount_untaxed"/> جنية مصري </center>
+                                            </td>
+                                        </tr>
+
+
+                                    </table>
+                                </center>
+
+                                <br/>
+                                <br/>
+                                <table style="width:100%;border-width:0px;border-color:black;font-size:12px;"
+                                       class="table table-sm table-bordered oe_inline" dir="rtl">
+
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:15%;">
+                                            <span style="float:left">الإسم :</span>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;width:45%;">
+                                            ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+                                        </td>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:10%;">
+                                            <span style="float:right">: Name</span>
+                                        </td>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:10%;">
+                                            <span style="float:left"> التاريخ :</span>
+                                        </td>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:15%;">
+                                            <span style="float:right" t-field="o.invoice_date"/>
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            <span style="float:left">الوظيفة :</span>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;">
+                                            ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+                                        </td>
+                                        <td colspan="3"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            <span style="float:right">: Occupation</span>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            <span style="float:left">التوقيع :</span>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;">
+                                            ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+                                        </td>
+                                        <td colspan="3"
+                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            <span style="float:right">: Signature</span>
+                                        </td>
+
+                                    </tr>
+
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>
