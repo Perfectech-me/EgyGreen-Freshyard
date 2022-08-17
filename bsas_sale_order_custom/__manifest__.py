@@ -16,7 +16,7 @@
         'views/sales_person_users.xml',
         'views/account_move.xml',
         'views/res_partner.xml',
-        'views/customer_type.xml',
+        # 'views/customer_type.xml',
         'wizard/approve_credit_limit.xml',
         'wizard/refuse_credit_limit.xml',
     ],

@@ -8,7 +8,7 @@
 
                 <xpath expr="//field[@name='vat']" position="after">
                     <field name="customer_rank" invisible="1"/>
-                    <field name="customer_type_id" attrs="{'invisible':[('customer_rank','&lt;=',0)]}"/>
+<!--                    <field name="customer_type_id" attrs="{'invisible':[('customer_rank','&lt;=',0)]}"/>-->
                 </xpath>
                 <xpath expr="//div[@class='o_address_format']" position="inside">
                     <field name="continent" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
@@ -36,8 +36,8 @@
                         <field name="insurance_credit_limit" attrs="{'required':[('insurance_type','=','yes')]}"/>-
                         <field name="insurance_currency_id" attrs="{'required':[('insurance_type','=','yes')]}"/>
                     </div>
-                    <field name="insurance_company"
-                           attrs="{'required':[('insurance_type','=','yes')],'invisible':[('insurance_type','!=','yes')]}"/>
+<!--                    <field name="insurance_company"-->
+<!--                           attrs="{'required':[('insurance_type','=','yes')],'invisible':[('insurance_type','!=','yes')]}"/>-->
                 </xpath>
 
             </field>
