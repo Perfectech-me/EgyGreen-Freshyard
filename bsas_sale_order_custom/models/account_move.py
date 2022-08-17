@@ -7,8 +7,12 @@ class AccountMoveInherit(models.Model):
     sales_order_id = fields.Many2one(comodel_name="sale.order")
     not_local_sale_order = fields.Boolean(compute='_get_check_not_local_sale_order')
 
+    @api.depends('sales_order_id')
     def _get_check_not_local_sale_order(self):
         for rec in self:
-            rec.not_local_sale_order=False
-            if rec.sales_order_id.order_category!='Local':
+            if rec.sales_order_id and rec.sales_order_id.order_category!='Local':
                 rec.not_local_sale_order = True
+            else:
+                rec.not_local_sale_order = False
+
+

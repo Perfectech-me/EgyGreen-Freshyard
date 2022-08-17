@@ -7,4 +7,3 @@ from . import purchase_order
 from . import shipment_line
 from . import sales_person_users
 from . import account_move
-from . import customer_type

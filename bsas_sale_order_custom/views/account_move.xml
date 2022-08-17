@@ -2,6 +2,7 @@
     <data>
 
 
+        <!-- Inherit Form View to Modify it -->
         <record id="form_view_account_move_inherit" model="ir.ui.view">
             <field name="name">name.account.move.inherit.form</field>
             <field name="model">account.move</field>
@@ -10,7 +11,8 @@
 
                 <xpath expr="//field[@name='invoice_user_id']" position="after">
                     <field name="invoice_person_user_id"/>
-                    <field name="not_local_sale_order"/>
+                    <field name="sales_order_id" invisible="1"/>
+                    <field name="not_local_sale_order" invisible="1"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_user_id']" position="attributes">

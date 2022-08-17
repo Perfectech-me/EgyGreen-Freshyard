@@ -190,4 +190,6 @@ class SaleAdvancePaymentInvInherit(models.TransientModel):
                             inv.bank_ids=sale.bank_ids.ids
                         inv.sales_order_id=sale.id
 
+
+
         return res
