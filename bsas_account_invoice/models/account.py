@@ -15,25 +15,6 @@ class AccountMoveInherit(models.Model):
     form13number = fields.Char(string="From13 Number")
     form13date = fields.Date(string="From13 Date")
     form13amount = fields.Float(string="From13 Amount")
-    without_holding_amount=fields.Float(compute='compute_without_holding_amount')
-    rate_without_holding = fields.Float(compute='compute_without_holding_amount')
-
-    @api.depends('invoice_line_ids')
-    def compute_without_holding_amount(self):
-        for rec in self:
-            rec.without_holding_amount=0.0
-            rec.rate_without_holding =0.0
-            total_tax = 0.0
-            for line in rec.invoice_line_ids:
-                for tax in line.tax_ids:
-                    if tax.without_holding:
-                        if tax.amount<0:
-                            total_tax+=((tax.amount*line.price_subtotal*-1)/100)
-                        else:
-                            total_tax+=((tax.amount*line.price_subtotal)/100)
-                        rec.rate_without_holding=tax.amount
-
-            rec.without_holding_amount = total_tax
 
     @api.constrains('bl_awb','form13number')
     def _check_bl_awb_form13number(self):
@@ -45,23 +26,6 @@ class AccountMoveInherit(models.Model):
 
                 if rec.form13number==self.form13number :
                     raise ValidationError(("From13 Number Must Be Unique And Exist in Invoice "+str(rec.name)))
-
-
-
-    @api.model
-    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-        res = super(AccountMoveInherit, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
-                                                                  submenu=submenu)
-        remove_report_id = self.env.ref('bsas_account_invoice.bill_discount_report').id
-        if view_type == 'form' and self.env.context.get('default_move_type') !='in_invoice':
-            if remove_report_id and toolbar and res['toolbar'] and res['toolbar'].get('print'):
-                remove_report_record = [rec for rec in res['toolbar'].get('print') if rec.get('id') == remove_report_id]
-                if remove_report_record and remove_report_record[0]:
-                    res['toolbar'].get('print').remove(remove_report_record[0])
-        return res
-
-
-
 
 class AccountMoveLineInherit(models.Model):
     _inherit = 'account.move.line'
