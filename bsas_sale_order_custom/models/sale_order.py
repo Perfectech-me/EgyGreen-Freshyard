@@ -188,7 +188,6 @@ class SaleAdvancePaymentInvInherit(models.TransientModel):
                             inv.invoice_person_user_id=sale.sales_person_user_id.id
                         if not inv.bank_ids:
                             inv.bank_ids=sale.bank_ids.ids
-                        inv.sales_order_id=sale.id
 
 
 
