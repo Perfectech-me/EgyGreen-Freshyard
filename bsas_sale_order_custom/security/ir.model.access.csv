@@ -7,3 +7,4 @@ access_bsas_res_partner_notify,name_res_partner_notify,model_res_partner_notify,
 access_bsas_res_partner_consignee,name_res_partner_consignee,model_res_partner_consignee,,1,1,1,1
 access_bsas_shipment_line,name_shipment_line,model_shipment_line,,1,1,1,1
 access_bsas_sales_person_users,name_sales_person_users,model_sales_person_users,,1,1,1,1
+access_bsas_res_partners_type,name_res_partners_type,model_res_partner_type,,1,1,1,1

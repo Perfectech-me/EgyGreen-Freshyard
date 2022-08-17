@@ -17,10 +17,6 @@
                  </xpath>
 
 
-<!--                <xpath expr="//group[@name='sale_shipping']//div[@name='commitment_date_div']" position="attributes">-->
-<!--                    <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>-->
-<!--                </xpath>-->
-
                 <xpath expr="//group[@name='sale_shipping']//span[@class='text-muted']" position="attributes">
                     <attribute name="attrs">{'invisible':[('order_category','in', ['Export','International'])]}</attribute>
                 </xpath>
