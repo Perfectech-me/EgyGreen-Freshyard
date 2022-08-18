@@ -1,2 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_bsas_port_loading,port_loading,model_port_loading,,1,1,1,1
+access_bsas_approve_credit_limit,name_approve_credit_limit,model_approve_credit_limit,,1,1,1,1
+access_bsas_sale_order_product,name_sale_order_product,model_sale_order_product,,1,1,1,1
+access_bsas_refuse_credit_limit,name_refuse_credit_limit,model_refuse_credit_limit,,1,1,1,1
+access_bsas_res_partner_notify,name_res_partner_notify,model_res_partner_notify,,1,1,1,1
+access_bsas_res_partner_consignee,name_res_partner_consignee,model_res_partner_consignee,,1,1,1,1
+access_bsas_shipment_line,name_shipment_line,model_shipment_line,,1,1,1,1
+access_bsas_sales_person_users,name_sales_person_users,model_sales_person_users,,1,1,1,1
