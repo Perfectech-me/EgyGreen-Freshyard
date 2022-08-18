@@ -20,8 +20,8 @@ class ResPartnerInherit(models.Model):
         self.insurance_currency_id=False
         self.insurance_company_text=""
 
-    def _get_name(self):
-        res=super(ResPartnerInherit, self)._get_name()
-        if self.continent:
-            res = "%s \n %s" % (res, self.continent)
-        return res
+    # def _get_name(self):
+    #     res=super(ResPartnerInherit, self)._get_name()
+    #     if self.continent:
+    #         res = "%s \n %s" % (res, self.continent)
+    #     return res
