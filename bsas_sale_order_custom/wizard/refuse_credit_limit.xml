@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="form_view_refuse_credit_limit" model="ir.ui.view">
+            <field name="name">name.refuse.credit.limit.form</field>
+            <field name="model">refuse.credit.limit</field>
+            <field name="arch" type="xml">
+                <form string="Refuse Credit Limit">
+                    <sheet>
+                        <group>
+                            <field name="refuse_reason" required="1"/>
+                            <field name="sale_id" invisible="1" force_save="1"/>
+                        </group>
+                        <footer>
+                            <button name="button_approve" type="object" string="Confirm"
+                                    class="oe_highlights"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_refuse_product_additional_cost" model="ir.actions.act_window">
+            <field name="name">Refuse Credit Limit</field>
+            <field name="res_model">refuse.credit.limit</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

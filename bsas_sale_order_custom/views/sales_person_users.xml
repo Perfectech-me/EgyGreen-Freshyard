@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+
+
+        <record id="form_view_sales_person_users" model="ir.ui.view">
+            <field name="name">name.sales.person.users.form</field>
+            <field name="model">sales.person.users</field>
+            <field name="arch" type="xml">
+                <form string="Sales Person">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_sales_person_users" model="ir.actions.act_window">
+            <field name="name">Sales Person</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.person.users</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem id="menu_sales_person_users" name="Sales Person" parent="sale.menu_sale_config"
+                  action="action_view_sales_person_users" sequence="4"/>
+
+    </data>
+</odoo>
