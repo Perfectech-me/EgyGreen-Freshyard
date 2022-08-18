@@ -10,6 +10,7 @@
                     <field name="without_holding_amount" invisible="1"/>
                     <field name="rate_without_holding" invisible="1"/>
                     <field name="move_type" invisible="1"/>
+                    <field name="not_local_sale_order" invisible="1"/>
                     <field name="bl_awb" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
                     <field name="inspection1_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
                     <field name="inspection2_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
