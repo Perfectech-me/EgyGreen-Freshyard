@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Bsas Account Invoice",
+    'name': "Bsas Account Move Bill Report",
 
     'category': 'Accounting',
     'version': '15.0',
