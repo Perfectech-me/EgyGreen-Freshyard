@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from num2words import num2words
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
@@ -17,6 +18,30 @@ class account_cheque(models.Model):
                            default=lambda     self: self.env['ir.sequence'].next_by_code('cheque'))
     # sequence = fields.Char('ٍSequence', size=32, required=True, readonly=True, default=lambda self: _('New'),
     #                        tracking=True)
+    def num_to_words_ar(self, numbers):
+        str=num2words(numbers,to='currency',lang='ar')
+        if "ريال" in str:
+            str=str.replace( "ريال","جنيه")
+        if "هللة" in str:
+            str=str.replace("هللة","قروش")
+        if "عشرين" in str:
+            str=str.replace( "عشرين","عشرون")
+        if "ثلاثين" in str:
+            str=str.replace( "ثلاثين","ثلاثون")
+        if "اربعين" in str:
+            str=str.replace( "اربعين","اربعون")
+        if "خمسين" in str:
+            str=str.replace( "خمسين","خمسون")
+        if "ستين" in str:
+            str=str.replace("ستين","ستون")
+        if "سبعين" in str:
+            str.replace( "سبعين","سبعون")
+        if "ثمانين" in str:
+            str.replace( "ثمانين","ثمانون")
+        if "تسعين" in str:
+            str.replace("تسعين", "تسعون")
+        return str
+
 
     def _get_report_base_filename(self):
         return self.name
