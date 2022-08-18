@@ -11,8 +11,6 @@
 
                 <xpath expr="//field[@name='invoice_user_id']" position="after">
                     <field name="invoice_person_user_id"/>
-                    <field name="sales_order_id" invisible="1"/>
-                    <field name="not_local_sale_order" invisible="1"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_user_id']" position="attributes">
