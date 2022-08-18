@@ -18,12 +18,6 @@
             <field name="binding_model_id" ref="account.model_account_move"/>
 
         </record>
-        <!--        <report id="bill_discount_report" string="إيصال خصم لصالح مصلحة الضرائب" model="account.move"-->
-        <!--                report_type="qweb-pdf"-->
-        <!--                file="bsas_account_invoice.discount_report_template"-->
-        <!--                name="bsas_account_invoice.discount_report_template"-->
-        <!--        />-->
-
 
         <template id="discounts_report_templates">
             <t t-call="web.html_container">
