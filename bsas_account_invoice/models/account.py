@@ -35,16 +35,16 @@ class AccountMoveInherit(models.Model):
 
             rec.without_holding_amount = total_tax
 
-    # @api.constrains('bl_awb','form13number')
-    # def _check_bl_awb_form13number(self):
-    #     for rec in self.search([('id','!=',self.id),('move_type' ,'=', 'out_invoice')]):
-    #
-    #         if self.move_type=='out_invoice':
-    #             if rec.bl_awb==self.bl_awb:
-    #                 raise ValidationError(("bl_awb Must Be Unique And Exist in Invoice "+str(rec.name)))
-    #
-    #             if rec.form13number==self.form13number :
-    #                 raise ValidationError(("From13 Number Must Be Unique And Exist in Invoice "+str(rec.name)))
+    @api.constrains('bl_awb','form13number')
+    def _check_bl_awb_form13number(self):
+        for rec in self.search([('id','!=',self.id),('move_type' ,'=', 'out_invoice')]):
+
+            if self.move_type=='out_invoice':
+                if rec.bl_awb==self.bl_awb:
+                    raise ValidationError(("bl_awb Must Be Unique And Exist in Invoice "+str(rec.name)))
+
+                if rec.form13number==self.form13number :
+                    raise ValidationError(("From13 Number Must Be Unique And Exist in Invoice "+str(rec.name)))
 
 
 

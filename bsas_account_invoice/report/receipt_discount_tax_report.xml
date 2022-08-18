@@ -1,11 +1,28 @@
 <odoo>
     <data>
 
-        <report id="bill_discount_report" string="إيصال خصم لصالح مصلحة الضرائب" model="account.move"
-                report_type="qweb-pdf"
-                file="bsas_account_invoice.discount_report_template"
-                name="bsas_account_invoice.discount_report_template"
-        />
+
+        <record id="action_report_account_move_bill_discount" model="ir.actions.report">
+            <field name="name">Account Move</field>
+
+            <field name="model">account.move</field>
+
+            <field name="report_type">qweb-pdf</field>
+
+            <field name="report_name">bsas_account_invoice.discount_report_template</field>
+
+            <field name="report_file">bsas_account_invoice.discount_report_template</field>
+
+            <field name="print_report_name">إيصال خصم لصالح مصلحة الضرائب</field>
+
+            <field name="binding_model_id" ref="account.model_account_move"/>
+
+        </record>
+        <!--        <report id="bill_discount_report" string="إيصال خصم لصالح مصلحة الضرائب" model="account.move"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                file="bsas_account_invoice.discount_report_template"-->
+        <!--                name="bsas_account_invoice.discount_report_template"-->
+        <!--        />-->
 
 
         <template id="discount_report_template">
@@ -20,7 +37,9 @@
                                      style="max-height: 100px;"/>
                             </div>
                             <center>
-                                <h4><span style="border-bottom: 2px solid black">إيصال خصم لصالحه مصلحة الضرائب</span></h4>
+                                <h4>
+                                    <span style="border-bottom: 2px solid black">إيصال خصم لصالحه مصلحة الضرائب</span>
+                                </h4>
                             </center>
 
                         </div>
@@ -140,7 +159,10 @@
                                             </td>
                                             <td colspan="1"
                                                 style="border-width:1px;border-color:black;font-size:15px;width:50%;">
-                                                <center><span t-field="o.without_holding_amount"/>  جنية مصري </center>
+                                                <center>
+                                                    <span t-field="o.without_holding_amount"/>
+                                                    جنية مصري
+                                                </center>
                                             </td>
                                         </tr>
                                         <tr>
@@ -154,7 +176,9 @@
                                             <td colspan="1"
                                                 style="border-width:1px;border-color:black;font-size:15px;width:50%;">
                                                 <t t-if="o.name">
-                                                    <center><span t-field="o.name"/></center>
+                                                    <center>
+                                                        <span t-field="o.name"/>
+                                                    </center>
                                                 </t>
                                             </td>
 
@@ -170,7 +194,10 @@
                                             </td>
                                             <td colspan="1"
                                                 style="border-width:1px;border-color:black;font-size:15px;width:50%;">
-                                                <center><span t-field="o.rate_without_holding"/> % </center>
+                                                <center>
+                                                    <span t-field="o.rate_without_holding"/>
+                                                    %
+                                                </center>
                                             </td>
 
 
@@ -184,7 +211,10 @@
                                             </td>
                                             <td colspan="1"
                                                 style="border-width:1px;border-color:black;font-size:15px;width:50%;">
-                                                <center><span t-esc="o.amount_untaxed"/> جنية مصري </center>
+                                                <center>
+                                                    <span t-esc="o.amount_untaxed"/>
+                                                    جنية مصري
+                                                </center>
                                             </td>
                                         </tr>
 
@@ -213,7 +243,7 @@
                                         </td>
                                         <td colspan="1"
                                             style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:10%;">
-                                            <span style="float:left"> التاريخ :</span>
+                                            <span style="float:left">التاريخ :</span>
                                         </td>
                                         <td colspan="1"
                                             style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:15%;">
