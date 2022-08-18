@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_extra.wizard_view_form" model="ir.ui.view">
+        <field name="name">purchase.wizard.form</field>
+        <field name="model">purchase.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name='vendor'/>
+
+<!--                <group>-->
+<!--                    <group>-->
+<!--                        <field name="carrier_id" domain="[('id', 'in', available_carrier_ids)]"/>-->
+<!--                        <field name="delivery_type" invisible="1"/>-->
+<!--                        <field name="currency_id" invisible="1"/>-->
+<!--                        <field name="order_id" invisible="1"/>-->
+<!--                        <field name='delivery_price' invisible="1"/>-->
+<!--                        <label for="display_price"/>-->
+<!--                        <div class="o_row">-->
+<!--                            <field name='display_price' widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('carrier_id','=', False)]}"/>-->
+<!--                            <button name="update_price" type="object" attrs="{'invisible': [('delivery_type','in', ('fixed', 'base_on_rule'))]}">-->
+<!--                                <i class="fa fa-arrow-right mr-1"/>Get rate-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </group>-->
+<!--                </group>-->
+<!--                <div role="alert" class="alert alert-warning" attrs="{'invisible': [('invoicing_message', '=', '')]}">-->
+<!--                    <field name="invoicing_message" nolabel="1"/>-->
+<!--                </div>-->
+<!--                <div role="alert" class="alert alert-info" attrs="{'invisible': [('delivery_message', '=', False)]}">-->
+<!--                    <field name="delivery_message" nolabel="1"/>-->
+<!--                </div>-->
+                    <sheet>
+                       <notebook>
+                           <page string="order lines" name="order_lines">
+                               <field name="order_lines" class="w-100">
+                                   <tree string="Communication">
+                                       <field name="product_id"/>
+                                       <field name="purchase_id"/>
+                                       <field name="price_unit"/>
+                                   </tree>
+                               </field>
+                           </page>
+
+                       </notebook>
+                    </sheet>
+                <footer>
+<!--                    <button name="button_confirm" invisible="not context.get('carrier_recompute')" type="object" string="Update" class="btn-primary" data-hotkey="q"/>-->
+                    <button name="button_confirm"  type="object" string="Add" class="btn-primary" data-hotkey="q"/>
+                    <button name="cancel" string="Discard"  type="object" data-hotkey="z" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
