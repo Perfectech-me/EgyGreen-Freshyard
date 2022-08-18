@@ -23,25 +23,25 @@
 <!--        </record>-->
 
 
-        <record id="form_view_res_partner_inherit_property" model="ir.ui.view">
-            <field name="name">name.res.partner.property.inherit.form</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="account.view_partner_property_form"/>
-            <field name="arch" type="xml">
+<!--        <record id="form_view_res_partner_inherit_property" model="ir.ui.view">-->
+<!--            <field name="name">name.res.partner.property.inherit.form</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="account.view_partner_property_form"/>-->
+<!--            <field name="arch" type="xml">-->
 
-                <xpath expr="//field[@name='property_account_payable_id']" position="after">
-                    <field name="insurance_type"/>
-                    <label for="insurance_credit_limit" attrs="{'invisible':[('insurance_type','!=','yes')]}"/>
-                    <div class="o_row" attrs="{'invisible':[('insurance_type','!=','yes')]}">
-                        <field name="insurance_credit_limit" attrs="{'required':[('insurance_type','=','yes')]}"/>-
-                        <field name="insurance_currency_id" attrs="{'required':[('insurance_type','=','yes')]}"/>
-                    </div>
-                    <field name="insurance_company_text"
-                           attrs="{'required':[('insurance_type','=','yes')],'invisible':[('insurance_type','!=','yes')]}"/>
-                </xpath>
+<!--                <xpath expr="//field[@name='property_account_payable_id']" position="after">-->
+<!--                    <field name="insurance_type"/>-->
+<!--                    <label for="insurance_credit_limit" attrs="{'invisible':[('insurance_type','!=','yes')]}"/>-->
+<!--                    <div class="o_row" attrs="{'invisible':[('insurance_type','!=','yes')]}">-->
+<!--                        <field name="insurance_credit_limit" attrs="{'required':[('insurance_type','=','yes')]}"/>- -->
+<!--                        <field name="insurance_currency_id" attrs="{'required':[('insurance_type','=','yes')]}"/>-->
+<!--                    </div>-->
+<!--                    <field name="insurance_company_text"-->
+<!--                           attrs="{'required':[('insurance_type','=','yes')],'invisible':[('insurance_type','!=','yes')]}"/>-->
+<!--                </xpath>-->
 
-            </field>
-        </record>
+<!--            </field>-->
+<!--        </record>-->
 
     </data>
 </odoo>
