@@ -52,7 +52,7 @@ class AccountMoveInherit(models.Model):
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
         res = super(AccountMoveInherit, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
                                                                   submenu=submenu)
-        remove_report_id = self.env.ref('bsas_account_move_invoice.bill_discount_report').id
+        remove_report_id = self.env.ref('bsas_account_move_invoice.action_report_account_move_bill_discount').id
         if view_type == 'form' and self.env.context.get('default_move_type') !='in_invoice':
             if remove_report_id and toolbar and res['toolbar'] and res['toolbar'].get('print'):
                 remove_report_record = [rec for rec in res['toolbar'].get('print') if rec.get('id') == remove_report_id]
