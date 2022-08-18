@@ -6,7 +6,7 @@
     'depends': ['base', 'bsas_sale_order_custom'],
 
     'data': [
-        'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',
         # 'views/customer_type.xml',
         # 'views/res_partner.xml',
     ],
