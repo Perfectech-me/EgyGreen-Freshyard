@@ -8,7 +8,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/customer_type.xml',
-        'views/res_partner.xml',
+        # 'views/res_partner.xml',
     ],
     'license': 'LGPL-3',
 
