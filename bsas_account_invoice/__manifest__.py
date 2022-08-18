@@ -4,7 +4,7 @@
 
     'category': 'Accounting',
     'version': '15.0',
-    'depends': ['base','account','account_accountant','purchase_extra','bsas_sale_order_custom'],
+    'depends': ['base','account','account_accountant','purchase_extra'],
     'data': [
         'views/account_move.xml',
         'views/partner.xml',
