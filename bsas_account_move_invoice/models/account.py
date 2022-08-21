@@ -46,7 +46,10 @@ class AccountMoveInherit(models.Model):
                             total_tax+=((tax.amount*line.price_subtotal*-1)/100)
                         else:
                             total_tax+=((tax.amount*line.price_subtotal)/100)
-                        rec.rate_without_holding=tax.amount
+                        if tax.amount<0:
+                            rec.rate_without_holding=tax.amount*-1
+                        else:
+                            rec.rate_without_holding = tax.amount * -1
 
             rec.without_holding_amount = total_tax
 
