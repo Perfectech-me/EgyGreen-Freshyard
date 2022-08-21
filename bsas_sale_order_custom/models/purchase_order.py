@@ -7,7 +7,7 @@ class PurchaseOrderInherit(models.Model):
         ('Local', 'Local'),
     ], default='International')
 
-    export_type = fields.Selection(string="Export Type", selection=[('fresh', 'fresh'), ('frozen', 'frozen'),
+    export_type = fields.Selection(string="Type", selection=[('fresh', 'fresh'), ('frozen', 'frozen'),
                                                                     ('food_products', 'Food Products'), ],
                                    default='fresh')
     product_type = fields.Selection(string="Product Type", selection=[

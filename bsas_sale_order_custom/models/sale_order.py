@@ -48,7 +48,7 @@ class SaleOrderInherit(models.Model):
                                                                             ('Export', 'Export'),
                                                                           ],default='International' )
 
-    export_type = fields.Selection(string="Export Type", selection=[('fresh', 'Fresh'),('frozen','Frozen'), ('food_products', 'Food Products'),('other','Other') ],default='fresh')
+    export_type = fields.Selection(string="Type", selection=[('fresh', 'Fresh'),('frozen','Frozen'), ('food_products', 'Food Products'),('other','Other') ],default='fresh')
     product_type = fields.Selection(string="Product Type", selection=[
         ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
 
