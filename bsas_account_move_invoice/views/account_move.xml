@@ -6,6 +6,13 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <br/>
+                    <field name="bill_sequence" invisible="1"/>
+                    <field name="bill_sequence_year" readonly="1" force_save="1" attrs="{'invisible':['|',('bill_sequence','=',False),('move_type', '!=', 'in_invoice')]}"/>
+                </xpath>
+
                 <xpath expr="//group[@id='header_right_group']" position="inside">
                     <field name="without_holding_amount" invisible="1"/>
                     <field name="rate_without_holding" invisible="1"/>

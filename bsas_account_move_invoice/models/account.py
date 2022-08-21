@@ -17,6 +17,21 @@ class AccountMoveInherit(models.Model):
     form13amount = fields.Float(string="From13 Amount")
     without_holding_amount=fields.Float(compute='compute_without_holding_amount')
     rate_without_holding = fields.Float(compute='compute_without_holding_amount')
+    bill_sequence = fields.Char()
+    bill_sequence_year = fields.Char()
+
+
+    def action_post(self):
+        res=super(AccountMoveInherit, self).action_post()
+        if self.move_type=='in_invoice' and not self.bill_sequence:
+            self.bill_sequence=self.env['ir.sequence'].next_by_code('account.move.bill.seq')
+            if self.bill_sequence:
+                bill_sequence_year=self.bill_sequence.split('/')
+                if len(bill_sequence_year)==3:
+                    self.bill_sequence_year=str(bill_sequence_year[0])+"/"+str(bill_sequence_year[2])+"/"+str(bill_sequence_year[1])
+                else:
+                    self.bill_sequence_year=self.bill_sequence
+        return res
 
     @api.depends('invoice_line_ids')
     def compute_without_holding_amount(self):

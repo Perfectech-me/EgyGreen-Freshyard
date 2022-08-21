@@ -6,6 +6,7 @@
     'version': '15.0',
     'depends': ['base','account','account_accountant','purchase_extra','bsas_sale_order_custom'],
     'data': [
+        'data/data.xml',
         'views/account_move.xml',
         'views/partner.xml',
         'views/taxes.xml',

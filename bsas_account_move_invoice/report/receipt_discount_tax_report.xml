@@ -27,6 +27,8 @@
                                 <h4>
                                     <span style="border-bottom: 2px solid black">إيصال خصم لصالحه مصلحة الضرائب</span>
                                 </h4>
+
+                                    <strong><span t-field="o.bill_sequence_year"/></strong>
                             </center>
 
                         </div>
