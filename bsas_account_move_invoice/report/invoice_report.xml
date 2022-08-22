@@ -8,6 +8,12 @@
                     <strong>BL/AWB:</strong>
                     <p class="m-0" t-field="o.bl_awb"/>
                 </div>
+
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.supplier_invoice" name="supplier_invoice">
+                    <strong>Supplier Invoice:</strong>
+                    <p class="m-0" t-field="o.supplier_invoice"/>
+                </div>
+
             </xpath>
 
 

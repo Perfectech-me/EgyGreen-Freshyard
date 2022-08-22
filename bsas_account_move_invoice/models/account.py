@@ -93,9 +93,9 @@ class AccountMoveLineInherit(models.Model):
             if rec.product_id.detailed_type=='product':
                 rec.is_storable=True
 
-    @api.constrains('container_equipment_number')
-    def _check_bl_awb(self):
-        for rec in self:
-            for line in rec.search([('id', '!=', rec.id)]):
-                if line.container_equipment_number == rec.container_equipment_number and rec.is_storable==line.is_storable==True and rec.move_id.move_type == 'out_invoice':
-                    raise ValidationError(("container/Equipment Number Must Be Unique And Exist in Invoice " + str(line.move_id.name)))
+    # @api.constrains('container_equipment_number')
+    # def _check_bl_awb(self):
+    #     for rec in self:
+    #         for line in rec.search([('id', '!=', rec.id)]):
+    #             if line.container_equipment_number == rec.container_equipment_number and rec.is_storable==line.is_storable==True and rec.move_id.move_type == 'out_invoice':
+    #                 raise ValidationError(("container/Equipment Number Must Be Unique And Exist in Invoice " + str(line.move_id.name)))
