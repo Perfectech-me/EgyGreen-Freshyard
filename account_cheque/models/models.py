@@ -435,7 +435,7 @@ class account_cheque(models.Model):
         elif self.type == 'incoming' and self.status == 'done':
             raise ValidationError('You Cannot set bounced state in this case !')
         elif self.status == 'bank':
-            date = self.cheque_given_date
+            date = self.cheque_return_date
             self.status = 'bounced'
             self.journal_items_count += 4
             self.current_state_date = datetime.today().strftime('%Y-%m-%d')
