@@ -548,7 +548,7 @@ class account_cheque(models.Model):
 
             move_vals = {
                 'ref': self.sequence + '- Bounced',
-                'date': self.date,
+                'date': date,
                 'journal_id': self.journal_id.id,
                 'line_ids': records,
                 'state': 'posted',
