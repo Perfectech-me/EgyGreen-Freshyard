@@ -6,7 +6,7 @@
             <field name="name">name.shipment.line.tree</field>
             <field name="model">shipment.line</field>
             <field name="arch" type="xml">
-                <tree string="Shipment Line">
+                <tree string="Shipping Lines">
                     <field name="port_sequence"/>
                     <field name="name"/>
                     <field name="street"/>
@@ -22,7 +22,7 @@
             <field name="name">name.shipment.line.form</field>
             <field name="model">shipment.line</field>
             <field name="arch" type="xml">
-                <form string="Shipment Line">
+                <form string="Shipping Lines">
                     <sheet>
                         <h1>
                             <field name="port_sequence" readonly="1"/>
@@ -64,14 +64,14 @@
             </field>
         </record>
         <record id="action_view_shipment_line" model="ir.actions.act_window">
-            <field name="name">Shipment Line</field>
+            <field name="name">Shipping Lines</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">shipment.line</field>
             <field name="view_mode">tree,form</field>
 
         </record>
 
-        <menuitem id="menu_shipment_line" name="Shipment Line"
+        <menuitem id="menu_shipment_line" name="Shipping Lines"
                   parent="sale.menu_sales_config" action="action_view_shipment_line" sequence="210"/>
 
     </data>

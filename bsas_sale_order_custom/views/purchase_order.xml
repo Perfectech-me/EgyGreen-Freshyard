@@ -11,7 +11,7 @@
 
                 <xpath expr="//field[@name='partner_ref']" position="after">
                      <field name="order_category" widget="radio" options="{'horizontal': true}"/>
-                    <field name="export_type" widget="radio" options="{'horizontal': true}"/>
+                    <field name="export_type" widget="radio"/>
                     <field name="product_type" widget="radio" />
 
                 </xpath>

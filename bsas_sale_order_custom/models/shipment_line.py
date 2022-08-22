@@ -2,7 +2,7 @@ from odoo import models, fields, api
 class ShipmentLine(models.Model):
     _name = 'shipment.line'
     _rec_name = 'name'
-    _description = 'Shipment Line'
+    _description = 'Shipping Lines'
 
     name = fields.Char(String="Name")
     port_sequence = fields.Char()

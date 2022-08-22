@@ -74,10 +74,18 @@ class SaleOrderInherit(models.Model):
     notify_partner_line = fields.One2many(comodel_name="res.partner.notify", inverse_name="sale_id",string="Notify Partner PO")
     consignee_partner_line = fields.One2many(comodel_name="res.partner.consignee", inverse_name="sale_id",string="Consignee Partner PO")
     loading_date = fields.Date(string="Loading Date")
-    shipment_line_id = fields.Many2one(comodel_name="shipment.line", string="Shipment Line")
+    shipment_line_id = fields.Many2one(comodel_name="shipment.line", string="Shipping Lines")
+    shipping_line_type = fields.Selection(string="Shipping Type", selection=[('Air', 'Air'), ('Ocean', 'Ocean'),('Land', 'Land')])
+
     sales_person_user_id = fields.Many2one(comodel_name="sales.person.users", string="Sales Person")
     bank_ids = fields.Many2many(comodel_name="res.partner.bank",string="Bank Accounts")
 
+    container_type_id = fields.Many2one(comodel_name="container.type.config", string="Container/Equipment Type")
+
+
+    @api.onchange('shipment_line_id')
+    def _get_shipping_line_type(self):
+        self.shipping_line_type=self.shipment_line_id.shipping_type
 
 
     @api.onchange('partner_id')

@@ -9,6 +9,10 @@
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//field[@name='payment_reference']" position="after">
+                   <field name="supplier_invoice"/>
+                </xpath>
+
                 <xpath expr="//field[@name='invoice_user_id']" position="after">
                     <field name="invoice_person_user_id"/>
                     <field name="sales_order_id" invisible="1"/>

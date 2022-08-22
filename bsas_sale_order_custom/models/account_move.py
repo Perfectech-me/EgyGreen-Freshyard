@@ -6,6 +6,7 @@ class AccountMoveInherit(models.Model):
     bank_ids = fields.Many2many(comodel_name="res.partner.bank",string="Bank Accounts")
     sales_order_id = fields.Many2one(comodel_name="sale.order")
     not_local_sale_order = fields.Boolean(compute='_get_check_not_local_sale_order')
+    supplier_invoice = fields.Char(string="Supplier Invoice")
 
     @api.depends('sales_order_id')
     def _get_check_not_local_sale_order(self):
