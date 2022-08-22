@@ -5,18 +5,18 @@
 
 
                     <br/>
-                    <div class="float-right"  dir="rtl" name="company_info">
-                        <div class="col text-right font-weight-bold" name="cheque_date">
+                    <div class="float-right"  dir="rtl"  name="company_info">
+                        <div class="col text-right font-weight-bold" style="padding-right:30px" name="cheque_date">
                             <span t-field="o.cheque_date"/>
                         </div>
-                        <br/>
+
                         <br/>
 
                         <div class="col text-right font-weight-bold" style="padding-right:60px" name="payee">
                             <span t-field="o.payee_user_id"/>
 
                         </div>
-                    <br/>
+
                         <div class="col text-right" style="padding-right:60px" name="num_to_words_ar" >
                             <span class="font-weight-bold">فقط: </span>
                             <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>
