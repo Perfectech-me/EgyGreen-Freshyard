@@ -163,14 +163,14 @@
                                             <td colspan="1"
                                                 style="border-width:1px;border-color:black;font-size:15px;width:50%;">
                                                 <span style="float:right;text-align:right">
-                                                    رقم الفاتورة
+                                                    رقم الفواتير
                                                 </span>
                                             </td>
                                             <td colspan="1"
                                                 style="border-width:1px;border-color:black;font-size:15px;width:50%;">
-                                                <t t-if="o.name">
+                                                <t t-if="o.ref">
                                                     <center>
-                                                        <span t-field="o.name"/>
+                                                        <span t-field="o.ref"/>
                                                     </center>
                                                 </t>
                                             </td>

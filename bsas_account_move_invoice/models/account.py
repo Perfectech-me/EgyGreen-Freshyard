@@ -23,7 +23,7 @@ class AccountMoveInherit(models.Model):
 
     def action_post(self):
         res=super(AccountMoveInherit, self).action_post()
-        if self.move_type=='in_invoice' and not self.bill_sequence:
+        if self.move_type=='in_invoice' and not self.bill_sequence and self.rate_without_holding>0:
             self.bill_sequence=self.env['ir.sequence'].next_by_code('account.move.bill.seq')
             if self.bill_sequence:
                 bill_sequence_year=self.bill_sequence.split('/')
@@ -33,7 +33,7 @@ class AccountMoveInherit(models.Model):
                     self.bill_sequence_year=self.bill_sequence
         return res
 
-    @api.depends('invoice_line_ids')
+    @api.depends('invoice_line_ids','state')
     def compute_without_holding_amount(self):
         for rec in self:
             rec.without_holding_amount=0.0
@@ -49,7 +49,7 @@ class AccountMoveInherit(models.Model):
                         if tax.amount<0:
                             rec.rate_without_holding=tax.amount*-1
                         else:
-                            rec.rate_without_holding = tax.amount * -1
+                            rec.rate_without_holding = tax.amount
 
             rec.without_holding_amount = total_tax
 
@@ -93,9 +93,3 @@ class AccountMoveLineInherit(models.Model):
             if rec.product_id.detailed_type=='product':
                 rec.is_storable=True
 
-    # @api.constrains('container_equipment_number')
-    # def _check_bl_awb(self):
-    #     for rec in self:
-    #         for line in rec.search([('id', '!=', rec.id)]):
-    #             if line.container_equipment_number == rec.container_equipment_number and rec.is_storable==line.is_storable==True and rec.move_id.move_type == 'out_invoice':
-    #                 raise ValidationError(("container/Equipment Number Must Be Unique And Exist in Invoice " + str(line.move_id.name)))
