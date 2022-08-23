@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='ref']" position="attributes">
-                    <attribute name="required">1</attribute>
+                    <attribute name="attrs">{'required':[('move_type', '=', 'in_invoice')]}</attribute>
                 </xpath>
 
                 <xpath expr="//field[@name='name']" position="after">
