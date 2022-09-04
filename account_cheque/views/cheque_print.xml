@@ -2,11 +2,8 @@
     <template id="print_cheque1">
             <div t-attf-class="header " t-att-style="report_header_style">
                 <t t-set="o" t-value="o.with_context(lang=lang)" />
-
-
-                    <br/>
                     <div class="float-right"  dir="rtl"  name="company_info">
-                        <div class="col text-right font-weight-bold" style="padding-right:30px" name="cheque_date">
+                        <div class="col text-right font-weight-bold" style="padding-right:20px;font-size:14px;" name="cheque_date">
                             <span t-field="o.cheque_date"/>
                         </div>
 
@@ -17,25 +14,17 @@
 
                         </div>
 
-                        <div class="col text-right" style="padding-right:60px" name="num_to_words_ar" >
+                        <div class="col text-right" style="padding-right:60px;font-size:11px;" name="num_to_words_ar" >
                             <span class="font-weight-bold">فقط: </span>
                             <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>
                             <span class="font-weight-bold"> لاغير</span>
 
                         </div>
 
-                        <div class="col text-right" name="amount" >
-                            <span t-field="o.amount"/>
+                        <div style="float:right;text-align:right;width:100%">
+                            <span t-field="o.amount" style="float:right;text-align:right;"/>
                         </div>
-<!--                        <div class="col text-right" name="company_vat" t-if="company.vat">-->
-<!--                            <t t-esc="'رقم التسجيل الضريبى'"/>: <span dir="ltr" class="text-left" t-field="company.vat"/>-->
-<!--                        </div>-->
-<!--                        <div class="col text-right" name="company_phone" t-if="company.phone">-->
-<!--                            <t t-esc="'تليفون'"/>: <span t-field="company.phone"/>-->
-<!--                        </div>-->
-                    </div>
-
-<!--                </t>-->
+                        </div>
 
 
             </div>
@@ -46,8 +35,6 @@
     <template id="print_cheque">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-<!--                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>-->
-<!--                <t t-set="print_with_payments" t-value="True"/>-->
                 <t t-call="account_cheque.print_cheque1" t-lang="lang"/>
             </t>
         </t>

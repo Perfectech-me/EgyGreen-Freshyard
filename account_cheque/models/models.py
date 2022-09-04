@@ -51,7 +51,6 @@ class account_cheque(models.Model):
 
     @api.model
     def create(self, waltz):
-        print('aaaaa',self.env.company)
 
         account_type_test=self.env['account.account'].search_read([])
         for a in account_type_test:
