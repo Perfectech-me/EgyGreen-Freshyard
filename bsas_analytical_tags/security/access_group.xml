@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <record id="set_analytic_tags" model="res.groups">
+            <field name="name">Set Analytic Tags</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+        </record>
+    </data>
+</odoo>
