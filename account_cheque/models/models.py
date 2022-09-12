@@ -13,7 +13,7 @@ class account_cheque(models.Model):
     _description = 'Account Cheque'
 
     _rec_name = 'sequence'
-    _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin', 'utm.mixin']
+    _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
     sequence = fields.Char(string='ٍSequence', required=True, copy=False, store=True, index=True,
                            default=lambda     self: self.env['ir.sequence'].next_by_code('cheque'))
     # sequence = fields.Char('ٍSequence', size=32, required=True, readonly=True, default=lambda self: _('New'),

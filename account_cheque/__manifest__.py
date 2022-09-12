@@ -18,6 +18,7 @@
         'reports/print_cheque.xml',
         'reports/cheque_print.xml',
         'reports/epe_check.xml',
+        'reports/cib_cheque.xml',
     ],
 
     'license': 'LGPL-3',

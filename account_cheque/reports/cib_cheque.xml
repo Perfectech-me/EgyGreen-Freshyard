@@ -1,0 +1,62 @@
+<odoo>
+
+        <template id="print_cib_cheque_temp">
+        <div t-attf-class="header " t-att-style="report_header_style">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <div dir="rtl">
+                <div style="float:left;text-align:left;font-size:14px;width:100%;">
+                    <span t-esc="o.cheque_date"/>
+                </div>
+                <div style="float:right;text-align:right;padding-right:33px;width:100%;padding-top:22px;" name="payee">
+                    <span t-field="o.payee_user_id"/>
+                </div>
+
+
+                <div style="float:right;text-align:right;width:32%;padding-top:40px;">
+                    <span t-field="o.amount" style="float:right;text-align:right;"/>
+                </div>
+
+
+                <div style="float:left;text-align:right;font-size:11px;width:68%;padding-top:40px;">
+
+                    <span class="font-weight-bold">فقط:</span>
+                    <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>
+                    <span class="font-weight-bold">لاغير</span>
+
+                </div>
+
+
+                <div style="float:right;text-align:right;width:100%;padding-top:8px;">
+
+                    <span style="float:right;text-align:right;">أحمد يحيي حنفى أحمد</span>
+                    <br/>
+                    <br/>
+
+                    <span style="float:left;text-align:right;padding-left:90px;padding-top:10px;">غير قابل للتظهير
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </template>
+
+
+
+
+
+
+
+    <template id="print_cib_cheque">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="account_cheque.print_cib_cheque_temp" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>
