@@ -3,7 +3,7 @@
     'name': "Set Analytic Tags In Sale Order",
     'category': 'Sales',
     'version': '15.0',
-    'depends': ['base','account','sale','sale_stock'],
+    'depends': ['base','account','sale','sale_stock','account_accountant'],
 
     'data': [
         'security/access_group.xml',
