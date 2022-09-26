@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+<!--        <template id="search_template_partner">-->
+<!--            <button t-if="options.get('partner')" type="button"-->
+<!--                    class="o-no-caret btn btn-secondary dropdown-toggle account_partner_filter" data-toggle="dropdown">-->
+<!--                <span class="fa fa-folder-open"/>-->
+<!--                Partners-->
+<!--            </button>-->
+<!--            <ul class="dropdown-menu o_filter_menu" role="menu">-->
+<!--                <li class="o_account_report_search js_account_partner_m2m"/>-->
+<!--            </ul>-->
+<!--        </template>-->
+
+
+<!--        <div class="btn-group dropdown o_account_reports_filter_partner" t-if="options.get('partner')">-->
+<!--            <t t-call="account_reports.search_template_partner"/>-->
+<!--        </div>-->
+
+
+        <template id="search_template_account">
+
+
+
+
+
+            <button t-if="options.get('currency')" type="button"
+                    class="o-no-caret btn btn-secondary dropdown-toggle account_account_filter" data-toggle="dropdown">
+                <span class="fa fa-folder-open"/>
+                Currency
+            </button>
+            <ul class="dropdown-menu o_filter_menu" role="menu">
+                <li class="o_account_report_search js_account_account_m2m"/>
+            </ul>
+        </template>
+        <template id="browseinfo_search_template" inherit_id="account_reports.search_template">
+            <xpath expr="//div[@class='btn-group dropdown o_account_reports_filter_analytic']" position="after">
+                <div class="btn-group dropdown o_account_reports_filter_analytic" t-if="options.get('currency')">
+                    <t t-call="account_partner_ledger_report.search_template_account"/>
+                </div>
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>
