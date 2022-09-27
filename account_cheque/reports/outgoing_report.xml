@@ -21,7 +21,7 @@
                                     <t t-esc="o.get_today()" t-field-options='{"format": "d/M/yy"}'/>
                                 </td>
                             </h1>
-                            <table  class="table table-condensed"
+                            <table class="table table-condensed"
                                    style="border:8px solid black;width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
                                 <tbody>
                                     <tr style="white-space: nowrap;">
@@ -42,9 +42,17 @@
                                             <t t-esc="o.payee_user_id.name"/>
                                         </td>
                                         <td align="right">Status :</td>
-                                            <td style="text-align: right;">
-                                                <t t-esc="o.status"/>
-                                            </td>
+                                        <td style="text-align: right;">
+                                            <t t-esc="o.status"/>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr style="white-space: nowrap;">
+                                        <td align="right" colspan="1">Analytic Account :</td>
+                                        <td style="text-align: center;" colspan="3">
+                                            <t t-esc="o.analytic_account_id.name"/>
+                                        </td>
                                     </tr>
 
 
@@ -62,6 +70,7 @@
                                         <td class="tg-hmp3">Ch Given Date</td>
                                         <td class="tg-hmp3">Due Date</td>
                                         <td class="tg-hmp3">Bank Account</td>
+                                        <td class="tg-hmp3">Analytic Account</td>
                                         <td class="tg-hmp3">State</td>
                                         <td class="tg-hmp3">State Date</td>
                                     </tr>
@@ -73,34 +82,40 @@
                                         <tr>
                                             <td class="td-lrbotborder">
                                                 <span t-field="rec.payee_user_id.name" style=" font-size:13px;"/>
+
                                                 <td class="td-lrbotborder">
                                                     <span t-esc="rec.chq_no" style=" font-size:13px;"/>
-                                                    <td class="td-lrbotborder">
-                                                        <span t-esc="rec.amount"
-                                                              style=" font-size:13px;"/>
-                                                        <td class="td-lrbotborder">
-                                                            <span t-esc="rec.cheque_given_date"
-                                                                  style=" font-size:13px;"/>
-                                                            <td class="td-lrbotborder">
-                                                                <span t-esc="rec.cheque_date"
-                                                                      style=" font-size:13px;"/>
-                                                                <td class="td-lrbotborder">
-                                                                    <span t-field="rec.bank_account_id"
-                                                                          style=" font-size:13px;"/>
-                                                                    <td class="td-lrbotborder">
-                                                                        <span t-field="rec.status"
-                                                                              style=" font-size:13px;"/>
-                                                                        <td class="td-lrbotborder">
-                                                                            <span t-field="rec.current_state_date"
-                                                                                  style=" font-size:13px;"/>
-                                                                        </td>
-                                                                    </td>
-                                                                </td>
-                                                            </td>
-                                                        </td>
-                                                    </td>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-esc="rec.amount"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-esc="rec.cheque_given_date"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-esc="rec.cheque_date"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.bank_account_id"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.analytic_account_id"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.status"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.current_state_date"
+                                                          style=" font-size:13px;"/>
                                                 </td>
                                             </td>
+
                                         </tr>
                                     </t>
                                     <tr>
@@ -108,6 +123,8 @@
 
                                         <td>
                                             <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>
+                                        </td>
+                                        <td>
                                         </td>
                                         <td>
                                         </td>

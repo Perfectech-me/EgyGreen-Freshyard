@@ -29,7 +29,7 @@
 
                 <div style="float:right;text-align:right;width:68%;padding-top:8px;">
 
-                    <span style="float:right;text-align:right;">أحمد يحيي حنفى أحمد</span>
+                    <span style="float:right;text-align:right;width:100%;"><span t-field="o.beneficiary_name"/></span>
                     <br/>
                     <br/>
 

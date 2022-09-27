@@ -16,6 +16,9 @@ class account_move_report_wizard(models.Model):
     type = fields.Selection(string="", selection=[('incoming', 'incoming'), ('outgoing', 'outgoing'), ],
                             required=True )
 
+    analytic_account_id = fields.Many2one(comodel_name="account.analytic.account", string="Analytic Account")
+
+
     # @api.multi
     def get_today(self):
         return datetime.today().date()
@@ -37,6 +40,10 @@ class account_move_report_wizard(models.Model):
             domain.append(('status', '=', self.status))
         if self.payee_user_id:
             domain.append(('payee_user_id', '=', self.payee_user_id.id))
+
+        if self.analytic_account_id:
+            domain.append(('analytic_account_id', '=', self.analytic_account_id.id))
+
         domain.append(('type', '=', self.type))
         print(domain)
         return self.env['account.cheque'].search(domain)

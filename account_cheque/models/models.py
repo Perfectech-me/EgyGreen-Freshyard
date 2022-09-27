@@ -15,10 +15,10 @@ class account_cheque(models.Model):
     _rec_name = 'sequence'
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
     sequence = fields.Char(string='ٍSequence', required=True, copy=False, store=True, index=True,
-                           default=lambda     self: self.env['ir.sequence'].next_by_code('cheque'))
-    # sequence = fields.Char('ٍSequence', size=32, required=True, readonly=True, default=lambda self: _('New'),
+                           default=lambda self: self.env['ir.sequence'].next_by_code('cheque'))
 
-    #                        tracking=True)
+    analytic_account_id = fields.Many2one(comodel_name="account.analytic.account", string="Analytic Account")
+
 
 
     def num_to_words_ar(self, numbers):
@@ -90,10 +90,9 @@ class account_cheque(models.Model):
     attachment = fields.Many2many('ir.attachment')
     current_state_date = fields.Date(string="Current State Date", required=False, default=datetime.today().date())
 
-    def check_company(self):
+    beneficiary_name = fields.Char(string="إسم المستفيد")
 
-        # for r in com:
-        #     print(r,"sssss")
+    def check_company(self):
         res={}
         for rec in self:
             rec.company_id = ""
@@ -101,52 +100,12 @@ class account_cheque(models.Model):
             com = self.env['res.company'].browse(self._context.get('allowed_company_ids')).ids
             domain = [('id', 'in', com)]
             res['domain'] = {'company_id': domain}
-        #     print(rec)
         print(self.env['res.company'].search([]))
 
         for rec in self.env.company:
             print('rec',rec)
-            # for r in rec.:
         return res
 
-        # self.company_id= self.env.company
-    # def get_journal(self):
-    #     res = {}
-    #
-    #     x = self.env['res.config.settings'].search([], order='id desc',
-    #                                                limit=1)
-    #     print(self.env.company)
-    #     self.journal_id = [(6, 0, [])]
-    #     for rec in x:
-    #         self.journal_id += rec.incoming_chq_journal
-    #         # print("asdasd",rec.incoming_chq_journal)
-    #     return self.journal_id
-        # dom'multiple_assets_per_line': False}
-        # a.type {'id': 41, 'message_is_follower': False, 'message_follower_ids': [102], 'message_partner_ids': [], 'message_ids': [109], 'has_message': True, 'message_unread': False, 'message_unread_counter': 0, 'message_needaction': False, 'message_needaction_counter': 0, 'message_has_error': False, 'message_has_error_counter': 0, 'message_attachment_count': 0, 'message_main_attachment_id': False, 'website_message_ids': [], 'message_has_sms_error': False, 'name': 'Undistributed Profits/Losses', 'currency_id': False, 'code': '999999', 'deprecated': False, 'used': False, 'user_type_id': (12, 'Current Year Earnings'), 'internal_type': 'other', 'internal_group': 'equity', 'reconcile': False, 'tax_ids': [], 'note': False, 'company_id': (1, 'Egygreen AgroExport'), 'tag_ids': [], 'group_id': False, 'root_id': (57057, '99'), 'allowed_journal_ids': [], 'opening_debit': 0.0, 'opening_credit': 0.0, 'opening_balance': 0.0, 'is_off_balance': False, 'current_balance': 0.0, 'related_taxes_amount': 0, '__last_update': datetime.datetime(2022, 7, 13, 0, 2, 13, 516501), 'display_name': '999999 Undistributed Profits/Losses', 'create_uid': (1, 'OdooBot'), 'create_date': datetime.datetime(2022, 7, 13, 0, 2, 13, 516501), 'write_uid': (1, 'OdooBot'), 'write_date': datetime.datetime(2022, 7, 13, 0, 2, 13, 516501), 'exclude_provision_currency_ids': [], 'exclude_from_aged_reports': False, 'asset_model': False, 'create_asset': 'no', 'can_create_asset': False, 'form_view_ref': False, 'asset_type': False, 'multiple_assets_per_line': False}
-        # CHQ/000011
-        # 1
-        # 5
-        # 6
-        # 8
-        # 9
-        # 6
-        # 2022-07-30 23:58:23,905 24883 INFO egygreen werkzeug: 127.ain = [('id', 'in', x)]
-        # res['domain'] = {'incoming_chq_journal': domain}
-        # return res
-    #     self.journal_id= x.incoming_chq_journal
-    #
-    # for rec in self:
-    #
-    #     if rec.dest_warehouse_id:
-    #         rec.location_dest_id = ""
-    #
-    #         dest = self.env['stock.location'].search(
-    #             [('location_id', '=', rec.dest_warehouse_id.view_location_id.id)]).ids
-    #         domain = [('id', 'in', dest)]
-    #         res['domain'] = {'location_dest_id': domain}
-    #     else:
-    #         rec.location_dest_id = ""
-    #     return res
 
     @api.constrains('chq_no')
     def _chq_no_constraint(self):
@@ -190,7 +149,6 @@ class account_cheque(models.Model):
             x = self.env['account.move'].search(
                 [('partner_id', '=', self.payer_user_id.id), ('move_type', '=', 'out_invoice')])
             print(x)
-            print("hishammamamma")
             self.invoice_ids = x
 
     @api.onchange('payee_user_id')
@@ -236,6 +194,7 @@ class account_cheque(models.Model):
                 'credit': 0.0,
                 'journal_id': self.journal_id.id,
                 'partner_id': x.id,
+                'analytic_account_id': self.analytic_account_id.id,
                 # 'currency_id': self.currency_id.id,
             })
         object2 = (
@@ -245,6 +204,8 @@ class account_cheque(models.Model):
                    'credit': self.amount,
                    'journal_id': self.journal_id.id,
                    'partner_id': x.id,
+                   'analytic_account_id': self.analytic_account_id.id,
+
                    })
 
         records.append(object1)
@@ -625,7 +586,6 @@ class account_cheque(models.Model):
         x = self.search([('type', '=', 'incoming'), ])
         today = fields.Date.today()
         users = self.env['res.users'].search([])
-        print("hiiiiii")
 
         for record in x:
             m = (record.cheque_date - today).days
@@ -637,35 +597,6 @@ class account_cheque(models.Model):
                                                  user_id=user.id,
                                                  summary="Your Cheque Will be Due in %s Days !" % m)
 
-    #     self.env['mail.message'].create({
-            #         'message_type': "notification",
-            #         "subtype": self.env.ref("mail.mt_comment").id,
-            #         'subject': "Hi %s" % record.create_uid.name,
-            #         'body': "Your Cheque Will be Due in %s Days !" % x,
-            #         'needaction_partner_ids': [(6, 0, [record.create_uid.partner_id.id])],
-            #         'model': 'account.cheque',
-            #         'res_id': record.id,
-            #     })
-            #     mails_send = self.env['mail.mail'].create({
-            #         'subject': "Cheque System Reminder",
-            #         'auto_delete': False,
-            #         'body_html': """ <![CDATA[
-            # <p>Dear ${object.create_uid.partner_id.name}
-            # </p>
-            # </br>
-            # <p>Your Cheque No : ${object.chq_no} Will be Due in ${object.no_of_days_to_reminder} Days !
-            # </p>
-            #
-            #         ]]>"""
-            #         ,
-            #         'notification': False,
-            #         'email_from': 'faxes00.company@gmail.com' or '',
-            #         'email_to': record.create_uid.partner_id.email or '',
-            #     })
-            #
-            #     mails_send.send()
-
-    # mail.activity.mixin
 
     @api.onchange('current_state_date')
     def fire_notification_2(self):
@@ -687,35 +618,6 @@ class account_cheque(models.Model):
 
                 print(record.create_uid.name)
                 print('yalla ')
-                # self.env['mail.message'].create({
-                #     'message_type': "notification",
-                #     "subtype": self.env.ref("mail.mt_comment").id,
-                #     'subject': "Hi %s" % record.create_uid.name,
-                #     'body': "Your Cheque Will be Due in %s Days !" % m,
-                #     'needaction_partner_ids': [(6, 0, [record.create_uid.partner_id.id])],
-                #     'model': 'account.cheque',
-                #     'res_id': record.id,
-                # })
-                #
-                # # Find the e-mail template
-                # mails_send = self.env['mail.mail'].create({
-                #     'subject': "Cheque System Reminder",
-                #     'auto_delete': False,
-                #     'body_html': """ <![CDATA[
-                #             <p>Dear ${object.create_uid.partner_id.name}
-                #             </p>
-                #             </br>
-                #             <p>Your Cheque No : ${object.chq_no} Will be Due in ${object.no_of_days_to_reminder} Days !
-                #             </p>
-                #
-                #                     ]]>"""
-                #     ,
-                #     'notification': False,
-                #     'email_from': 'faxes00.company@gmail.com' or '',
-                #     'email_to': record.create_uid.partner_id.email or '',
-                # })
-                #
-                # mails_send.send()
 
 
 class ResConfigSettings(models.TransientModel):
