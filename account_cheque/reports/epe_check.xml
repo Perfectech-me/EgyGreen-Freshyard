@@ -24,7 +24,7 @@
 
                 <div style="float:right;text-align:right;width:32%;padding-top:57px;">
                     <span t-field="o.amount" style="float:right;text-align:right;"/> &#160;&#160;&#160;<span
-                        t-field="o.bank_account_id.currency_id"/>
+                        t-field="o.bank_account_id.sudo().currency_id"/>
                 </div>
 
                 <div style="float:right;text-align:right;width:68%;padding-top:8px;">
