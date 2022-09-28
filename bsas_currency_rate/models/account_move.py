@@ -7,14 +7,17 @@ class AccountMoveLine(models.Model):
 
     def _currency_rate(self):
         if self.currency_id:
+            print("self.currency_id",self.currency_id)
+            for r in self:
 
-            currency_id = self.env['res.currency'].search([('id', '=', self.currency_id.id)])
-            for cur in currency_id:
-                if cur.rate_ids:
+                currency_id = self.env['res.currency'].search([('id', '=', r.currency_id.id)])
+                for cur in currency_id:
+                    if cur.rate_ids:
 
-                 if cur.rate_ids[0].company_rate:
-                  self.currency_rate =cur.rate_ids[0].inverse_company_rate
-                else:   self.currency_rate=1.0
+                     if cur.rate_ids[0].company_rate:
+
+                      r.currency_rate =cur.rate_ids[0].inverse_company_rate
+                    else:   r.currency_rate=1.0
 
 
         else:
