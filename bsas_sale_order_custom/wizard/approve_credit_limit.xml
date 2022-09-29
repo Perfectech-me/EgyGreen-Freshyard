@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+
+        <record id="form_view_approve_credit_limit" model="ir.ui.view">
+            <field name="name">name.approve.credit.limit.form</field>
+            <field name="model">approve.credit.limit</field>
+            <field name="arch" type="xml">
+                <form string="Approve Credit Limit">
+                    <sheet>
+                        <group col="4">
+                            <field name="customer_credit_limit"/>
+                            <field name="blocking_limit"/>
+                            <field name="total_receivable"/>
+                            <field name="due_before"/>
+                            <field name="amount_total" invisible="1"/>
+                        </group>
+
+                        <group string="Products"></group>
+                        <field name="order_lines" readonly="1">
+                            <tree editable="1">
+                                <field name="product_id"/>
+                                <field name="cost"/>
+                                <field name="service_provider_partner_id"/>
+                                <field name="balance"/>
+                            </tree>
+                        </field>
+
+
+
+                        <footer>
+                            <button name="button_approve" type="object" string="Confirm"
+                                    class="oe_highlights"/>
+                            <button name="button_refuse" type="object" string="Refuse"
+                                    class="oe_highlights"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_product_additional_cost" model="ir.actions.act_window">
+            <field name="name">Approve Credit Limit</field>
+            <field name="res_model">approve.credit.limit</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+    </data>
+</odoo>

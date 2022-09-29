@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <record id="view_res_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='accounting_entries']" position="after">
+                    <group name="customer_credit" string="Customer Credit">
+                        <field name="is_credit_limit"/>
+                        <field name="credit_limit" attrs="{'invisible': [('is_credit_limit', '!=',True )]}"/>
+                        <field name="Blocking_limit" attrs="{'invisible': [('is_credit_limit', '!=',True)]}"/>
+                        <field name="credit_on_hold" />
+                    </group>
+                    <group>
+                        <field name="balance_invoice_ids"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                    <field name="credit_limit_id" />
+                </field>
+                <field name="credit_limit_id" position="after">
+                    <field name="total_receivable" />
+                    <field name="is_confirm" invisible='1'/>
+                    <field name="is_warning" invisible='1'/>
+                </field>
+                <xpath expr="//header" position="after">
+                    <div groups="account.group_account_invoice" class="alert alert-info" role="alert" style="margin-bottom: 10px;font-weight: bold;color: black;" attrs="{'invisible': [('partner_id', '=',False)]}">
+                    The Customer's Due Amount is <bold><field name="customer_due_amt"/></bold>
+                </div>
+                </xpath>
+
+                <xpath expr="//sheet/div[@name='button_box']" position="after">
+                    <div groups="account.group_account_invoice" class="oe_title alert alert-danger" role="alert" style="margin-bottom: 10px;font-weight: bold;text-align: center;color: black;" attrs="{'invisible': ['|',('partner_id', '=',False),('is_warning','!=',True)]}">
+                    The Customer's Credit Limit has been crossed 
+                </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

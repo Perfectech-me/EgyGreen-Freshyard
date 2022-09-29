@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wizard_custom_credit,access_wizard_custom_credit_name,bi_customer_limit.model_wizard_custom_credit,,1,1,1,1

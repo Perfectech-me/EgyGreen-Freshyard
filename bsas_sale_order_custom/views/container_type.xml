@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+
+
+
+
+        <record id="form_view_container_type_config" model="ir.ui.view">
+            <field name="name">name.container.type.config.form</field>
+            <field name="model">container.type.config</field>
+            <field name="arch" type="xml">
+                <form string="Container Type">
+                    <sheet>
+                        <group>
+
+                            <field name="name"/>
+<!--                            <field name="type" widget="radio" options="{'horizontal': true}" required="1"/>-->
+
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_view_container_type_config" model="ir.actions.act_window">
+            <field name="name">Container Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">container.type.config</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem id="menu_container_type_config" name="Container Type"
+                  parent="sale.menu_sales_config" action="action_view_container_type_config" sequence="211"/>
+
+    </data>
+</odoo>

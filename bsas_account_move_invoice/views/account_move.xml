@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+
+        <record id="form_view_account_move_inherit" model="ir.ui.view">
+            <field name="name">name.account.move.inherit.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='ref']" position="attributes">
+                    <attribute name="attrs">{'required':[('move_type', '=', 'in_invoice')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <br/>
+                    <field name="bill_sequence" invisible="1"/>
+                    <field name="bill_sequence_year" readonly="1" force_save="1" attrs="{'invisible':['|',('bill_sequence_year','=',False),('move_type', '!=', 'in_invoice')]}"/>
+                </xpath>
+
+                <xpath expr="//group[@id='header_right_group']" position="inside">
+                    <field name="without_holding_amount" invisible="1"/>
+                    <field name="rate_without_holding" invisible="1"/>
+                    <field name="move_type" invisible="1"/>
+                    <field name="not_local_sale_order" invisible="1"/>
+                    <field name="bl_awb" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="inspection1_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="inspection2_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="insurance_customer_id" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                    <label for="other_cost" attrs="{'required':[('not_local_sale_order','=',True),('move_type', '=', 'out_invoice')],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+
+                    <div attrs="{'invisible':['|',('move_type', '!=', 'out_invoice'),('not_local_sale_order','=',False)]}" class="o_row">
+                        <field name="other_cost" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                        -
+                        <field name="other_cost_partner_id" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                    </div>
+                    <field name="form13number" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="form13date" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                    <field name="form13amount" attrs="{'required':[('move_type', '=', 'out_invoice'),('not_local_sale_order','=',True)],'invisible':['|',('not_local_sale_order','=',False),('move_type', '!=', 'out_invoice')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='name']" position="after">
+                    <field name="is_storable" invisible="1"/>
+                    <field name="container_equipment_number" attrs="{'required':[('parent.move_type', '=', 'out_invoice'),('is_storable','=',True),('parent.not_local_sale_order','=',True)],'invisible':[('parent.move_type', '!=', 'out_invoice')]}"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='line_ids']//tree//field[@name='name']" position="after">
+                    <field name="container_equipment_number" invisible="1"/>
+                    <field name="is_storable" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

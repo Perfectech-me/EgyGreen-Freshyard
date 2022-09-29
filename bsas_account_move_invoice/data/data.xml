@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="account_move_bills_sequence" model="ir.sequence">
+            <field name="name">Bill Account Move</field>
+            <field name="code">account.move.bill.seq</field>
+            <field name="prefix">WHT/</field>
+            <field name="padding">5</field>
+            <field name="suffix">/%(year)s</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

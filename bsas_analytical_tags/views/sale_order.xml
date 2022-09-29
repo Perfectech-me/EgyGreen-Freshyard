@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <record id="form_view_inherit_sale_order" model="ir.ui.view">
+            <field name="name">name.sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+
+
+
+
+
+                <xpath expr="//form//header//button[@id='action_confirm']" position="before">
+
+                    <button name="set_analytic_tag" string="Set Analytic tags" class="btn-primary" states="draft" type="object"
+                             groups="bsas_analytical_tags.set_analytic_tags"/>
+
+
+                </xpath>
+                <xpath expr="//page[@name='other_information']//field[@name='analytic_account_id']" position="attributes">
+                     <attribute name="options">{'no_create_edit': True, 'no_create': True,'no_open': True}</attribute>
+
+
+
+
+<!--                    <button name="set_analytic_tag" string="Set Analytic tags" class="btn-primary" type="object"-->
+<!--                             groups="bsas_analytical_tags.set_analytic_tags"/>-->
+
+
+                </xpath>
+                <xpath expr="//notebook/page[@name='order_lines']/field/tree/field[@name='analytic_tag_ids']" position='attributes'>
+                    <attribute name="options">{'no_create_edit': True, 'no_create': True,'no_open': True}</attribute>
+
+                </xpath>
+
+            </field>
+        </record>
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="options">{'no_create_edit': True, 'no_create': True,'no_open': True}</attribute>
+                </xpath>
+                <xpath expr="//tree//field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="options">{'no_create_edit': True, 'no_create': True,'no_open': True}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

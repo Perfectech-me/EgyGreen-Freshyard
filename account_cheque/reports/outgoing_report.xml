@@ -1,0 +1,151 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+
+
+<odoo>
+    <report id="outgoing_report_get"
+            string="Outgoing Cheque Report"
+            model="cheque.wizard"
+            report_type="qweb-pdf"
+            menu="False"
+            name="account_cheque.outgoing_report1"
+    />
+
+    <template id="outgoing_report1">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <font face="KacstOne">
+                            <h1 align="center">Report Date :
+                                <td>
+                                    <t t-esc="o.get_today()" t-field-options='{"format": "d/M/yy"}'/>
+                                </td>
+                            </h1>
+                            <table class="table table-condensed"
+                                   style="border:8px solid black;width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
+                                <tbody>
+                                    <tr style="white-space: nowrap;">
+                                        <td align="right">From :</td>
+                                        <td style="text-align: right;">
+                                            <t t-esc="o.from_date" t-field-options='{"format": "d/M/yy"}'/>
+                                        </td>
+
+                                        <td align="right">To :</td>
+                                        <td style="text-align: right">
+                                            <t t-esc="o.to_date"
+                                               t-field-options='{"format": "d/M/yy"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr style="white-space: nowrap;">
+                                        <td align="right">Payee :</td>
+                                        <td style="text-align: right;">
+                                            <t t-esc="o.payee_user_id.name"/>
+                                        </td>
+                                        <td align="right">Status :</td>
+                                        <td style="text-align: right;">
+                                            <t t-esc="o.status"/>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr style="white-space: nowrap;">
+                                        <td align="right" colspan="1">Analytic Account :</td>
+                                        <td style="text-align: center;" colspan="3">
+                                            <t t-esc="o.analytic_account_id.name"/>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+
+                            <table class="table table-condensed"
+                                   style="border:8px solid black;width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
+                                <thead>
+
+                                    <tr>
+                                        <td class="tg-hmp3">Payee</td>
+                                        <td class="tg-hmp3">Ch.NO</td>
+                                        <td class="tg-hmp3">Amount</td>
+                                        <td class="tg-hmp3">Ch Given Date</td>
+                                        <td class="tg-hmp3">Due Date</td>
+                                        <td class="tg-hmp3">Bank Account</td>
+                                        <td class="tg-hmp3">Analytic Account</td>
+                                        <td class="tg-hmp3">State</td>
+                                        <td class="tg-hmp3">State Date</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_amount" t-value="0"/>
+                                    <t t-foreach="o.generate_cheque_report()" t-as="rec">
+                                        <t t-set="total_amount" t-value="(total_amount+rec.amount)"/>
+                                        <tr>
+                                            <td class="td-lrbotborder">
+                                                <span t-field="rec.payee_user_id.name" style=" font-size:13px;"/>
+
+                                                <td class="td-lrbotborder">
+                                                    <span t-esc="rec.chq_no" style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-esc="rec.amount"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-esc="rec.cheque_given_date"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-esc="rec.cheque_date"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.bank_account_id"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.analytic_account_id"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.status"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.current_state_date"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                            </td>
+
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <th class="tg-baqh" colspan="2">Total Amount</th>
+
+                                        <td>
+                                            <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </font>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

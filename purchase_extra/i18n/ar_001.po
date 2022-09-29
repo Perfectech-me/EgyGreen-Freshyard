@@ -1,0 +1,544 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_cheque
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-09 09:50+0000\n"
+"PO-Revision-Date: 2020-06-09 09:50+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Accounts"
+msgstr "الحسابات"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Add an internal note..."
+msgstr "اضافة ملاحظة"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__amount
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__attachment
+msgid "Attachment"
+msgstr "الملف"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Attachments"
+msgstr "الملفات"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__bank_account_id
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__bank_account_id
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Bank Account"
+msgstr "حساب البنك"
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__status__bank
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__status__bank
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+#: model_terms:ir.ui.view,arch_db:account_cheque.res_config_settings_mymodule_form
+msgid "Bank Repository"
+msgstr "حافظة ايداع"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__bills_ids
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Bills"
+msgstr "الفواتير"
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__status__bounced
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__status__bounced
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Bounced"
+msgstr "ارتداد"
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__status__cancel
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__status__cancel
+#: model_terms:ir.ui.view,arch_db:account_cheque.cashed_wizard
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Cashed"
+msgstr "دفع"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Ch Given Date"
+msgstr "تاريخ تسليم الشيك"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+msgid "Ch Receive Date"
+msgstr "تاريخ استلام الشيك"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Ch.NO"
+msgstr "رقم الشيك"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_move__cheque_id
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__cheque_id
+msgid "Cheque"
+msgstr "الشيك"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_res_config_settings__incoming_chq_credit_account_id
+#: model:ir.model.fields,field_description:account_cheque.field_res_config_settings__outgoing_chq_credit_account_id
+msgid "Cheque Credit Account"
+msgstr "حساب الشيك المدين"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__cheque_date
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__date
+msgid "Cheque Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_res_config_settings__incoming_chq_debit_account_id
+#: model:ir.model.fields,field_description:account_cheque.field_res_config_settings__outgoing_chq_debit_account_id
+msgid "Cheque Debit Account"
+msgstr "حساب الشيك الدائن"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cashed_wizard
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Cheque Details"
+msgstr "تفاصيل الشيك"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__cheque_given_date
+msgid "Cheque Given Date"
+msgstr "تاريخ تسليم الشيك"
+
+#. module: account_cheque
+#: model:ir.ui.menu,name:account_cheque.cheque_root
+msgid "Cheque Management"
+msgstr "ادارة الشيك"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__chq_no
+msgid "Cheque Number"
+msgstr "رقم الشيك"
+
+#. module: account_cheque
+#: model:ir.model.constraint,message:account_cheque.constraint_account_cheque_ch_no_uni
+msgid "Cheque Number Must Be Unique"
+msgstr "لا يمكن تكرار رقم الشيك"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__cheque_receive_date
+msgid "Cheque Receive Date"
+msgstr "تاريخ استلام الشيك"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__cheque_return_date
+msgid "Cheque Return Date"
+msgstr "تاريخ استرجاع الشيك"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__cheq_under_collection_account_id
+#: model:ir.model.fields,field_description:account_cheque.field_res_config_settings__chq_under_coll_account_id
+msgid "Cheque Under Collection Account"
+msgstr "حساب شيكات تحت التحصيل"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_move__chq_id
+msgid "Chq"
+msgstr "شيك"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_wizard_report
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_wizard_report
+msgid "Close"
+msgstr "اغلاق"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__comment
+msgid "Comment"
+msgstr "تعليق"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__company_id
+msgid "Company"
+msgstr "شركة"
+
+#. module: account_cheque
+#: model:ir.model,name:account_cheque.model_res_config_settings
+msgid "Config Settings"
+msgstr "ضبط الإعدادات"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__create_uid
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__create_uid
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__create_uid
+msgid "Created by"
+msgstr "انشاء بواسطة"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__create_date
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__create_date
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__create_date
+msgid "Created on"
+msgstr "تاريخ الانشاء"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__credit_account_id
+msgid "Credit Account"
+msgstr "حساب مدين"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__current_state_date
+msgid "Current State Date"
+msgstr "تاريخ الحالة الحالية"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Customer"
+msgstr "العميل"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__debit_account_id
+msgid "Debit Account"
+msgstr "حساب دائن"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Description"
+msgstr "شرح"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__display_name
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__display_name
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__display_name
+msgid "Display Name"
+msgstr "الاسم"
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__status__done
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__status__done
+msgid "Done"
+msgstr "تم"
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__status__draft
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__status__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__from_date
+msgid "From"
+msgstr "من"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "From :"
+msgstr ": من"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__id
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__id
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.res_config_settings_mymodule_form
+msgid "Incoming Account"
+msgstr "الحساب الوارد"
+
+#. module: account_cheque
+#: model:ir.actions.server,name:account_cheque.incoming_action
+#: model:ir.ui.menu,name:account_cheque.incoming
+msgid "Incoming Cheque"
+msgstr "الشيك الوارد"
+
+#. module: account_cheque
+#: model:ir.actions.act_window,name:account_cheque.action_reporting_incoming
+#: model:ir.actions.report,name:account_cheque.incoming_report_get
+#: model:ir.ui.menu,name:account_cheque.incoming_report
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_wizard_report
+msgid "Incoming Cheque Report"
+msgstr "تقرير الشيكات الواردة"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__invoice_ids
+msgid "Invoice"
+msgstr "الفتورة"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Invoices"
+msgstr "الفواتير"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.res_config_settings_mymodule_form
+msgid "Invoicing"
+msgstr "الفوترة"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__journal_id
+msgid "Journal"
+msgstr "دفتر اليومية"
+
+#. module: account_cheque
+#: model:ir.model,name:account_cheque.model_account_move
+msgid "Journal Entries"
+msgstr "القيود اليومية"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Journal Items"
+msgstr "العناصر اليومية"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__journal_items_count
+msgid "Journal Items Count"
+msgstr "عدد العناصر اليومية"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque____last_update
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard____last_update
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__write_uid
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__write_uid
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__write_date
+#: model:ir.model.fields,field_description:account_cheque.field_cashed_wizard__write_date
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__name
+msgid "Name"
+msgstr "اسم"
+
+#. module: account_cheque
+#: code:addons/account_cheque/models/models.py:0
+#, python-format
+msgid "New"
+msgstr "جديد"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__no_of_days_to_reminder
+msgid "No Of Days Before Due Date To Reminder "
+msgstr "عدد الايام للتذكير قبل تاريخ الاستحقاق"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.res_config_settings_mymodule_form
+msgid "Outgoing Account"
+msgstr "الحساب الخارج"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Outgoing Account Cheque"
+msgstr "شيك الحساب الخارج"
+
+#. module: account_cheque
+#: model:ir.actions.server,name:account_cheque.outgoing_action
+#: model:ir.ui.menu,name:account_cheque.outgoing
+msgid "Outgoing Cheque"
+msgstr "الشيكات الخارجة"
+
+#. module: account_cheque
+#: model:ir.actions.act_window,name:account_cheque.action_reporting_outgoing
+#: model:ir.actions.report,name:account_cheque.outgoing_report_get
+#: model:ir.ui.menu,name:account_cheque.outgoing_report
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_wizard_report
+msgid "Outgoing Cheque Report"
+msgstr "تقرير الشيكات الخارجة"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__payee_user_id
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__payee_user_id
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Payee"
+msgstr "المدفوع له"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Payee :"
+msgstr ": المدفوع له "
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__payer_user_id
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__payer_user_id
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+msgid "Payer"
+msgstr "الدافع"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+msgid "Payer :"
+msgstr ": الدافع "
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__payer_bank
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+msgid "Payer Bank"
+msgstr "بنك الدافع"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Payment Matching"
+msgstr "مطابقة المدفوعات"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_wizard_report
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_wizard_report
+msgid "Print"
+msgstr "طباعة"
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__status__registered
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__status__registered
+msgid "Registered"
+msgstr "مقيد"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Report Date :"
+msgstr "تاريخ التقرير"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__sequence
+msgid "Sequence"
+msgstr "سياق"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "State"
+msgstr "الحالة"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "State Date"
+msgstr "تاريخ الحالة"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__status
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__status
+msgid "Status"
+msgstr "الحالة"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Status :"
+msgstr "الحالة"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cashed_wizard
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Submit"
+msgstr "تأكيد"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__to_date
+msgid "To"
+msgstr "الى"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "To :"
+msgstr ": الى"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Total"
+msgstr "المجموع"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.incoming_report1
+#: model_terms:ir.ui.view,arch_db:account_cheque.outgoing_report1
+msgid "Total Amount"
+msgstr "مجموع المبلغ"
+
+#. module: account_cheque
+#: model:ir.model.fields,field_description:account_cheque.field_account_cheque__type
+#: model:ir.model.fields,field_description:account_cheque.field_cheque_wizard__type
+msgid "Type"
+msgstr "نوع"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Vendor Bill"
+msgstr "فتورة المورد"
+
+#. module: account_cheque
+#: model_terms:ir.ui.view,arch_db:account_cheque.cheque_form_view
+msgid "Your Document"
+msgstr "ملفك"
+
+#. module: account_cheque
+#: model:ir.model,name:account_cheque.model_account_cheque
+msgid "account.cheque"
+msgstr ""
+
+#. module: account_cheque
+#: model:ir.model,name:account_cheque.model_cashed_wizard
+msgid "cashed.wizard"
+msgstr ""
+
+#. module: account_cheque
+#: model:ir.model,name:account_cheque.model_cheque_wizard
+msgid "cheque.wizard"
+msgstr ""
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__type__incoming
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__type__incoming
+msgid "incoming"
+msgstr "الوارد"
+
+#. module: account_cheque
+#: model:ir.model.fields.selection,name:account_cheque.selection__account_cheque__type__outgoing
+#: model:ir.model.fields.selection,name:account_cheque.selection__cheque_wizard__type__outgoing
+msgid "outgoing"
+msgstr "الخارج"
