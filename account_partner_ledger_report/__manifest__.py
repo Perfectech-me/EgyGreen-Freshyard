@@ -10,11 +10,14 @@
     'category': 'Accounting Reports',
     'version': '15',
 
-    'depends': ['base','account_accountant','account_reports','web'],
+    'depends': ['base','account_accountant','account_reports','web','report_xlsx'],
 
     # always loaded
     'data': [
+            'security/ir.model.access.csv',
             'views/search_template_view.xml',
+            'wizard/partner_ledger_custom_report.xml',
+            'reports/partner_ledger_report.xml',
 
     ],
     'license': 'LGPL-3',

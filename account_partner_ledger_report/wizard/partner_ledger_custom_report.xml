@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+
+
+        <record id="form_view_partner_report_ledger_custom" model="ir.ui.view">
+            <field name="name">name.partner.report.ledger.custom.form</field>
+            <field name="model">partner.report.ledger.custom</field>
+            <field name="arch" type="xml">
+                <form string="Partner Ledger Report">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_from" required="1"/>
+                                <field name="partner_ids" widget="many2many_tags"/>
+                                <field name="account_type"/>
+                            </group>
+                             <group>
+                                 <field name="date_to" required="1"/>
+                                <field name="analytic_tag_ids" widget="many2many_tags"/>
+                                <field name="currency_ids" widget="many2many_tags"/>
+                                <field name="analytic_account_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+
+                        <footer>
+                             <button name="button_print_pdf" type="object" string="Print PDF"
+                                    class="oe_highlight"/>
+                            <button name="button_print" type="object" string="Print Excel"
+                                    class="oe_highlight"/>
+                            <button string="Cancel" class="btn-default" special="cancel"/>
+
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_partner_ledger_report" model="ir.actions.act_window">
+            <field name="name">Partner Ledger Report</field>
+            <field name="res_model">partner.report.ledger.custom</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="action_view_partner_report_ledger" name="Partner Ledger Report"
+                  parent="account_accountant.menu_accounting" action="action_partner_ledger_report" sequence="3"/>
+
+    </data>
+</odoo>
