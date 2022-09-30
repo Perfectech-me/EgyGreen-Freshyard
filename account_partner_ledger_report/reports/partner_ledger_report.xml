@@ -75,7 +75,7 @@
                                              Payable
                                          </t>
                                          <t t-if="wizard_data[0]['account_type'] not in ['receivable','payable']">
-                                             All
+
                                          </t>
 
                                      </td>
