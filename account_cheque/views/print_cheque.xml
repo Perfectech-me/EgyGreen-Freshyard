@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--            <field name="margin_top">30</field>-->
+<!--            <field name="margin_bottom">23</field>-->
+<!--            <field name="margin_left">5</field>-->
+<!--            <field name="margin_right">5</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">20</field>-->
+<!--            <field name="dpi">90</field>-->
+        <record id="paperformat_print_cheque" model="report.paperformat">
+            <field name="name">paper format_print_cheque</field>
+            <field name="format">custom</field>
+            <field name="page_height">180</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Landscape</field>
+
+<!--            <field name="margin_left">3</field>-->
+<!--            <field name="margin_right">3</field>-->
+        </record>
+
+        <record id="action_print_cheque" model="ir.actions.report">
+            <field name="name">print cheque</field>
+            <field name="model">account.cheque</field>
+            <field name="paperformat_id" ref="account_cheque.paperformat_print_cheque" />
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">account_cheque.print_cheque</field>
+            <field name="report_file">account_cheque.print_cheque</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="account_cheque.model_account_cheque"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
