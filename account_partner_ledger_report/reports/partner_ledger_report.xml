@@ -1,0 +1,318 @@
+<odoo>
+    <data>
+
+        <record id="partner_ledger_report_xlsx" model="ir.actions.report">
+            <field name="name">Partner Ledger Report</field>
+            <field name="model">partner.report.ledger.custom</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">account_partner_ledger_report.print_partner_report_xlsx</field>
+            <field name="report_file">account_partner_ledger_report.print_partner_report_xlsx</field>
+            <field name="binding_model_id" ref="account.model_account_move_line"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="partners_ledger_report_pdf" model="ir.actions.report">
+            <field name="name">Partner Ledger Report Pdf</field>
+            <field name="model">partner.report.ledger.custom</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">account_partner_ledger_report.pdf_partner</field>
+            <field name="report_file">account_partner_ledger_report.pdf_partner</field>
+            <field name="binding_model_id" ref="model_partner_report_ledger_custom"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <template id="pdf_partner">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+
+                    <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;">
+
+
+                        <div style="width:100%;float:left;text-align:left">
+                            <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
+                                 style="max-height: 100px;"/>
+                        </div>
+                    </div>
+
+                    <div class="page">
+                        <div class="oe_structure">
+
+
+                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                   class="table table-sm table-bordered oe_inline">
+
+                                 <tr>
+
+                                     <td colspan="1"
+                                            style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+                                            Date From
+                                     </td>
+                                     <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:22.5%;">
+                                            <span t-esc="wizard_data[0]['date_from']"/>
+                                     </td>
+                                     <td colspan="1"
+                                            style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+                                            Date To
+                                     </td>
+                                     <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:22.5%;">
+                                            <span t-esc="wizard_data[0]['date_to']"/>
+                                     </td>
+
+                                      <td colspan="1"
+                                            style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:12.5%;">
+                                            Account Type
+                                     </td>
+                                     <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:22.5%;">
+
+                                         <t t-if="wizard_data[0]['account_type']=='receivable'">
+                                             Receivable
+                                         </t>
+                                         <t t-if="wizard_data[0]['account_type']=='payable'">
+                                             Payable
+                                         </t>
+                                         <t t-if="wizard_data[0]['account_type'] not in ['receivable','payable']">
+
+                                         </t>
+
+                                     </td>
+
+
+                                 </tr>
+
+                                 <tr>
+
+                                     <td colspan="1"
+                                            style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+                                            Partner
+                                     </td>
+                                     <td colspan="2"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+
+                                         <t t-foreach="wizard_data[0]['partner_name']" t-as="partner">
+                                             <span t-esc="partner"/>,
+                                         </t>
+
+                                     </td>
+
+                                     <td colspan="1"
+                                            style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+                                            Analytic Tags
+                                     </td>
+                                     <td colspan="2"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+
+                                         <t t-foreach="wizard_data[0]['analytic_tags']" t-as="analytic">
+                                             <span t-esc="analytic"/>,
+                                         </t>
+
+                                     </td>
+
+                                 </tr>
+
+                                 <tr>
+
+                                     <td colspan="1"
+                                            style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+                                            Currency
+                                     </td>
+                                     <td colspan="2"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+
+                                         <t t-foreach="wizard_data[0]['currency_list']" t-as="currency">
+                                             <span t-esc="currency"/>,
+                                         </t>
+
+                                     </td>
+
+
+
+                                      <td colspan="1"
+                                            style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+                                            Analytic Account
+                                     </td>
+                                     <td colspan="2"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+
+                                         <t t-foreach="wizard_data[0]['analytic_accounts']" t-as="analytic_account">
+                                             <span t-esc="analytic_account"/>,
+                                         </t>
+
+                                     </td>
+
+
+
+
+                                 </tr>
+
+
+                             </table>
+
+
+
+
+
+
+
+                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                   class="table table-sm table-bordered oe_inline">
+                                <thead>
+                                    <tr style="background-color:#d9d9d9;">
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
+                                            Partner
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:10%;">
+                                           Journal
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:10%;">
+                                            Account
+                                        </th>
+
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:10%;">
+                                            Desc
+                                        </th>
+
+
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:10%;">
+                                            Ref
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:8%;">
+                                            Due Date
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:10%;">
+                                            Matching Number
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:8%;">
+                                            Initial Balance
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:8%;">
+                                           Debit
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:8%;">
+                                            Credit
+                                        </th>
+
+<!--                                        <th colspan="1"-->
+<!--                                            style="text-align:center;border-width:1px;border-color:black;width:8%;">-->
+<!--                                            <center> Amount Currency-->
+<!--                                            </center>-->
+<!--                                        </th>-->
+
+                                        <th colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;width:8%;">
+                                            Balance
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="account_move_lines" t-as="line">
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="line['partner']"/>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="line['journal_id']"/>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="line['account_id']"/>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="line['desc']"/>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="line['ref']"/>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="line['date_maturity']"/>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="line['matching_number']"/>
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                            <span t-esc="'{0:,.2f}'.format(line['initial_balance'])"/> <span t-esc="line['currency_id']"/>
+
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                                <span t-esc="'{0:,.2f}'.format(line['debit'])"/> <span t-esc="line['currency_id']"/>
+
+
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                            <span t-esc="'{0:,.2f}'.format(line['credit'])"/> <span t-esc="line['currency_id']"/>
+
+                                        </td>
+
+<!--                                        <td colspan="1"-->
+<!--                                            style="text-align:center;border-width:1px;border-color:black;">-->
+<!--                                            <center>-->
+<!--                                                <span t-esc="line['amount_currency']"/>-->
+<!--                                            </center>-->
+<!--                                        </td>-->
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;">
+                                            <span t-esc="'{0:,.2f}'.format(line['balance'])"/> <span t-esc="line['currency_id']"/>
+
+                                        </td>
+
+
+                                    </tr>
+
+                                </t>
+
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="footer o_boxed_footer">
+                        <br/>
+                        <br/>
+                        <div class="text-center">
+                            <div t-if="report_type == 'pdf'">
+                                Page:
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

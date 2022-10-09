@@ -176,7 +176,7 @@
                                            attrs="{'invisible': [('type', '=','outgoing')],'required':[('type','=','incoming')]}"/>
                                     <field name="payee_user_id" string="Payee"
                                            attrs="{'invisible': [('type', '=','incoming')],'required':[('type','=','outgoing')]}"/>
-                                    <field name="beneficiary_name"/>
+                                    <field name="beneficiary_name" required="1"/>
 
                                 </group>
                             </group>

@@ -10,19 +10,22 @@
     'category': 'Accounting Reports',
     'version': '15',
 
-    'depends': ['base','account_accountant','account_reports','web'],
+    'depends': ['base','account_accountant','account_reports','web','report_xlsx'],
 
     # always loaded
     'data': [
-            'views/search_template_view.xml',
+            'security/ir.model.access.csv',
+            # 'views/search_template_view.xml',
+            'wizard/partner_ledger_custom_report.xml',
+            'reports/partner_ledger_report.xml',
 
     ],
     'license': 'LGPL-3',
 
-    'assets': {
-        'web.assets_backend': [
-            'account_partner_ledger_report/static/src/js/custom_account_reports.js'
-        ],
-    }
+    # 'assets': {
+    #     'web.assets_backend': [
+    #         'account_partner_ledger_report/static/src/js/custom_account_reports.js'
+    #     ],
+    # }
 
 }
