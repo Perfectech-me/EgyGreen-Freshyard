@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_template_restrict_creation,product.template restrictcreation,product.model_product_template,account.group_account_user,1,0,0,0
-access_product_product_restrict_creation,product.product restrictcreation,product.model_product_product,restrict_creation.group_restrict_creation,1,0,0,0
-access_product_template_user,product.template user,product.model_product_template,group_restrict_creation,1,0,0,0
-
