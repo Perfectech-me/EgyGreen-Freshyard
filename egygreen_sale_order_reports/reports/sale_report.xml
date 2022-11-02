@@ -8,7 +8,7 @@
 <!--            <field name="page_height">170</field>-->
 <!--            <field name="page_width">80</field>-->
             <field name="orientation">Portrait</field>
-            <field name="margin_top">30</field>
+            <field name="margin_top">35</field>
             <field name="margin_bottom">32.00</field>
             <field name="header_spacing">20</field>
             <field name="dpi">90</field>
@@ -34,7 +34,7 @@
 
                             <div style="width:30%;float:left;text-align:left">
                                 <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
-                                     style="max-height: 100px;"/>
+                                     style="max-height: 80px;"/>
                             </div>
                             <div style="width:70%;float:right;">
                                 <h3 style="width:100%;">
