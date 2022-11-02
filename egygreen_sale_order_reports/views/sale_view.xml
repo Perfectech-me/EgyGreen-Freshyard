@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="form_view_sale_order_inherit" model="ir.ui.view">
+        <field name="name">name.sale.order.inherit.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
+                <field name="net_weight_per_unit"/>
+                <field name="gross_weight_per_unit"/>
+            </xpath>
+
+        </field>
+    </record>
+
+  </data>
+</odoo>
