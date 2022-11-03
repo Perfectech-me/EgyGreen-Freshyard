@@ -103,7 +103,7 @@ class ProductTemplateInherit(models.Model):
     def compute_partners_ids(self):
         for rec in self:
             rec.partners_ids=False
-            domain=[]
+            domain = [('company_id', '=', rec.company_id.id)]
             if rec.shipping_product:
                 domain.append(('shipping_company','=',True))
             if rec.clearance_product:
