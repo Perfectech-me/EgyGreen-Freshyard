@@ -15,4 +15,3 @@ class ResPartner(models.Model):
     company_id = fields.Many2one('res.company', 'Company', index=True,required=True)
 
 
-    # comp
