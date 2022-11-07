@@ -189,7 +189,7 @@
                                             Due Date
                                         </th>
                                         <th colspan="1"
-                                            style="text-align:left;border-width:1px;border-color:black;width:10%;">
+                                            style="text-align:left;border-width:1px;border-color:black;width:9%;">
                                             Matching Number
                                         </th>
                                         <th colspan="1"
@@ -212,7 +212,7 @@
 <!--                                        </th>-->
 
                                         <th colspan="1"
-                                            style="text-align:left;border-width:1px;border-color:black;width:8%;">
+                                            style="text-align:left;border-width:1px;border-color:black;width:9%;">
                                             Balance
                                         </th>
                                     </tr>

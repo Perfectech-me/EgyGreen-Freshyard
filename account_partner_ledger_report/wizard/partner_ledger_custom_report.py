@@ -111,13 +111,10 @@ class PartnerReportLedgerCustom(models.TransientModel):
 
 
 
-                        if debit>0 and credit<debit:
-
+                        if debit>0 and credit==0:
                             balance=debit+initial_balance
-                        else:
-                            balance=credit-initial_balance
-                            if balance<0:
-                                balance=balance*-1
+                        elif credit>0 and debit==0:
+                            balance = initial_balance-credit
 
                         account_move_lines.append({
                         'partner': line.partner_id.name or "",
