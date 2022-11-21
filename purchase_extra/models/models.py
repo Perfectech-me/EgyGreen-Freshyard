@@ -72,20 +72,32 @@ class PurchaseOrder(models.Model):
         #     ('id', '=', self.purchase_id.id)
         # ])
         wizard_line_ids = []
+        balance = self.env['account.move'].search([
+            ('partner_id', '=', self.partner_id.id),
+
+        ])
+        total_balance=0
+        for r in balance:
+            total_balance=total_balance+r.amount_total_signed
+
+        print("total_payment",total_balance,self.partner_id.total_invoiced)
 
         for line in self.order_line:
             print('product', line.product_id)
             order = self.env['purchase.order.line'].search([
-                ('partner_id', '=', line.partner_id.id),
+                # ('partner_id', '=', line.partner_id.id),
                 ('product_id', '=', line.product_id.id),
                 ('order_id','!=',self.id)
             ], limit=1)
             print(order.price_unit,'sssss')
+
             wizard_line_ids.append((0, 0, {
                 'product_id': line.product_id.id,
                 'purchase_id': order.order_id.id,
 
-                'price_unit': order.price_unit
+                'price_unit': order.price_unit,
+                'product_quantity':line.product_id.qty_available,
+                'balance':total_balance
 
             }))
         return {

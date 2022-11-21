@@ -81,4 +81,6 @@ class PurchaseWizerdLine(models.TransientModel):
 
     product_id = fields.Many2one('product.product', 'Product')
     purchase_id=fields.Many2one('purchase.order')
-    price_unit=fields.Float(string='Untit price')
+    price_unit=fields.Float(string='Unit price')
+    product_quantity=fields.Float(string="Product Qty")
+    balance=fields.Float("Balance")
