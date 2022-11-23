@@ -195,7 +195,7 @@ class account_cheque(models.Model):
                 'journal_id': self.journal_id.id,
                 'partner_id': x.id,
                 'analytic_account_id': self.analytic_account_id.id,
-                # 'currency_id': self.currency_id.id,
+                'currency_id': self.debit_account_id.currency_id.id,
             })
         object2 = (
             0, 0, {'name': self.name,
@@ -205,6 +205,7 @@ class account_cheque(models.Model):
                    'journal_id': self.journal_id.id,
                    'partner_id': x.id,
                    'analytic_account_id': self.analytic_account_id.id,
+                   'currency_id': self.debit_account_id.currency_id.id,
 
                    })
 
