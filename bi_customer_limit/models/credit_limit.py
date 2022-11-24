@@ -95,7 +95,7 @@ class sale_order(models.Model):
 
     @api.constrains("total_receivable", "partner_id",'amount_total')
     def _check_Blocking_limit(self):
-        if self.partner_id.Blocking_limit <= (self.total_receivable+self.amount_total):
+        if self.partner_id.is_credit_limit and self.partner_id.Blocking_limit <= (self.total_receivable+self.amount_total):
             raise ValidationError(_("The Customer is in blocking stage "))
 
     @api.model
