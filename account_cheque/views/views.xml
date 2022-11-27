@@ -197,7 +197,11 @@
                             <group>
                                 <group>
                                     <field name="chq_no"/>
+                                    <label for="amount"/>
+                                    <div class="o_row">
                                     <field name="amount" attrs="{'readonly': [('status', '!=','draft')]}"/>
+                                    - <field name="currency_id" required="1"/>
+                                    </div>
                                 </group>
                                 <group>
                                     <field name="cheque_date"/>
