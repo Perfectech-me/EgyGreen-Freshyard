@@ -11,6 +11,12 @@
     <record id="group_cheque" model="res.groups">
         <field name="name">Cheque access</field>
     </record>
+    <record model="ir.rule" id="cheque_comp_rule">
+        <field name="name">cheque company rule</field>
+        <field name="model_id" ref="model_account_cheque"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
 
 
 
