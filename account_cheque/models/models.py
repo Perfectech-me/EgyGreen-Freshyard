@@ -89,8 +89,10 @@ class account_cheque(models.Model):
     journal_items_count = fields.Integer(string="", required=False, )
     attachment = fields.Many2many('ir.attachment')
     current_state_date = fields.Date(string="Current State Date", required=False, default=datetime.today().date())
-
     beneficiary_name = fields.Char(string="إسم المستفيد")
+
+    currency_id = fields.Many2one(comodel_name="res.currency", string="Currency")
+
 
     def check_company(self):
         res={}
@@ -186,11 +188,19 @@ class account_cheque(models.Model):
         self.journal_items_count += 2
         self.current_state_date = datetime.today().strftime('%Y-%m-%d')
         records = []
+
+        if self.currency_id.id==self.company_id.currency_id.id:
+            debit=self.amount
+            credit=self.amount
+        else:
+            debit=self.amount* self.debit_account_id.currency_id.rate
+            credit=self.amount* self.debit_account_id.currency_id.rate
         object1 = (
             0, 0, {
                 'name': self.name,
                 'account_id': self.debit_account_id.id,
-                'debit': self.amount,
+                'debit': debit,
+                'amount_currency': self.amount ,
                 'credit': 0.0,
                 'journal_id': self.journal_id.id,
                 'partner_id': x.id,
@@ -201,11 +211,12 @@ class account_cheque(models.Model):
             0, 0, {'name': self.name,
                    'account_id': self.credit_account_id.id,
                    'debit': 0.0,
-                   'credit': self.amount,
+                   'credit': credit,
+                   'amount_currency': -self.amount,
                    'journal_id': self.journal_id.id,
                    'partner_id': x.id,
                    'analytic_account_id': self.analytic_account_id.id,
-                   'currency_id': self.debit_account_id.currency_id.id,
+                   'currency_id': self.credit_account_id.currency_id.id,
 
                    })
 
