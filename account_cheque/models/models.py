@@ -193,8 +193,14 @@ class account_cheque(models.Model):
             debit=self.amount
             credit=self.amount
         else:
-            debit=self.amount* self.debit_account_id.currency_id.rate
-            credit=self.amount* self.debit_account_id.currency_id.rate
+            if self.debit_account_id.currency_id.rate>0:
+                debit=self.amount / self.debit_account_id.currency_id.rate
+            else:
+                debit=0
+            if self.debit_account_id.currency_id.rate>0:
+                credit=self.amount / self.debit_account_id.currency_id.rate
+            else:
+                credit=0
         object1 = (
             0, 0, {
                 'name': self.name,
