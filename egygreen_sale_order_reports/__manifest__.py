@@ -14,6 +14,7 @@
         # 'security/ir.model.access.csv',
         'views/sale_view.xml',
         'reports/sale_report.xml',
+        'reports/invoice_preforma_report.xml',
     ],
 
 }

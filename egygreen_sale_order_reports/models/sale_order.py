@@ -8,3 +8,18 @@ class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
     partner_bank_id = fields.Many2one(comodel_name="res.partner.bank", string="Recipient Bank")
+
+
+class SaleAdvancePaymentInvInherit(models.TransientModel):
+    _inherit = 'sale.advance.payment.inv'
+    def create_invoices(self):
+        res=super(SaleAdvancePaymentInvInherit, self).create_invoices()
+        sale_orders = self.env['sale.order'].browse(self._context.get('active_ids', []))
+        if sale_orders:
+            for sale in sale_orders:
+                if sale.invoice_ids:
+                    for inv in sale.invoice_ids:
+                        inv.partner_bank_id=sale.partner_bank_id.id
+
+
+        return res
