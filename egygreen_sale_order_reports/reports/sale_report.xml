@@ -294,7 +294,7 @@
                                         </td>
                                         <td colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;">
-                                            <span t-field="o.final_destination_country_id"/>
+                                            <span t-field="o.final_destination_city_id"/>
                                         </td>
                                          <td colspan="1"
                                             style="background-color:#c2d6d6;text-align:center;border-width:1px;border-color:black;font-size:15px;">
@@ -314,7 +314,7 @@
                                         </td>
                                         <td colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;">
-                                            <span t-field="o.port_loading_id.state_city_id"/>
+                                            <span t-field="o.port_loading_id"/>
                                         </td>
                                          <td colspan="1"
                                             style="background-color:#c2d6d6;text-align:center;border-width:1px;border-color:black;font-size:15px;">
@@ -369,6 +369,8 @@
                                     </tr>
 
                                     <tr t-foreach="o.order_line" t-as="line">
+                                        <t t-if="not line.product_id.additional_service">
+
                                         <td
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
                                             <span t-field="line.product_id"/>
@@ -393,6 +395,7 @@
                                             <t t-set="total_gross_weight" t-value="total_gross_weight+(line.gross_weight_per_unit * line.product_uom_qty)"/>
 
                                         </td>
+                                        </t>
                                     </tr>
                                 </table>
 
@@ -442,25 +445,27 @@
                                         </td>
                                     </tr>
                                     <tr t-foreach="o.order_line" t-as="line">
-                                        <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
-                                            <span t-field="line.name"/>
-                                        </td>
-                                        <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
-                                            <span t-field="line.product_uom_qty"/>
-                                            <t t-set="total_qty" t-value="line.product_uom_qty+total_qty"/>
+                                        <t t-if="not line.product_id.additional_service">
+                                            <td
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <td
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <span t-field="line.product_uom_qty"/>
+                                                <t t-set="total_qty" t-value="line.product_uom_qty+total_qty"/>
 
-                                        </td>
-                                        <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
-                                            <span t-field="line.price_unit"/>
-                                        </td>
+                                            </td>
+                                            <td
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <span t-field="line.price_unit"/>
+                                            </td>
 
-                                        <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
-                                            <span t-field="line.price_subtotal"/>
-                                        </td>
+                                            <td
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <span t-field="line.price_subtotal"/>
+                                            </td>
+                                        </t>
                                     </tr>
                                     <tr>
                                         <td
@@ -522,16 +527,6 @@
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:50%;">
                                             <strong>Please make the payment in <span t-field="o.currency_id"/> to: </strong><br/>
                                                 <span t-field="o.note"/>
-
-                                            <t t-set="bank_name" t-value=""/>
-                                            <t t-set="bank_address" t-value=""/>
-                                            <t t-set="bank_city" t-value=""/>
-                                            <t t-set="bank_country" t-value=""/>
-                                            <t t-set="soft_code" t-value=""/>
-                                            <t t-set="currency" t-value=""/>
-                                            <t t-set="account_number" t-value=""/>
-                                            <t t-set="account_name" t-value=""/>
-                                            <t t-set="iban" t-value=""/>
                                             <t t-foreach="o.bank_ids" t-as="bank">
                                                 <t t-set="bank_name" t-value="bank.bank_id.name"/>
                                                 <t t-set="bank_address" t-value="bank.bank_id.street"/>
@@ -545,13 +540,13 @@
 
                                             </t>
 
-                                            Bank Name :  <span t-esc="bank_name"/> <br/>
-                                            Address : <span t-esc="bank_address"/> , <span t-esc="bank_city"/> , <span t-esc="bank_country"/> <br/>
-                                            Swift Code : <span t-esc="soft_code"/> <br/>
-                                            Currency : <span t-esc="currency"/> <br/>
-                                            Account Name :  <span t-esc="account_name"/><br/>
-                                            IBANe : <span t-esc="iban"/> <br/>
-                                            Account Number : <span t-esc="account_number"/><br/>
+                                            Bank Name :  <span t-field="o.partner_bank_id.bank_id.name"/> <br/>
+                                            Address : <span t-field="o.partner_bank_id.bank_id.street"/> , <span t-field="o.partner_bank_id.bank_id.city"/> , <span t-field="o.partner_bank_id.bank_id.country.name"/> <br/>
+                                            Swift Code : <span t-field="o.partner_bank_id.bank_id.bic"/> <br/>
+                                            Currency : <span t-field="o.partner_bank_id.currency_id.name"/> <br/>
+                                            Account Name :  <span t-field="o.partner_bank_id.acc_holder_name"/><br/>
+                                            IBANe : <span t-field="o.partner_bank_id.bank_id.bic"/> <br/>
+                                            Account Number : <span t-field="o.partner_bank_id.acc_number"/><br/>
 
                                             <center>
                                                 <strong style="background-color:#c2d6d6;">

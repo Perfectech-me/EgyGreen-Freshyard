@@ -8,7 +8,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-
+            <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                <field name="partner_bank_id" attrs="{'readonly':[('state','in',['sale','done'])]}"/>
+            </xpath>
             <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
                 <field name="net_weight_per_unit"/>
                 <field name="gross_weight_per_unit"/>
