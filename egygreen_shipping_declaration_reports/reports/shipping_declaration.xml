@@ -102,7 +102,9 @@
                                               <t t-foreach="o.partner_consignee_ids" t-as="cons">
                                                  <span t-field="cons.name"/>
                                             <br/>
-                                            <span t-field="cons.street"/>
+                                            <t t-if="cons.street">
+                                               <span t-field="cons.street"/>
+                                            </t>    
                                             <t t-if="cons.street2">
                                                 ,<span t-field="cons.street2"/>
                                             </t>
@@ -112,20 +114,22 @@
                                             <t t-if="cons.state_id">
                                                 ,<span t-field="cons.state_id"/>
                                             </t>
-                                            <t t-if="cons.state_id">
+                                            <t t-if="cons.country_id">
                                                 ,<span t-field="cons.country_id"/>
                                             </t>
-                                             <t t-if="cons.state_id">
+                                             <t t-if="cons.continent">
                                                 ,<span t-field="cons.continent"/>
                                             </t>
                                             </t>
                                             <br/>
                                              <strong style="text-decoration: underline;background: #d4eceb;">Notify</strong>
                                              <br/>
-                                                 <t t-foreach="o.partner_notify_ids" t-as="notify">
+                                            <t t-foreach="o.partner_notify_ids" t-as="notify">
                                                  <span t-field="notify.name"/>
                                             <br/>
-                                            <span t-field="notify.street"/>
+                                            <t t-if="notify.street">
+                                               <span t-field="notify.street"/>
+                                            </t>    
                                             <t t-if="notify.street2">
                                                 ,<span t-field="notify.street2"/>
                                             </t>
@@ -135,10 +139,10 @@
                                             <t t-if="notify.state_id">
                                                 ,<span t-field="notify.state_id"/>
                                             </t>
-                                            <t t-if="notify.state_id">
+                                            <t t-if="notify.country_id">
                                                 ,<span t-field="notify.country_id"/>
                                             </t>
-                                             <t t-if="notify.state_id">
+                                             <t t-if="notify.continent">
                                                 ,<span t-field="notify.continent"/>
                                             </t>
                                             </t>
