@@ -5,8 +5,6 @@
         <record id="paperformat_print_shipping_declaration_invoice" model="report.paperformat">
             <field name="name">Shipping Declaration</field>
             <field name="format">custom</field>
-<!--            <field name="page_height">170</field>-->
-<!--            <field name="page_width">80</field>-->
             <field name="orientation">Portrait</field>
             <field name="margin_top">35</field>
             <field name="margin_bottom">32.00</field>
