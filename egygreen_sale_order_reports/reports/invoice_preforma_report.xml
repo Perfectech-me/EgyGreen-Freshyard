@@ -1,7 +1,7 @@
 <odoo>
     <data>
           <record id="action_report_proforma_invoice_account_move" model="ir.actions.report">
-            <field name="name">PRO-FORMA INVOICE</field>
+            <field name="name">FINAL INVOICE</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">egygreen_sale_order_reports.invoice_report_templates</field>
@@ -532,14 +532,13 @@
                                             <strong>Please make the payment in <span t-field="o.currency_id"/> to: </strong><br/>
                                                 <span t-field="o.narration"/>
 
-                                            Bank Name :  <span t-field="o.partner_bank_id.bank_id.name"/> <br/>
+                                           Bank Name :  <span t-field="o.partner_bank_id.bank_id.name"/> <br/>
                                             Address : <span t-field="o.partner_bank_id.bank_id.street"/> , <span t-field="o.partner_bank_id.bank_id.city"/> , <span t-field="o.partner_bank_id.bank_id.country.name"/> <br/>
-                                            Swift Code : <span t-field="o.partner_bank_id.bank_id.bic"/> <br/>
+                                            Swift Code : <span t-field="o.partner_bank_id.acc_holder_name"/> <br/>
                                             Currency : <span t-field="o.partner_bank_id.currency_id.name"/> <br/>
-                                            Account Name :  <span t-field="o.partner_bank_id.acc_holder_name"/><br/>
+                                            Account Name :  <span t-field="o.partner_bank_id.partner_id"/><br/>
                                             IBANe : <span t-field="o.partner_bank_id.bank_id.bic"/> <br/>
                                             Account Number : <span t-field="o.partner_bank_id.acc_number"/><br/>
-
                                             <center>
                                                 <strong style="background-color:#c2d6d6;">
                                                 NO Claims accepted after 48 hours from port arrival

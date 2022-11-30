@@ -542,9 +542,9 @@
 
                                             Bank Name :  <span t-field="o.partner_bank_id.bank_id.name"/> <br/>
                                             Address : <span t-field="o.partner_bank_id.bank_id.street"/> , <span t-field="o.partner_bank_id.bank_id.city"/> , <span t-field="o.partner_bank_id.bank_id.country.name"/> <br/>
-                                            Swift Code : <span t-field="o.partner_bank_id.bank_id.bic"/> <br/>
+                                            Swift Code : <span t-field="o.partner_bank_id.acc_holder_name"/> <br/>
                                             Currency : <span t-field="o.partner_bank_id.currency_id.name"/> <br/>
-                                            Account Name :  <span t-field="o.partner_bank_id.acc_holder_name"/><br/>
+                                            Account Name :  <span t-field="o.partner_bank_id.partner_id"/><br/>
                                             IBANe : <span t-field="o.partner_bank_id.bank_id.bic"/> <br/>
                                             Account Number : <span t-field="o.partner_bank_id.acc_number"/><br/>
 
