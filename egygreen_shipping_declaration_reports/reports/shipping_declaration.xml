@@ -98,8 +98,8 @@
                                             <strong style="text-decoration: underline;background: #d4eceb;">Consignee</strong>
                                             <br/>
                                               <t t-foreach="o.partner_consignee_ids" t-as="cons">
-                                                 <span t-field="cons.name"/>
-                                            <br/>
+<!--                                                  <span t-field="cons.name"/> -->
+<!--                                             <br/> -->
                                             <t t-if="cons.street">
                                                <span t-field="cons.street"/>
                                             </t>    
@@ -123,8 +123,8 @@
                                              <strong style="text-decoration: underline;background: #d4eceb;">Notify</strong>
                                              <br/>
                                             <t t-foreach="o.partner_notify_ids" t-as="notify">
-                                                 <span t-field="notify.name"/>
-                                            <br/>
+<!--                                                  <span t-field="notify.name"/>
+<!--                                             <br/> --> -->
                                             <t t-if="notify.street">
                                                <span t-field="notify.street"/>
                                             </t>    
