@@ -162,7 +162,7 @@
                                             <span style="float:left;text-decoration: underline;white-space: nowrap;">P.O.D.: (Port of Discharge):</span>
                                              <br/>
 
-                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.discharge_country_id"/>
+                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.discharge_city_id"/>
                                              <br/>
                                             <span style="float:left;text-decoration: underline;white-space: nowrap;">FINAL DELIVERY:</span>
                                              <br/>
