@@ -69,17 +69,20 @@
                                             <t t-if="o.company_id.state_id">
                                                 ,<span t-field="o.company_id.country_id"/>
                                             </t>
-                                            <t t-if="o.company_id.mobile"> ,Mob:<span t-field="o.company_id.mobile"/>,</t> <t t-if="o.company_id.phone">Tel: <span t-field="o.company_id.phone"/>,</t>
-
+                                            <br/>
+                                            <t t-if="o.company_id.mobile"> Mob:<span t-field="o.company_id.mobile"/>,</t> <t t-if="o.company_id.phone">Tel: <span t-field="o.company_id.phone"/></t>
+                                            <br/>
                                             <t t-if="o.company_id.email">
-                                            ,Email: <span t-field="o.company_id.email"/>
+                                            Email: <span t-field="o.company_id.email"/>
                                             </t>
+                                            <br/>
 
                                             <t t-if="o.company_id.website">
-                                            ,Website: <span t-field="o.company_id.website"/>
+                                            Website: <span t-field="o.company_id.website"/>
                                             </t>
+                                            <br/>
                                              <t t-if="o.company_id.vat">
-                                            ,VAT: <span t-field="o.company_id.vat"/>
+                                            VAT: <span t-field="o.company_id.vat"/>
                                             </t>
                                         </td>
                                          <td colspan="1"
@@ -232,9 +235,9 @@
                                         <td
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                             <t t-foreach="o.consignee_partner_line" t-as="line_cons">
-
+                                                <t t-if="line_cons.consignee_po">
                                                 <span t-field="line_cons.consignee_po"/>
-
+                                                </t>
                                             </t>
 
                                         </td>
@@ -247,7 +250,8 @@
                                         <td
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                             <t t-foreach="o.notify_partner_line" t-as="line_notify">
-                                                <span t-field="line_notify.notify_po"/>,
+                                                <t t-if="line_notify.notify_po">
+                                                <span t-field="line_notify.notify_po"/>,</t>
                                             </t>
 
                                         </td>
