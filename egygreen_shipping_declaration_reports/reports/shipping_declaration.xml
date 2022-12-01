@@ -123,8 +123,6 @@
                                              <strong style="text-decoration: underline;background: #d4eceb;">Notify</strong>
                                              <br/>
                                             <t t-foreach="o.partner_notify_ids" t-as="notify">
-<!--                                                  <span t-field="notify.name"/>
-<!--                                             <br/> --> -->
                                             <t t-if="notify.street">
                                                <span t-field="notify.street"/>
                                             </t>    
