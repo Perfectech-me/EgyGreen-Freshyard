@@ -294,7 +294,7 @@
                                         </td>
                                         <td colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;">
-                                            <span t-field="o.final_destination_city_id"/>
+                                            <span t-field="o.final_destination_country_id"/>
                                         </td>
                                          <td colspan="1"
                                             style="background-color:#c2d6d6;text-align:center;border-width:1px;border-color:black;font-size:15px;">

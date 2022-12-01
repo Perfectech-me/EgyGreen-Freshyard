@@ -13,8 +13,11 @@
                      <field name="order_category" widget="radio" options="{'horizontal': true}"/>
                     <field name="export_type" widget="radio"/>
                     <field name="product_type" widget="radio" />
-
                 </xpath>
+
+                 <xpath expr="//field[@name='order_line']//tree//field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="required">1</attribute>
+                 </xpath>
 
             </field>
         </record>

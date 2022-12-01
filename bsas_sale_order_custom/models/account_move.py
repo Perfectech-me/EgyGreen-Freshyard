@@ -17,3 +17,9 @@ class AccountMoveInherit(models.Model):
                 rec.not_local_sale_order = False
 
 
+class AccountAnalyticTagInherit(models.Model):
+    _inherit = 'account.analytic.tag'
+
+    _sql_constraints = [
+        ('tag_unique', 'UNIQUE (name)', 'Analytic Tag Must Be Unique')
+    ]
