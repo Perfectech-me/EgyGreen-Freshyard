@@ -15,6 +15,7 @@
         'views/sale_view.xml',
         'reports/sale_report.xml',
         'reports/invoice_preforma_report.xml',
+        'reports/shipping_order_warehouse.xml',
     ],
 
 }
