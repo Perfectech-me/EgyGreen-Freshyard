@@ -193,10 +193,6 @@
                                             <br/>
                                             <strong>ETA</strong>
                                             <span style="float: right; text-align:right;" t-field="o.commitment_date"/>
-                                            <br/>
-                                           <br/>
-                                           <span>The Shipping Line Will be Fully Responsible for all the consequence of the delay if the
-cargo arrive lately than ETA and Temperature fluctuation on the ETA</span>
                                         </td>
                                          <td clospan="1" width="50%" style="text-align:left;border-width:1px;border-top:0px;border-left:0px;border-color:black;font-size:12px;">
                                             <strong>Free Time</strong>
@@ -210,6 +206,11 @@ cargo arrive lately than ETA and Temperature fluctuation on the ETA</span>
 
                                         </td>
 
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2" style="text-align:left;border-width:0px;border-top:0px;border-left:0px;border-color:black;font-size:12px;">
+                                             <span>The Shipping Line Will be Fully Responsible for all the consequence of the delay if the cargo arrive lately than ETA and Temperature fluctuation on the ETA</span>
+                                         </td>
                                      </tr>
                                      <tr>
                                          <td colspan="2" style="text-align:center;border-bottom: 0px;text-decoration: underline;border-color:black;background: #d4eceb;"><strong style=" text-align:center;float:center;">Description of Goods</strong></td>

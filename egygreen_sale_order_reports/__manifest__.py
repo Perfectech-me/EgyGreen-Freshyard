@@ -8,14 +8,17 @@
     'author': "Mohamed Salah",
     'category': 'Sales',
     'version': '15.0',
-    'depends': ['base','sale'],
+    'depends': ['base','sale','account','bsas_sale_order_custom'],
 
     'data': [
         # 'security/ir.model.access.csv',
         'views/sale_view.xml',
+        'views/account_move.xml',
         'reports/sale_report.xml',
         'reports/invoice_preforma_report.xml',
         'reports/shipping_order_warehouse.xml',
+        'reports/marine_insurance.xml',
+        'reports/final_invoice_clearance.xml',
     ],
 
 }
