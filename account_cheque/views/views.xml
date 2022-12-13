@@ -317,16 +317,26 @@
         <field name="model">cheque.wizard</field>
         <field name="arch" type="xml">
             <form string="Outgoing Cheque Report" create="false" edit="false">
-                <group>
+                <sheet>
+                <group string="Creation Date">
                     <field name="from_date"/>
                     <field name="to_date"/>
                 </group>
+
+                <group string="Given Date">
+                    <field name="given_from_date"/>
+                    <field name="given_to_date"/>
+                </group>
+
                 <group>
                     <field name="payee_user_id"/>
                     <field name="status"/>
                     <field name="analytic_account_id"/>
+                    <field name="account_type_ids" invisible="1"/>
+                    <field name="bank_account_id"  domain="[('user_type_id','in',account_type_ids)]"/>
 
                 </group>
+                </sheet>
                 <footer>
                     <button string="Print" name="outgoing_report_method" type="object" default_focus="1"
                             class="btn-primary"/>
