@@ -80,10 +80,7 @@
                                             <t t-if="o.company_id.website">
                                             Website: <span t-field="o.company_id.website"/>
                                             </t>
-                                            <br/>
-                                             <t t-if="o.company_id.vat">
-                                            VAT: <span t-field="o.company_id.vat"/>
-                                            </t>
+
                                         </td>
                                          <td colspan="1"
                                             style="background-color:#c2d6d6;text-align:center;border-width:1px;border-color:black;font-size:15px;width:30%;">
@@ -333,13 +330,14 @@
                                      <tr>
                                         <td colspan="1"
                                             style="background-color:#c2d6d6;text-align:center;border-width:1px;border-color:black;font-size:15px;">
-                                            <strong style="float:center;border-bottom: 2px solid black">Packing Type &amp; Commodity</strong>
+                                            <strong style="float:center;border-bottom: 2px solid black">Data Loger</strong>
                                         </td>
                                         <td colspan="3"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;">
-                                            <t t-foreach="o.order_line" t-as="order">
-                                                <span t-field="order.product_id"/>
-                                            </t>
+                                            <span t-field="o.data_loger"/>
+<!--                                            <t t-foreach="o.order_line" t-as="order">-->
+<!--                                                <span t-field="order.product_id"/>-->
+<!--                                            </t>-->
                                         </td>
                                     </tr>
 
@@ -436,6 +434,11 @@
                                         </td>
                                         <td
                                             style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                            <strong>Container/Equipment</strong>
+                                        </td>
+
+                                        <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
                                             <strong>Qty</strong>
                                         </td>
                                          <td
@@ -453,6 +456,15 @@
                                             <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
                                                 <span t-field="line.name"/>
+                                            </td>
+                                            <td
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <t t-if="line.container_equipment_number">
+                                                <span t-field="line.container_equipment_number"/>
+                                                </t>
+                                                <t t-else="">
+                                                    ــــ
+                                                </t>
                                             </td>
                                             <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:20%;">

@@ -65,10 +65,7 @@
                                             <t t-if="o.company_id.website">
                                             Website: <span t-field="o.company_id.website"/>
                                             </t>
-                                            <br/>
-                                             <t t-if="o.company_id.vat">
-                                            VAT: <span t-field="o.company_id.vat"/>
-                                            </t>
+
                                         </td>
                                          <td colspan="1"
                                             style="text-align:left;border-width:0px;border-color:black;font-size:15px;width:30%;">

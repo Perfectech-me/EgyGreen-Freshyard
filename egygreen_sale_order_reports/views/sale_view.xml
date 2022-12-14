@@ -10,10 +10,18 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='fiscal_position_id']" position="after">
                 <field name="partner_bank_id" attrs="{'readonly':[('state','in',['sale','done'])]}"/>
+                <field name="data_loger"/>
             </xpath>
             <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
+                <field name="container_equipment_number"/>
                 <field name="net_weight_per_unit"/>
                 <field name="gross_weight_per_unit"/>
+            </xpath>
+
+            <xpath expr="//group[@name='sale_header']" position="inside">
+                <group>
+                    <field name="data_loger"/>
+                </group>
             </xpath>
 
         </field>
