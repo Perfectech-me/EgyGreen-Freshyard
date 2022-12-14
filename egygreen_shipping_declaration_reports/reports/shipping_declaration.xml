@@ -86,11 +86,6 @@
                                             <br/>
                                             <t t-if="o.company_id.website">
                                             <strong t-field="o.company_id.website"/>
-                                            <br/>
-                                            </t>
-
-                                             <t t-if="o.company_id.vat">
-                                            <strong>VAT :</strong> <strong t-field="o.company_id.vat"/>
                                             </t>
                                         </td>
                                          <td colspan="1"
