@@ -2,30 +2,88 @@
 <odoo>
     <data>
         <record id="paperformat_print_cheque" model="report.paperformat">
-            <field name="name">paper format_print_cheque</field>
+            <field name="name">Paper Agricole Check</field>
             <field name="format">custom</field>
             <field name="page_height">170</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">35</field>
+            <field name="margin_right">3</field>
+            <field name="margin_left">7</field>
             <field name="dpi">80</field>
         </record>
 
 
-        <record id="paperformat_print_epe_cheque" model="report.paperformat">
-            <field name="name">paper EPE Cheque</field>
+
+        <record id="paperformat_print_cib_cheque" model="report.paperformat">
+            <field name="name">Paper Cib Cheque</field>
             <field name="format">custom</field>
             <field name="page_height">160</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">35</field>
+            <field name="margin_right">4</field>
+            <field name="margin_left">7</field>
+            <field name="dpi">80</field>
+        </record>
+
+
+        <record id="paperformat_print_epe_cheque" model="report.paperformat">
+            <field name="name">Paper EPE Cheque</field>
+            <field name="format">custom</field>
+            <field name="page_height">160</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">35</field>
+            <field name="margin_right">3</field>
+            <field name="margin_left">7</field>
+            <field name="dpi">80</field>
+        </record>
+
+
+        <record id="paperformat_print_wafa_cheque" model="report.paperformat">
+            <field name="name">Paper Wafa Cheque</field>
+            <field name="format">custom</field>
+            <field name="page_height">160</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">35</field>
+            <field name="margin_right">3</field>
+            <field name="margin_left">7</field>
+            <field name="dpi">80</field>
+        </record>
+
+
+         <record id="paperformat_print_alexbank_cheque" model="report.paperformat">
+            <field name="name">Paper AlexBank Cheque</field>
+            <field name="format">custom</field>
+            <field name="page_height">160</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">35</field>
+            <field name="margin_right">3</field>
+            <field name="margin_left">7</field>
+            <field name="dpi">80</field>
+        </record>
+
+
+         <record id="paperformat_print_ebank_cheque" model="report.paperformat">
+            <field name="name">Paper E-Bank Cheque</field>
+            <field name="format">custom</field>
+            <field name="page_height">160</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">35</field>
+            <field name="margin_right">3</field>
+            <field name="margin_left">7</field>
             <field name="dpi">80</field>
         </record>
 
 
 
+
         <record id="action_print_cheque" model="ir.actions.report">
-            <field name="name">print cheque</field>
+            <field name="name">Agricole Check</field>
             <field name="model">account.cheque</field>
             <field name="paperformat_id" ref="account_cheque.paperformat_print_cheque" />
             <field name="report_type">qweb-pdf</field>
@@ -53,7 +111,7 @@
         <record id="action_print_cib_check" model="ir.actions.report">
             <field name="name">CIB Check</field>
             <field name="model">account.cheque</field>
-            <field name="paperformat_id" ref="account_cheque.paperformat_print_epe_cheque" />
+            <field name="paperformat_id" ref="account_cheque.paperformat_print_cib_cheque" />
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">account_cheque.print_cib_cheque</field>
             <field name="report_file">account_cheque.print_cib_cheque</field>
@@ -66,7 +124,7 @@
         <record id="action_print_wafa_check" model="ir.actions.report">
             <field name="name">Wafa Check</field>
             <field name="model">account.cheque</field>
-            <field name="paperformat_id" ref="account_cheque.paperformat_print_epe_cheque" />
+            <field name="paperformat_id" ref="account_cheque.paperformat_print_wafa_cheque" />
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">account_cheque.print_wafa_cheque</field>
             <field name="report_file">account_cheque.print_wafa_cheque</field>
@@ -79,7 +137,7 @@
         <record id="action_print_check_alexbank" model="ir.actions.report">
             <field name="name">AlexBank Check</field>
             <field name="model">account.cheque</field>
-            <field name="paperformat_id" ref="account_cheque.paperformat_print_epe_cheque" />
+            <field name="paperformat_id" ref="account_cheque.paperformat_print_alexbank_cheque" />
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">account_cheque.print_alex_cheque</field>
             <field name="report_file">account_cheque.print_alex_cheque</field>
@@ -91,7 +149,7 @@
         <record id="action_print_check_ebank" model="ir.actions.report">
             <field name="name">E-Bank Check</field>
             <field name="model">account.cheque</field>
-            <field name="paperformat_id" ref="account_cheque.paperformat_print_epe_cheque" />
+            <field name="paperformat_id" ref="account_cheque.paperformat_print_ebank_cheque" />
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">account_cheque.print_ebank_cheque</field>
             <field name="report_file">account_cheque.print_ebank_cheque</field>
