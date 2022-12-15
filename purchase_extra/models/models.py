@@ -130,26 +130,23 @@ class PurchaseOrder(models.Model):
 
         # return res
 
-    @api.onchange('order_line')
-    def _compute_percentage(self):
-        qty_total=0
-        for order in self.order_line:
-            # order.estimate_unit_price=order.price_unit
-            print("qtyyy",order.product_qty)
-            qty_total+= order.product_qty
-        for order in self.order_line:
-            if qty_total !=0:
-             order.product_qty_percentage=order.product_qty / qty_total
 
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    product_qty_percentage = fields.Float('Qty percentage')
+    product_qty_percentage = fields.Float('Qty percentage',compute='get_product_qty_percentage')
     estimate_unit_price = fields.Float('Estimate price')
     estimate_subtotal = fields.Float('Estimate subtotal')
 
-
+    @api.depends('order_id','product_id','product_qty')
+    def get_product_qty_percentage(self):
+        for rec in self:
+            rec.product_qty_percentage=0
+            qty_total = sum(line.product_qty for line in rec.order_id.order_line)
+            for order in rec.order_id.order_line:
+                if qty_total > 0:
+                    order.product_qty_percentage = order.product_qty / qty_total
 
 
     def _prepare_account_move_line(self, move=False):
