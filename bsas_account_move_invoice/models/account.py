@@ -84,8 +84,18 @@ class AccountMoveInherit(models.Model):
 class AccountMoveLineInherit(models.Model):
     _inherit = 'account.move.line'
 
-    container_equipment_number = fields.Char(string="Container/Equipment Number")
+    container_equipment_number = fields.Char(string="Container/Equipment Number",compute='compute_container_equipment_number')
     is_storable = fields.Boolean(string="IS Storable",compute='compute_is_storable')
+
+
+    @api.depends('sale_line_ids')
+    def compute_container_equipment_number(self):
+        for rec in self:
+            rec.container_equipment_number=''
+            if rec.sale_line_ids:
+                for line in rec.sale_line_ids:
+                    rec.container_equipment_number=line.container_equipment_number
+
     @api.depends('product_id')
     def compute_is_storable(self):
         for rec in self:
