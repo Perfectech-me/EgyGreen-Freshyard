@@ -22,7 +22,6 @@
         'reports/wafa_cheque.xml',
         'reports/alexbank.xml',
         'reports/ebank.xml',
-        'reports/credit_agricole.xml',
     ],
 
     'license': 'LGPL-3',
