@@ -158,18 +158,6 @@
             <field name="binding_type">report</field>
         </record>
 
-        <record id="action_print_check_credit_agricole" model="ir.actions.report">
-            <field name="name">Credit Agricole Check</field>
-            <field name="model">account.cheque</field>
-            <field name="paperformat_id" ref="account_cheque.paperformat_print_epe_cheque" />
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">account_cheque.print_credit_agricole_cheque</field>
-            <field name="report_file">account_cheque.print_credit_agricole_cheque</field>
-            <field name="print_report_name">(object._get_report_base_filename())</field>
-            <field name="binding_model_id" ref="account_cheque.model_account_cheque"/>
-            <field name="binding_type">report</field>
-        </record>
-
 
 
 
