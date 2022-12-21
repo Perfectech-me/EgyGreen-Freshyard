@@ -17,7 +17,7 @@
                     <br/>
 
                     <span class="font-weight-bold">فقط:</span>
-                    <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>
+                    <span class="font-weight-bold" t-field="o.total_amount_arabic_word"/>
                     <span class="font-weight-bold">لاغير</span>
 
                 </div>

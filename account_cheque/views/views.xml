@@ -197,6 +197,7 @@
                             <group>
                                 <group>
                                     <field name="chq_no"/>
+                                    <field name="total_amount_arabic_word" invisible="1"/>
                                     <label for="amount"/>
                                     <div class="o_row">
                                     <field name="amount" attrs="{'readonly': [('status', '!=','draft')]}"/>
