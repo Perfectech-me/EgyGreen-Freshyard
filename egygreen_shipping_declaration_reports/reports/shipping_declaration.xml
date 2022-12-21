@@ -231,19 +231,19 @@
                                                   <td style="background: #d4eceb;"><strong>Total Gross Weight</strong></td>
                                               </tr>
                                               <tr t-foreach="o.order_line" t-as="line">
-                                                  <td><span style="float: right; text-align:center;" t-esc="line.net_weight_per_unit*line.product_uom_qty"/></td>
+                                                  <td><span style="float: right; text-align:center;" t-esc="round(line.net_weight_per_unit*line.product_uom_qty,3)"/></td>
 
                                                   <td>
-                                                      <span style="float: right; text-align:center;" t-esc="line.gross_weight_per_unit*line.product_uom_qty"/>
+                                                      <span style="float: right; text-align:center;" t-esc="round(line.gross_weight_per_unit*line.product_uom_qty,3)"/>
                                                   </td>
                                               </tr>
                                           </table>
                                             <strong>Total Net Weight</strong>
-                                            <span style="float: right; text-align:right;" t-esc="total_net_weight"/>
+                                            <span style="float: right; text-align:right;" t-esc="round(total_net_weight,3)"/>
                                             <br/>
                                             <br/>
                                             <strong>Total Gross Weight</strong>
-                                            <span style="float: right; text-align:center;" t-esc="total_gross_weight"/>
+                                            <span style="float: right; text-align:center;" t-esc="round(total_gross_weight,3)"/>
                                             <br/>
 
                                         </td>
