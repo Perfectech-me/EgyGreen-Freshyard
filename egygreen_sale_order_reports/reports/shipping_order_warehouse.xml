@@ -152,9 +152,7 @@
                                             </td>
                                             <td colspan="1"
                                                 style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
-                                                <t t-foreach="line.order_id.picking_ids" t-as="picking">
-                                                    <span t-field="picking.location_id"/>
-                                                </t>
+                                                 <span t-field="line.order_id.packing_place_id"/>
                                             </td>
                                         </tr>
 
@@ -167,9 +165,10 @@
                                             <td colspan="1"
                                                 style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
                                                 <t t-foreach="line.order_id.invoice_ids" t-as="invoice">
-                                                    <span t-field="invoice.inspection1_partner_id"/><br/>
-                                                    <span t-field="invoice.inspection2_partner_id"/><br/>
-                                                    <span t-field="invoice.other_cost"/>-<span t-field="invoice.other_cost_partner_id"/>
+<!--                                                    <span t-field="invoice.inspection1_partner_id"/><br/>-->
+<!--                                                    <span t-field="invoice.inspection2_partner_id"/><br/>-->
+<!--                                                    <span t-field="invoice.other_cost"/>- -->
+                                                    <span t-field="invoice.other_cost_partner_id"/>
                                                 </t>
                                             </td>
                                         </tr>
@@ -181,10 +180,8 @@
                                             </td>
                                             <td colspan="1"
                                                 style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
-                                                <t t-foreach="line.order_id.order_line" t-as="service">
-                                                    <t t-if="service.product_id.additional_service">
-                                                        <span t-field="service.product_id"/>
-                                                    </t>
+                                                <t t-foreach="line.order_id.partner_shipping_ids" t-as="ship">
+                                                        <span t-field="ship.name"/>,
                                                 </t>
                                             </td>
                                         </tr>
@@ -197,10 +194,8 @@
                                             </td>
                                             <td colspan="1"
                                                 style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
-                                                <t t-foreach="line.order_id.order_line" t-as="service">
-                                                    <t t-if="service.service_provider_partner_id">
-                                                        <span t-field="service.service_provider_partner_id"/>
-                                                    </t>
+                                                 <t t-foreach="line.order_id.partner_clearance_ids" t-as="clear">
+                                                        <span t-field="clear.name"/>,
                                                 </t>
                                             </td>
                                         </tr>

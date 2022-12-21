@@ -222,19 +222,20 @@
 
 
                                               <t t-set="total_quantity" t-value="total_quantity+line.product_uom_qty"/>
-                                             <t t-set="total_gross_weight" t-value="total_gross_weight+line.gross_weight_per_unit"/>
-                                                 <t t-set="total_net_weight" t-value="total_net_weight+line.net_weight_per_unit"/>
+                                             <t t-set="total_gross_weight" t-value="total_gross_weight+line.gross_weight_per_unit*line.product_uom_qty"/>
+                                                 <t t-set="total_net_weight" t-value="total_net_weight+line.net_weight_per_unit*line.product_uom_qty"/>
                                              </t>
 
                                               <tr>
                                                   <td style="background: #d4eceb;"><strong>Total Net Weight</strong></td>
                                                   <td style="background: #d4eceb;"><strong>Total Gross Weight</strong></td>
                                               </tr>
-                                              <tr>
+                                              <tr t-foreach="o.order_line" t-as="line">
+                                                  <td><span style="float: right; text-align:center;" t-esc="line.net_weight_per_unit*line.product_uom_qty"/></td>
+
                                                   <td>
-                                                      <span style="float: right; text-align:center;" t-esc="total_net_weight"/>
+                                                      <span style="float: right; text-align:center;" t-esc="line.gross_weight_per_unit*line.product_uom_qty"/>
                                                   </td>
-                                                  <td><span style="float: right; text-align:center;" t-esc="total_gross_weight"/></td>
                                               </tr>
                                           </table>
                                             <strong>Total Net Weight</strong>
