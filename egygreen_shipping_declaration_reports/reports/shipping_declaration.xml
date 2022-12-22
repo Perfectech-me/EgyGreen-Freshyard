@@ -227,8 +227,8 @@
                                              </t>
 
                                               <tr>
-                                                  <td style="background: #d4eceb;"><strong>Total Net Weight</strong></td>
-                                                  <td style="background: #d4eceb;"><strong>Total Gross Weight</strong></td>
+                                                  <td style="background: #d4eceb;"><strong>Net Weight</strong></td>
+                                                  <td style="background: #d4eceb;"><strong>Gross Weight</strong></td>
                                               </tr>
                                               <tr t-foreach="o.order_line" t-as="line">
                                                   <td><span style="float: right; text-align:center;" t-esc="round(line.net_weight_per_unit*line.product_uom_qty,3)"/></td>
