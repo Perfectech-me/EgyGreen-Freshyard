@@ -23,7 +23,7 @@
                 </div>
 
                 <div style="float:right;text-align:right;width:100%;padding-top:10px;font-size:14px;" dir="rtl">
-                    <span style="float:right;text-align:right">#</span><span t-field="o.amount" style="float:right;text-align:right;"/>#     &#160;&#160;&#160;&#160;&#160;&#160;<span t-field="o.bank_account_id.sudo().currency_id"/>
+                    <span style="float:right;text-align:right">#</span><span t-field="o.amount" style="float:right;text-align:right;"/>#     &#160;&#160;&#160;&#160;&#160;<span t-field="o.bank_account_id.sudo().currency_id"/>
                 </div>
 
                 <div style="float:right;text-align:right;width:68%;padding-top:8px;">
