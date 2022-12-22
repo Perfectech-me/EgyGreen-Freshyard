@@ -31,10 +31,10 @@
         <record id="paperformat_print_epe_cheque" model="report.paperformat">
             <field name="name">Paper EPE Cheque</field>
             <field name="format">custom</field>
-            <field name="page_height">160</field>
+            <field name="page_height">170</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
-            <field name="margin_top">35</field>
+            <field name="margin_top">34</field>
             <field name="margin_right">0</field>
             <field name="margin_left">7</field>
             <field name="dpi">80</field>

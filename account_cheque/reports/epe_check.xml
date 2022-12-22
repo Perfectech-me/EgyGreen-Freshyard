@@ -3,15 +3,15 @@
         <div t-attf-class="header " t-att-style="report_header_style">
             <t t-set="o" t-value="o.with_context(lang=lang)"/>
             <div dir="rtl">
-                <div style="float:right;text-align:right;font-size:14px;width:100%;padding-right:15px;">
+                <div style="float:right;text-align:right;font-size:14px;width:100%;">
                     <span t-esc="o.cheque_date"/>
                 </div>
-                <div style="float:right;text-align:right;padding-right:52px;width:100%;padding-top:22px;" name="payee">
+                <div style="float:right;text-align:right;padding-right:100px;width:100%;padding-top:22px;" name="payee">
                     <!--<br/>-->
                     <span t-field="o.beneficiary_name"/>
                 </div>
 
-                <div class="col text-right" style="padding-right:33px;font-size:11px;width:100%;padding-top:33px;">
+                <div class="col text-right" style="padding-right:220px;font-size:11px;width:85%;padding-top:33px;height:2.5cm;">
                     <br/>
                     <br/>
                     <br/>
@@ -22,8 +22,8 @@
 
                 </div>
 
-                <div style="float:right;text-align:right;width:32%;padding-top:63px;font-size:14px;" dir="rtl">
-                    <span style="float:right;text-align:right">#</span><span t-field="o.amount" style="float:right;text-align:right;"/>#    <span t-field="o.bank_account_id.sudo().currency_id"/>
+                <div style="float:right;text-align:right;width:100%;padding-top:10px;font-size:14px;" dir="rtl">
+                    <span style="float:right;text-align:right">#</span><span t-field="o.amount" style="float:right;text-align:right;"/>#     &#160;&#160;&#160;&#160;&#160;&#160;<span t-field="o.bank_account_id.sudo().currency_id"/>
                 </div>
 
                 <div style="float:right;text-align:right;width:68%;padding-top:8px;">
@@ -32,7 +32,7 @@
                     <!--<br/>-->
                     <br/>
 
-                    <span style="float:left;text-align:right;padding-left:90px;padding-top:45px;">غير قابل للتظهير
+                    <span style="float:left;text-align:right;padding-left:180px;padding-top:45px;">غير قابل للتظهير
                     </span>
 
                 </div>
@@ -42,8 +42,6 @@
 
 
         </div>
-
-
     </template>
     <template id="print_epe_cheque">
         <t t-call="web.html_container">
