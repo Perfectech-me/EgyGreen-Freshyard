@@ -203,6 +203,7 @@
                                     <field name="amount" attrs="{'readonly': [('status', '!=','draft')]}"/>
                                     - <field name="currency_id" required="1"/>
                                     </div>
+                                    <field name="amount_egy" invisible="1"/>
                                 </group>
                                 <group>
                                     <field name="cheque_date"/>

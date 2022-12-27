@@ -1,6 +1,12 @@
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 from datetime import timedelta, datetime
+
+import pandas as pd
+# import datetime
+import time
+from dateutil.rrule import rrule, MONTHLY
+
 class account_move_report_wizard(models.Model):
     _name = 'cheque.wizard'
     _description = 'Cheque Wizard'
@@ -43,6 +49,27 @@ class account_move_report_wizard(models.Model):
     # @api.multi
     def generate_cheque_report(self):
         domain=[]
+        # month_list=[]
+        date1=datetime.strptime(str(self.from_date), "%Y-%m-%d").date()
+        date2=datetime.strptime(str(self.to_date), "%Y-%m-%d").date()
+
+        # for i in pd.date_range(start=date1, end=date2, freq='MS'):
+        #     print(i,"EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+        #     month_list.append(i.strftime("%b-%y"))
+        #     print("11111111111111111111111111111111",i.strftime("%b-%y"))
+        # month_list = [i.strftime("%b-%y") for i in pd.date_range(start=date1, end=date2, freq='MS')]
+        #
+        # print(month_list,"************************************************")
+
+        delta = date2 - date1  # returns timedelta
+        month_list=[]
+        for i in range(delta.days + 1):
+            day = date1 + timedelta(days=i)
+            if day.month not in month_list:
+                month_list.append(day.strftime("%b-%y"))
+
+        print(set(month_list),"TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+
 
         if self.date_type=='cheque_date':
             domain.append (('cheque_date', '>=', self.from_date))
@@ -67,11 +94,32 @@ class account_move_report_wizard(models.Model):
 
         if self.bank_account_id:
             domain.append(('bank_account_id', '=', self.bank_account_id.id))
-
-
         domain.append(('type', '=', self.type))
-        print(domain)
-        return self.env['account.cheque'].search(domain)
+
+        total_month_amount=[]
+        for month in set(month_list):
+            total_amount=0.0
+            for cheque in self.env['account.cheque'].search(domain):
+                if self.date_type=='cheque_date':
+                    cheque_date=datetime.strptime(str(cheque.cheque_date), "%Y-%m-%d").date()
+                    if month==cheque_date.strftime("%b-%y"):
+                        total_amount+=cheque.amount_egy
+                elif self.date_type == 'cheque_given_date':
+                    cheque_date = datetime.strptime(str(cheque.cheque_given_date), "%Y-%m-%d").date()
+                    if month == cheque_date.strftime("%b-%y"):
+                        total_amount += cheque.amount_egy
+
+            if total_amount>0:
+                total_month_amount.append({
+                    'month':month,
+                    'total_amount':total_amount,
+                })
+
+
+        if self.type=='incoming':
+            return self.env['account.cheque'].search(domain)
+        else:
+            return [self.env['account.cheque'].search(domain),total_month_amount]
 
     # @api.multi
     def incoming_report_method(self):

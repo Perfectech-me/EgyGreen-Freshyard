@@ -22,7 +22,7 @@
                                 </td>
                             </h1>
                             <table class="table table-condensed"
-                                   style="border:8px solid black;width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
+                                   style="border:8px solid black;width:100%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
                                 <tbody>
                                     <tr style="white-space: nowrap;">
                                         <td align="right">From :</td>
@@ -64,44 +64,66 @@
                                 <thead>
 
                                     <tr>
-                                        <td class="tg-hmp3">Payee</td>
-                                        <td class="tg-hmp3">Ch.NO</td>
+                                        <td class="tg-hmp3">Cheque Number</td>
+                                        <td class="tg-hmp3">Currency</td>
                                         <td class="tg-hmp3">Amount</td>
+                                        <td class="tg-hmp3">Amount EGP</td>
                                         <td class="tg-hmp3">Ch Given Date</td>
-                                        <td class="tg-hmp3">Due Date</td>
+                                        <td class="tg-hmp3">Cheque Date</td>
                                         <td class="tg-hmp3">Bank Account</td>
+                                        <td class="tg-hmp3">Payee</td>
+                                        <td class="tg-hmp3">إسم المستفيد</td>
                                         <td class="tg-hmp3">Analytic Account</td>
-                                        <td class="tg-hmp3">State</td>
+                                        <td class="tg-hmp3">Cheque State</td>
                                         <td class="tg-hmp3">State Date</td>
+                                        <td class="tg-hmp3">Description</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <t t-set="total_amount" t-value="0"/>
-                                    <t t-foreach="o.generate_cheque_report()" t-as="rec">
+                                    <t t-set="total_amount_egy" t-value="0"/>
+                                    <t t-foreach="o.generate_cheque_report()[0]" t-as="rec">
                                         <t t-set="total_amount" t-value="(total_amount+rec.amount)"/>
+                                        <t t-set="total_amount_egy" t-value="(total_amount_egy+rec.amount_egy)"/>
                                         <tr>
                                             <td class="td-lrbotborder">
-                                                <span t-field="rec.payee_user_id.name" style=" font-size:13px;"/>
+                                                <span t-field="rec.chq_no" style=" font-size:13px;"/>
 
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.chq_no" style=" font-size:13px;"/>
+                                                    <span t-field="rec.currency_id" style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.amount"
+                                                    <span t-field="rec.amount"
                                                           style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.cheque_given_date"
+                                                    <span t-field="rec.amount_egy"
                                                           style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.cheque_date"
+                                                    <span t-field="rec.cheque_given_date"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.cheque_date"
                                                           style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
                                                     <span t-field="rec.bank_account_id"
                                                           style=" font-size:13px;"/>
                                                 </td>
+
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.payee_user_id"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.beneficiary_name"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+
+
                                                 <td class="td-lrbotborder">
                                                     <span t-field="rec.analytic_account_id"
                                                           style=" font-size:13px;"/>
@@ -114,6 +136,10 @@
                                                     <span t-field="rec.current_state_date"
                                                           style=" font-size:13px;"/>
                                                 </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.comment"
+                                                          style=" font-size:13px;"/>
+                                                </td>
                                             </td>
 
                                         </tr>
@@ -123,6 +149,16 @@
 
                                         <td>
                                             <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="round(total_amount_egy,2)" style=" font-size:16px;"/>
+
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
                                         </td>
                                         <td>
                                         </td>
@@ -141,6 +177,20 @@
 
                                 </tbody>
                             </table>
+
+                            <table class="table table-condensed"
+                                   style="border:0px solid black;text-align: left;font-weight:bold;font-size:20px;">
+                                <thead>
+                                    <t t-foreach="o.generate_cheque_report()[1]" t-as="month_amount">
+                                        <tr>
+                                            <td style="width:20%;"><span t-esc="month_amount['month']"/> </td>
+                                            <td style="width:80%;float:left"><span t-esc="month_amount['total_amount']"/> </td>
+                                        </tr>
+                                    </t>
+                                </thead>
+                            </table>
+
+
                         </font>
                     </div>
 

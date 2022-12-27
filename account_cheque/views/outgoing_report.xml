@@ -68,7 +68,7 @@
                                 </thead>
                                 <tbody>
                                     <t t-set="total_amount" t-value="0"/>
-                                    <t t-foreach="o.generate_cheque_report()" t-as="rec">
+                                    <t t-foreach="o.generate_cheque_report()[0]" t-as="rec">
                                         <t t-set="total_amount" t-value="(total_amount+rec.amount)"/>
                                         <tr>
                                             <td class="td-lrbotborder">

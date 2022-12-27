@@ -199,6 +199,9 @@ class account_cheque(models.Model):
     payer_bank = fields.Text(string="Payer Bank", required=False, )
     company_id = fields.Many2one(comodel_name="res.company", string="Company", required=True,default=lambda self: self.env.company.id)
     amount = fields.Float(string="Amount", required=True, )
+    amount_egy = fields.Float(string="Amount EGY",compute='compute_amount_egy')
+
+
     cheque_given_date = fields.Date(string="Cheque Given Date", required=False, )
     cheque_receive_date = fields.Date(string="", required=False, )
     cheque_return_date = fields.Date(string="", required=False, )
@@ -222,6 +225,13 @@ class account_cheque(models.Model):
 
     currency_id = fields.Many2one(comodel_name="res.currency", string="Currency")
 
+    @api.depends('amount','currency_id')
+    def compute_amount_egy(self):
+        for rec in self:
+            if rec.currency_id.rate>0 and rec.currency_id.id != self.env.ref('base.EGP').id:
+                rec.amount_egy=rec.amount / rec.currency_id.rate
+            else:
+                rec.amount_egy =rec.amount
 
     def check_company(self):
         res={}
