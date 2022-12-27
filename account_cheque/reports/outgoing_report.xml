@@ -145,13 +145,13 @@
                                         </tr>
                                     </t>
                                     <tr>
-                                        <th class="tg-baqh" colspan="2">Total Amount</th>
+                                        <th class="tg-baqh" colspan="3"><span t-esc="len(o.generate_cheque_report()[0])"/> </th>
 
                                         <td>
-                                            <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>
+<!--&lt;!&ndash;                                            <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>&ndash;&gt;-->
                                         </td>
                                         <td>
-                                            <span t-esc="round(total_amount_egy,2)" style=" font-size:16px;"/>
+                                            <span t-esc="round(total_amount_egy,2)" style=" font-size:16px;"/>&#160;&#160;EGP
 
                                         </td>
                                         <td>
@@ -170,8 +170,7 @@
                                         </td>
                                         <td>
                                         </td>
-                                        <td>
-                                        </td>
+
 
                                     </tr>
 
@@ -184,7 +183,7 @@
                                     <t t-foreach="o.generate_cheque_report()[1]" t-as="month_amount">
                                         <tr>
                                             <td style="width:20%;"><span t-esc="month_amount['month']"/> </td>
-                                            <td style="width:80%;float:left"><span t-esc="month_amount['total_amount']"/> </td>
+                                            <td style="width:80%;float:left"><span t-esc="month_amount['total_amount']"/>&#160;&#160;EGP </td>
                                         </tr>
                                     </t>
                                 </thead>
