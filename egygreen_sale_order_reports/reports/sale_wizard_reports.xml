@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+
+
+        <record id="sale_wizard_report_xlsx" model="ir.actions.report">
+            <field name="name">Sales Report</field>
+            <field name="model">sale.wizard.report</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">egygreen_sale_order_reports.sale_report_xlsx</field>
+            <field name="report_file">egygreen_sale_order_reports.sale_report_xlsx</field>
+            <field name="binding_model_id" ref="egygreen_sale_order_reports.model_sale_wizard_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

@@ -16,7 +16,7 @@
                 <t t-call="web.external_layout">
                     <div class="page">
                         <font face="KacstOne">
-                            <h1 align="center">Report Date :
+                            <h1 align="center" style="background-color:#006699;color:#ffffff;">Report Date :
                                 <td>
                                     <t t-esc="o.get_today()" t-field-options='{"format": "d/M/yy"}'/>
                                 </td>
@@ -64,19 +64,19 @@
                                 <thead>
 
                                     <tr>
-                                        <td class="tg-hmp3">Cheque Number</td>
-                                        <td class="tg-hmp3">Currency</td>
-                                        <td class="tg-hmp3">Amount</td>
-                                        <td class="tg-hmp3">Amount EGP</td>
-                                        <td class="tg-hmp3">Ch Given Date</td>
-                                        <td class="tg-hmp3">Cheque Date</td>
-                                        <td class="tg-hmp3">Bank Account</td>
-                                        <td class="tg-hmp3">Payee</td>
-                                        <td class="tg-hmp3">إسم المستفيد</td>
-                                        <td class="tg-hmp3">Analytic Account</td>
-                                        <td class="tg-hmp3">Cheque State</td>
-                                        <td class="tg-hmp3">State Date</td>
-                                        <td class="tg-hmp3">Description</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Cheque Number</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Currency</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Amount</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Amount EGP</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Ch Given Date</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Cheque Date</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Bank Account</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Payee</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">إسم المستفيد</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Analytic Account</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Cheque State</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">State Date</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Description</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -144,14 +144,15 @@
 
                                         </tr>
                                     </t>
+
                                     <tr>
-                                        <th class="tg-baqh" colspan="3"><span t-esc="len(o.generate_cheque_report()[0])"/> </th>
+                                        <th class="tg-baqh" colspan="3" style="background-color:#006699;color:#ffffff;"><span t-esc="len(o.generate_cheque_report()[0])"/> </th>
 
                                         <td>
 <!--&lt;!&ndash;                                            <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>&ndash;&gt;-->
                                         </td>
-                                        <td>
-                                            <span t-esc="round(total_amount_egy,2)" style=" font-size:16px;"/>&#160;&#160;EGP
+                                        <td style="background-color:#006699;color:#ffffff;">
+                                            <span t-esc="'{0:,.2f}'.format(round(total_amount_egy,2))"/>&#160;&#160;EGP
 
                                         </td>
                                         <td>
@@ -178,12 +179,18 @@
                             </table>
 
                             <table class="table table-condensed"
-                                   style="border:0px solid black;text-align: left;font-weight:bold;font-size:20px;">
+                                   style="border:0px solid black;text-align: left;font-weight:bold;font-size:20px;width:40%">
                                 <thead>
+                                    <tr>
+                                        <td colspan="2" style="background-color:#006699;color:#ffffff;">
+                                            <strong>Total Amount per month in EGP</strong>
+                                        </td>
+                                    </tr>
                                     <t t-foreach="o.generate_cheque_report()[1]" t-as="month_amount">
-                                        <tr>
+                                        <tr style="background-color:#006699;color:#ffffff;">
                                             <td style="width:20%;"><span t-esc="month_amount['month']"/> </td>
-                                            <td style="width:80%;float:left"><span t-esc="month_amount['total_amount']"/>&#160;&#160;EGP </td>
+                                            <td style="width:80%;float:left">
+                                                <span t-esc="'{0:,.2f}'.format(month_amount['total_amount'])"/>&#160;&#160;EGP </td>
                                         </tr>
                                     </t>
                                 </thead>

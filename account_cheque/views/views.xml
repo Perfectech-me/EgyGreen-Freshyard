@@ -386,4 +386,26 @@
               action="action_reporting_incoming"/>
     <menuitem id="outgoing_report" name="Outgoing Cheque Report" sequence="4" groups="account_cheque.group_cheque"  parent="account_cheque.menu_root"
               action="action_reporting_outgoing"/>
+
+
+
+
+    <record id="form_view_inherit_res_currency" model="ir.ui.view">
+            <field name="name">name.res.currency.inherit.form</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='currency_subunit_label']" position="after">
+                    <field name="currency_unit_arabic"/>
+                    <field name="currency_subunit_arabic"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+
+
 </odoo>
