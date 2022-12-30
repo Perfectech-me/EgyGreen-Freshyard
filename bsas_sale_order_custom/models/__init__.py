@@ -8,4 +8,3 @@ from . import shipment_line
 from . import sales_person_users
 from . import account_move
 from . import container_type
-from . import stock_valuation_layer

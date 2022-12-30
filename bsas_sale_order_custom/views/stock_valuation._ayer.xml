@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="stock_account.stock_valuation_layer_pivot"/>
             <field name="arch" type="xml">
                 <field name="quantity" position="after">
-                    <field name="cost" type="measure"/>
+                    <field name="unit_cost" type="measure" string="Cost"/>
                 </field>
             </field>
         </record>
