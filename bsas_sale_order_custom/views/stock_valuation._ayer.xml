@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+
+        <record id="view_pivot_inherit_stock_valuation_layer" model="ir.ui.view">
+            <field name="name">view_pivot_inherit_stock_valuation_layer</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_pivot"/>
+            <field name="arch" type="xml">
+                <field name="quantity" position="after">
+                    <field name="cost" type="measure"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
