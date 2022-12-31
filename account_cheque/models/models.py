@@ -24,8 +24,8 @@ class account_cheque(models.Model):
     @api.depends('amount','currency_id')
     def compute_amount_arabic_word(self):
         for rec in self:
+            rec.total_amount_arabic_word = ''
             if rec.currency_id:
-                rec.total_amount_arabic_word = ''
                 amount = round(rec.amount, 4)
                 text = rec.currency_id.amount_to_text(amount)
                 integer = int(amount)
