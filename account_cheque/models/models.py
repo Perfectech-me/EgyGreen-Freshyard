@@ -23,80 +23,80 @@ class account_cheque(models.Model):
 
     @api.depends('amount','currency_id')
     def compute_amount_arabic_word(self):
-        self.total_amount_arabic_word = ''
-        amount = round(self.amount, 4)
-        text = self.currency_id.amount_to_text(amount)
-        integer = int(amount)
-        decimal = round((amount - integer), 2) * 100
-        riyal = num2words(integer, lang='ar')
-        halala = num2words(decimal, lang='ar')
-        text_ar = riyal
-        text_ar += " " + str(self.currency_id.currency_unit_arabic)
-        if decimal:
-            text_ar += ' و'
-            text_ar += halala
-            text_ar += " " + str(self.currency_id.currency_subunit_arabic)
-
-            # total_amount=str(text_ar).split()
-        amount_text = text_ar
-        line_list = str(text_ar).split()
-        if 'عشرين' in line_list:
-            amount_text = str(str(text_ar).replace("عشرين", "عشرون"))
-
-        if 'وعشرين' in line_list:
-            amount_text = str(str(text_ar).replace("وعشرين", "وعشرون"))
-
-        if 'ثلاثين' in line_list:
-            amount_text = str(str(text_ar).replace("ثلاثين", "ثلاثون"))
-
-        if 'وثلاثين' in line_list:
-            amount_text = str(str(text_ar).replace("وثلاثين", "وثلاثون"))
-
-        if 'أربعين' in line_list:
-            amount_text = str(str(text_ar).replace("أربعين", "أربعون"))
-        if 'وأربعين' in line_list:
-            amount_text = str(str(text_ar).replace("وأربعين", "وأربعون"))
-
-        if 'خمسين' in line_list:
-            amount_text = str(str(text_ar).replace("خمسين", "خمسون"))
-        if 'وخمسين' in line_list:
-            amount_text = str(str(text_ar).replace("وخمسين", "وخمسون"))
-
-        if 'ستين' in line_list:
-            amount_text = str(str(text_ar).replace("ستين", "ستون"))
-        if 'وستين' in line_list:
-            amount_text = str(str(text_ar).replace("وستين", "وستون"))
-
-        if 'سبعين' in line_list:
-            amount_text = str(str(text_ar).replace("سبعين", "سبعون"))
-        if 'وسبعين' in line_list:
-            amount_text = str(str(text_ar).replace("وسبعين", "وسبعون"))
-
-        if 'ثمانين' in line_list:
-            amount_text = str(str(text_ar).replace("ثمانين", "ثمانون"))
-
-        if 'وثمانين' in line_list:
-            amount_text = str(str(text_ar).replace("وثمانين", "وثمانون"))
-
-        if 'تسعين' in line_list:
-            amount_text = str(str(text_ar).replace("تسعين", "تسعون"))
-
-        if 'وتسعين' in line_list:
-            amount_text = str(str(text_ar).replace("وتسعين", "وتسعون"))
-        if 'مئة' in amount_text:
-            amount_text = str(str(amount_text).replace("مئة", "مائة"))
-        if 'ومئة' in amount_text:
-            amount_text = str(str(amount_text).replace("ومئة", "ومائة"))
-
-        if 'مئتين' in amount_text:
-            amount_text = str(str(amount_text).replace("مئتين", "مائتين"))
-        if 'ومئتين' in amount_text:
-            amount_text = str(str(amount_text).replace("ومئتين", "ومائتين"))
-
-        if '،' in amount_text:
-            amount_text = str(str(amount_text).replace("،", ","))
-
         for rec in self:
+            rec.total_amount_arabic_word = ''
+            amount = round(rec.amount, 4)
+            text = rec.currency_id.amount_to_text(amount)
+            integer = int(amount)
+            decimal = round((amount - integer), 2) * 100
+            riyal = num2words(integer, lang='ar')
+            halala = num2words(decimal, lang='ar')
+            text_ar = riyal
+            text_ar += " " + str(rec.currency_id.currency_unit_arabic)
+            if decimal:
+                text_ar += ' و'
+                text_ar += halala
+                text_ar += " " + str(rec.currency_id.currency_subunit_arabic)
+
+                # total_amount=str(text_ar).split()
+            amount_text = text_ar
+            line_list = str(text_ar).split()
+            if 'عشرين' in line_list:
+                amount_text = str(str(text_ar).replace("عشرين", "عشرون"))
+
+            if 'وعشرين' in line_list:
+                amount_text = str(str(text_ar).replace("وعشرين", "وعشرون"))
+
+            if 'ثلاثين' in line_list:
+                amount_text = str(str(text_ar).replace("ثلاثين", "ثلاثون"))
+
+            if 'وثلاثين' in line_list:
+                amount_text = str(str(text_ar).replace("وثلاثين", "وثلاثون"))
+
+            if 'أربعين' in line_list:
+                amount_text = str(str(text_ar).replace("أربعين", "أربعون"))
+            if 'وأربعين' in line_list:
+                amount_text = str(str(text_ar).replace("وأربعين", "وأربعون"))
+
+            if 'خمسين' in line_list:
+                amount_text = str(str(text_ar).replace("خمسين", "خمسون"))
+            if 'وخمسين' in line_list:
+                amount_text = str(str(text_ar).replace("وخمسين", "وخمسون"))
+
+            if 'ستين' in line_list:
+                amount_text = str(str(text_ar).replace("ستين", "ستون"))
+            if 'وستين' in line_list:
+                amount_text = str(str(text_ar).replace("وستين", "وستون"))
+
+            if 'سبعين' in line_list:
+                amount_text = str(str(text_ar).replace("سبعين", "سبعون"))
+            if 'وسبعين' in line_list:
+                amount_text = str(str(text_ar).replace("وسبعين", "وسبعون"))
+
+            if 'ثمانين' in line_list:
+                amount_text = str(str(text_ar).replace("ثمانين", "ثمانون"))
+
+            if 'وثمانين' in line_list:
+                amount_text = str(str(text_ar).replace("وثمانين", "وثمانون"))
+
+            if 'تسعين' in line_list:
+                amount_text = str(str(text_ar).replace("تسعين", "تسعون"))
+
+            if 'وتسعين' in line_list:
+                amount_text = str(str(text_ar).replace("وتسعين", "وتسعون"))
+            if 'مئة' in amount_text:
+                amount_text = str(str(amount_text).replace("مئة", "مائة"))
+            if 'ومئة' in amount_text:
+                amount_text = str(str(amount_text).replace("ومئة", "ومائة"))
+
+            if 'مئتين' in amount_text:
+                amount_text = str(str(amount_text).replace("مئتين", "مائتين"))
+            if 'ومئتين' in amount_text:
+                amount_text = str(str(amount_text).replace("ومئتين", "ومائتين"))
+
+            if '،' in amount_text:
+                amount_text = str(str(amount_text).replace("،", ","))
+
             rec.total_amount_arabic_word = amount_text
 
     def _get_report_base_filename(self):
