@@ -14,9 +14,10 @@ class SaleWizardReport(models.TransientModel):
                                                                 ], default='Africa')
     country_ids = fields.Many2many(comodel_name="res.country", string="Country")
     order_category = fields.Selection(string="Order Catrgory", selection=[
-        ('International', 'International'),
-        ('Local', 'Local'),
-    ], default='International')
+                                                                            ('International', 'International'),
+                                                                            ('Local', 'Local'),
+                                                                            ('Export', 'Export'),
+                                                                          ],default='International' )
 
     export_type = fields.Selection(string="Order Type", selection=[('fresh', 'fresh'), ('frozen', 'frozen'),
                                                                     ('food_products', 'Food Products'),
@@ -26,7 +27,7 @@ class SaleWizardReport(models.TransientModel):
 
     packing_place_id = fields.Many2one(comodel_name="res.partner", string="Packing Place")
     analytic_account_id = fields.Many2one(comodel_name="account.analytic.account", string="Analytical  Account")
-    discharge_country_id = fields.Many2one(comodel_name="res.country", string="Place Of Discharge")
+    discharge_country_id = fields.Many2one(comodel_name="res.country.state", string="Place Of Discharge")
 
     incoterm_id = fields.Many2one(comodel_name="account.incoterms", string="Incoterm")
     pricelist_id = fields.Many2one(comodel_name="product.pricelist", string="Pricelist")
@@ -36,8 +37,11 @@ class SaleWizardReport(models.TransientModel):
     partner_insurance_ids = fields.Many2many(comodel_name="res.partner", relation="insurances_id", column1="parts_insurance", column2="colums_insurance", string="Insurance Company", )
     shipping_type = fields.Selection(string="Shipping Type", selection=[('Air', 'Air'), ('Ocean', 'Ocean'),('Land', 'Land')])
     #
-    sales_person_user_ids = fields.Many2many(comodel_name="res.users",string="Sales Person")
+    sales_person_user_ids = fields.Many2many(comodel_name="sales.person.users",string="Sales Person")
 
-
+    sale_type = fields.Selection(string="", selection=[('sale_order', 'Sale Order'), ('sale_or_line', 'Sale Order Line')],default='sale_order')
+    product_type = fields.Selection(string="Product Type", selection=[
+        ('row_materials', 'Row Materials'), ('sort', 'Sort'), ('packing', 'Packing'),
+        ('finish_products', 'Finish Products'), ('other', 'Other')], default='row_materials')
     def button_print(self):
         return self.env.ref('egygreen_sale_order_reports.sale_wizard_report_xlsx').report_action(self)

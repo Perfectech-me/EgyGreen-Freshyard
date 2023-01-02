@@ -29,6 +29,7 @@
                                     <field name="pricelist_id"/>
                                     <field name="shipping_type"/>
                                     <field name="sales_person_user_ids" widget="many2many_tags"/>
+<!--                                    <field name="sale_type" required="1"/>-->
                             </group>
                         </group>
 

@@ -49,6 +49,10 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         worksheet.set_column('W:W', 22)
         worksheet.set_column('X:X', 22)
         worksheet.set_column('Y:Y', 22)
+        worksheet.set_column('Z:Z', 22)
+        worksheet.set_column('AA:AA', 22)
+        worksheet.set_column('AB:AB', 22)
+        worksheet.set_column('AC:AC', 22)
 
 
         domain=[('date_order','>=',partners.date_from),('date_order','<=',partners.date_to)]
@@ -73,7 +77,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         if partners.analytic_account_id:
             domain.append(('analytic_account_id', '=', partners.analytic_account_id.id))
         if partners.discharge_country_id:
-            domain.append(('discharge_country_id', '=', partners.discharge_country_id.id))
+            domain.append(('discharge_city_id', '=', partners.discharge_country_id.id))
 
         if partners.incoterm_id:
             domain.append(('incoterm_id', '=', partners.incoterm_id.id))
@@ -95,6 +99,9 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
 
         if partners.sales_person_user_ids:
             domain.append(('sales_person_user_id', 'in', partners.sales_person_user_ids.ids))
+
+        if partners.product_type:
+            domain.append(('product_type', '=', partners.product_type))
 
 
         row = 1
@@ -121,41 +128,77 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
             worksheet.write(row, col + 11, 'incoterm', header_format)
             worksheet.write(row, col + 12, 'loading date', header_format)
             worksheet.write(row, col + 13, 'ETA', header_format)
-            worksheet.write(row, col + 14, 'total net weight / KG', header_format)
-            worksheet.write(row, col + 15, 'total gross weight / KG', header_format)
-            worksheet.write(row, col + 16, 'Price list', header_format)
-            worksheet.write(row, col + 17, 'Amount In Currency', header_format)
-            worksheet.write(row, col + 22, 'amount in Egp', header_format)
-            worksheet.write(row, col + 19, 'payment Terms', header_format)
-            worksheet.write(row, col + 20, 'shipping Line', header_format)
-            worksheet.write(row, col + 21, 'shipping Type', header_format)
-            worksheet.write(row, col + 22, 'sales person', header_format)
+            worksheet.write(row, col + 14, 'Container / Equipment Quantity', header_format)
+            worksheet.write(row, col + 15, 'Container / Equipment Type', header_format)
+
+
+
+            worksheet.write(row, col + 16, 'total net weight / KG', header_format)
+            worksheet.write(row, col + 17, 'total gross weight / KG', header_format)
+            worksheet.write(row, col + 18, 'Price list', header_format)
+            worksheet.write(row, col + 19, 'Amount In Currency', header_format)
+            worksheet.write(row, col + 20, 'Amount in EGP', header_format)
+
+
+
+            worksheet.write(row, col + 21, 'payment Terms', header_format)
+            worksheet.write(row, col + 22, 'Freight Forwarder', header_format)
+            worksheet.write(row, col + 23, 'Clearance Company', header_format)
+            worksheet.write(row, col + 24, 'Insurance Company', header_format)
+
+
+            worksheet.write(row, col + 25, 'shipping Line', header_format)
+            worksheet.write(row, col + 26, 'shipping Type', header_format)
+            worksheet.write(row, col + 27, 'sales person', header_format)
 
             row += 1
-            worksheet.write(row, col, line.name, header_format_lines)
-            worksheet.write(row, col + 1, line.partner_id.name, header_format_lines)
-            worksheet.write(row, col + 2, line.partner_id.continent, header_format_lines)
-            worksheet.write(row, col + 3, line.partner_id.country_id.name, header_format_lines)
-            worksheet.write(row, col + 3, line.order_category, header_format_lines)
-            worksheet.write(row, col + 4, line.export_type, header_format_lines)
-            worksheet.write(row, col + 5, line.product_type, header_format_lines)
-            worksheet.write(row, col + 6, line.packing_place_id.name, header_format_lines)
-            worksheet.write(row, col + 7, line.analytic_account_id.name, header_format_lines)
-            worksheet.write(row, col + 8, line.final_destination_country_id.name, header_format_lines)
-            worksheet.write(row, col + 9, line.port_loading_id.name, header_format_lines)
-            worksheet.write(row, col + 10, line.discharge_country_id.name, header_format_lines)
-            worksheet.write(row, col + 11, line.incoterm.name, header_format_lines)
-            worksheet.write(row, col + 12, str(line.loading_date), header_format_lines)
-            worksheet.write(row, col + 13, str(line.commitment_date), header_format_lines)
-            worksheet.write(row, col + 14, sum(rec.net_weight_per_unit for rec in line.order_line), header_format_lines)
-            worksheet.write(row, col + 15, sum(rec.gross_weight_per_unit for rec in line.order_line), header_format_lines)
-            worksheet.write(row, col + 16, line.pricelist_id.name, header_format_lines)
-            worksheet.write(row, col + 17, line.amount_total, header_format_lines)
-            worksheet.write(row, col + 22, line.amount_total/line.currency_id.rate if line.currency_id.rate>0 else 0,header_format_lines)
-            worksheet.write(row, col + 19, line.payment_term_id.name, header_format_lines)
-            worksheet.write(row, col + 20, line.shipment_line_id.name, header_format_lines)
-            worksheet.write(row, col + 21, line.shipping_line_type, header_format_lines)
-            worksheet.write(row, col + 22, line.sales_person_user_id.name, header_format_lines)
+            worksheet.write(row, col, line.name or "", header_format_lines)
+            worksheet.write(row, col + 1, line.partner_id.name or "", header_format_lines)
+            worksheet.write(row, col + 2, line.partner_id.continent or "", header_format_lines)
+            worksheet.write(row, col + 3, line.partner_id.country_id.name or "", header_format_lines)
+            worksheet.write(row, col + 3, line.order_category or "", header_format_lines)
+            worksheet.write(row, col + 4, line.export_type or "", header_format_lines)
+            worksheet.write(row, col + 5, line.product_type or "", header_format_lines)
+            worksheet.write(row, col + 6, line.packing_place_id.name or "", header_format_lines)
+            worksheet.write(row, col + 7, line.analytic_account_id.name or "", header_format_lines)
+            worksheet.write(row, col + 8, line.final_destination_country_id.name or "", header_format_lines)
+            worksheet.write(row, col + 9, line.port_loading_id.name or "", header_format_lines)
+            worksheet.write(row, col + 10, line.discharge_country_id.name or "", header_format_lines)
+            worksheet.write(row, col + 11, line.incoterm.name or "", header_format_lines)
+            worksheet.write(row, col + 12, str(line.loading_date) or "", header_format_lines)
+            worksheet.write(row, col + 13, str(line.commitment_date) or "", header_format_lines)
+            worksheet.write(row, col + 14, str(line.container_number) or "", header_format_lines)
+            worksheet.write(row, col + 15, str(line.container_type_id.name) or "", header_format_lines)
+
+
+
+            worksheet.write(row, col + 16, sum(rec.net_weight_per_unit for rec in line.order_line)  or "", header_format_lines)
+            worksheet.write(row, col + 17, sum(rec.gross_weight_per_unit for rec in line.order_line)  or "", header_format_lines)
+            worksheet.write(row, col + 18, line.pricelist_id.name+"("+line.pricelist_id.currency_id.name+")"  or "", header_format_lines)
+            worksheet.write(row, col + 19, line.amount_total  or "", header_format_lines)
+            worksheet.write(row, col + 20, line.total_amount_egp  or "",header_format_lines)
+            worksheet.write(row, col + 21, line.payment_term_id.name  or "", header_format_lines)
+            name_freight=''
+            for fright in line.partner_shipping_ids:
+                name_freight+=fright.name+""
+            worksheet.write(row, col + 22, name_freight  or "", header_format_lines)
+
+            name_clearance = ''
+            for clearance in line.partner_clearance_ids:
+                name_clearance += clearance.name + ""
+
+            worksheet.write(row, col + 23, name_clearance or "", header_format_lines)
+
+            name_insurance = ''
+            for insurance in line.partner_insurance_ids:
+                name_insurance += insurance.name + ""
+
+            worksheet.write(row, col + 24, name_insurance or "", header_format_lines)
+
+
+            worksheet.write(row, col + 25, line.shipment_line_id.name or "", header_format_lines)
+            worksheet.write(row, col + 26, line.shipping_line_type or "", header_format_lines)
+            worksheet.write(row, col + 27, line.sales_person_user_id.name or "", header_format_lines)
 
             row += 1
             worksheet.write(row, col, 'Product Name', header_format)
