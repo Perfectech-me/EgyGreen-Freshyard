@@ -29,13 +29,13 @@ class StockValuationLayerInherit(models.Model):
     _inherit = 'stock.valuation.layer'
 
     categ_id = fields.Many2one('product.category', compute='product_id.categ_id',)
-    product_category_name = fields.Char(string="Category")
+    product_category_id = fields.Many2one('product.category',string="Category")
 
     @api.model
     def create(self, vals):
         res = super(StockValuationLayerInherit, self).create(vals)
         if res.product_id:
-            res.product_category_name=res.product_id.categ_id.name
+            res.product_category_id=res.product_id.categ_id.id
         return res
 
     # def _inverse_partner_data(self):
