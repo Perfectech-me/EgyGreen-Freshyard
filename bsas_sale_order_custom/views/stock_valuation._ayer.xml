@@ -8,6 +8,8 @@
             <field name="arch" type="xml">
                 <field name="quantity" position="after">
                     <field name="unit_cost" type="measure" string="Cost"/>
+                    <field name="uom_id"/>
+<!--                    <field name="categ_id" />-->
                 </field>
             </field>
         </record>
