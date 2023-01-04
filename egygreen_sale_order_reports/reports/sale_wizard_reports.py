@@ -22,7 +22,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         format_total_lines = workbook.add_format(
             {'bold': True, 'align': 'center', 'valign': 'vcenter','bg_color': '#b3b3b3','color': 'white'})
 
-        worksheet = workbook.add_worksheet('Journal Entries')
+        worksheet = workbook.add_worksheet('Sale Order')
 
         worksheet.set_column('A:A', 22)
         worksheet.set_column('B:B', 22)
