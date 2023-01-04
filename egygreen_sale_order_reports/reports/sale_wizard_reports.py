@@ -55,7 +55,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         worksheet.set_column('AC:AC', 22)
 
 
-        domain=[('create_date','>=',partners.date_from),('create_date','<=',partners.date_to)]
+        domain=[('date_order','>=',partners.date_from),('date_order','<=',partners.date_to)]
 
         if partners.partner_ids:
             domain.append(('partner_id','in',partners.partner_ids.ids))
