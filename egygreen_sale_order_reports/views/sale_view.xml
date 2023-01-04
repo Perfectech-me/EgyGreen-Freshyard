@@ -19,11 +19,7 @@
                 <field name="gross_weight_per_unit" required="1"/>
             </xpath>
 
-            <xpath expr="//group[@name='sale_header']" position="inside">
-                <group>
-                    <field name="data_loger"/>
-                </group>
-            </xpath>
+
 
         </field>
     </record>
