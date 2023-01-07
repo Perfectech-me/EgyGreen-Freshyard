@@ -59,47 +59,49 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
 
         if partners.partner_ids:
             domain.append(('partner_id','in',partners.partner_ids.ids))
-
+        #
         if partners.continent:
             domain.append(('partner_id.continent','=',partners.continent))
-
+        #
         if partners.country_ids:
             domain.append(('partner_id.country_id','=',partners.country_ids.ids))
+
         if partners.order_category:
             domain.append(('order_category','=',partners.order_category))
-
+        #
         if partners.export_type:
             domain.append(('export_type', '=', partners.export_type))
-
+        #
         if partners.packing_place_id:
             domain.append(('packing_place_id', '=', partners.packing_place_id.id))
-
+        #
         if partners.analytic_account_id:
             domain.append(('analytic_account_id', '=', partners.analytic_account_id.id))
+
         if partners.discharge_country_id:
             domain.append(('discharge_city_id', '=', partners.discharge_country_id.id))
 
         if partners.incoterm_id:
             domain.append(('incoterm_id', '=', partners.incoterm_id.id))
-
+        #
         if partners.pricelist_id:
             domain.append(('pricelist_id', '=', partners.pricelist_id.id))
 
         if partners.partner_shipping_ids:
             domain.append(('partner_shipping_ids', 'in', partners.partner_shipping_ids.ids))
-
+        #
         if partners.partner_clearance_ids:
             domain.append(('partner_clearance_ids', 'in', partners.partner_clearance_ids.ids))
 
         if partners.partner_insurance_ids:
             domain.append(('partner_insurance_ids', 'in', partners.partner_insurance_ids.ids))
-
+        #
         if partners.shipping_type:
             domain.append(('shipping_type', '=', partners.shipping_type))
 
         if partners.sales_person_user_ids:
             domain.append(('sales_person_user_id', 'in', partners.sales_person_user_ids.ids))
-
+        #
         if partners.product_type:
             domain.append(('product_type', '=', partners.product_type))
 
