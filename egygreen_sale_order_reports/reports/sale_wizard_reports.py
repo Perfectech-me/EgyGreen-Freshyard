@@ -183,7 +183,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
             worksheet.write(row, col + 18, line.pricelist_id.name+"("+line.pricelist_id.currency_id.name+")"  or "", header_format_lines)
             worksheet.write(row, col + 19, line.amount_total  or "", header_format_lines)
             worksheet.write(row, col + 20, line.total_amount_egp  or "",header_format_lines)
-            worksheet.write(row, col + 21, line.payment_term_id.name  or "", header_format_lines)
+            worksheet.write(row, col + 21, line.sudo().payment_term_id.name  or "", header_format_lines)
             name_freight=''
             for fright in line.partner_shipping_ids:
                 name_freight+=fright.name+""
