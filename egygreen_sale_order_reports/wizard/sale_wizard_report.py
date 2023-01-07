@@ -43,5 +43,8 @@ class SaleWizardReport(models.TransientModel):
     product_type = fields.Selection(string="Product Type", selection=[
         ('row_materials', 'Row Materials'), ('sort', 'Sort'), ('packing', 'Packing'),
         ('finish_products', 'Finish Products'), ('other', 'Other')],)
+
+    company_id = fields.Many2one(comodel_name="res.company", string="Company", default=lambda self: self.env.company.id)
+
     def button_print(self):
         return self.env.ref('egygreen_sale_order_reports.sale_wizard_report_xlsx').report_action(self)
