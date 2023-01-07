@@ -11,13 +11,13 @@ class SaleWizardReport(models.TransientModel):
                                                                 ('Europe', 'Europe'),
                                                                 ('North_America', 'North America'),
                                                                 ('South_America', 'South America')
-                                                                ], default='Africa')
+                                                                ])
     country_ids = fields.Many2many(comodel_name="res.country", string="Country")
     order_category = fields.Selection(string="Order Catrgory", selection=[
                                                                             ('International', 'International'),
                                                                             ('Local', 'Local'),
                                                                             ('Export', 'Export'),
-                                                                          ],default='International' )
+                                                                          ])
 
     export_type = fields.Selection(string="Order Type", selection=[('fresh', 'fresh'), ('frozen', 'frozen'),
                                                                     ('food_products', 'Food Products'),
@@ -39,9 +39,9 @@ class SaleWizardReport(models.TransientModel):
     #
     sales_person_user_ids = fields.Many2many(comodel_name="sales.person.users",string="Sales Person")
 
-    sale_type = fields.Selection(string="", selection=[('sale_order', 'Sale Order'), ('sale_or_line', 'Sale Order Line')],default='sale_order')
+    sale_type = fields.Selection(string="", selection=[('sale_order', 'Sale Order'), ('sale_or_line', 'Sale Order Line')])
     product_type = fields.Selection(string="Product Type", selection=[
         ('row_materials', 'Row Materials'), ('sort', 'Sort'), ('packing', 'Packing'),
-        ('finish_products', 'Finish Products'), ('other', 'Other')], default='row_materials')
+        ('finish_products', 'Finish Products'), ('other', 'Other')],)
     def button_print(self):
         return self.env.ref('egygreen_sale_order_reports.sale_wizard_report_xlsx').report_action(self)
