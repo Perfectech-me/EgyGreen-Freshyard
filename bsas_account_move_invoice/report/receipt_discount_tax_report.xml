@@ -217,29 +217,29 @@
 
                                 <br/>
                                 <br/>
-                                <table style="width:100%;border-width:0px;border-color:black;font-size:12px;"
+                                <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
                                        class="table table-sm table-bordered oe_inline" dir="rtl">
 
                                     <tr>
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:15%;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;width:15%;">
                                             <span style="float:left">الإسم :</span>
                                         </td>
 
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;width:45%;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:14px;width:45%;">
 
                                         </td>
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:10%;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;width:10%;">
                                             <span style="float:right">: Name</span>
                                         </td>
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:10%;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;width:10%;">
                                             <span style="float:left">التاريخ :</span>
                                         </td>
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;width:15%;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;width:15%;">
                                             <span style="float:right" t-field="o.invoice_date"/>
                                         </td>
 
@@ -247,32 +247,32 @@
                                     </tr>
                                     <tr>
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;">
                                             <span style="float:left">الوظيفة :</span>
                                         </td>
 
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:14px;">
 
                                         </td>
                                         <td colspan="3"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;">
                                             <span style="float:right">: Occupation</span>
                                         </td>
 
                                     </tr>
                                     <tr>
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;">
                                             <span style="float:left">التوقيع :</span>
                                         </td>
 
                                         <td colspan="1"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:14px;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:14px;">
 
                                         </td>
                                         <td colspan="3"
-                                            style="text-align:center;border-width:0px;border-color:black;font-size:15px;">
+                                            style="text-align:center;border-width:1px;border-color:black;font-size:15px;">
                                             <span style="float:right">: Signature</span>
                                         </td>
 
