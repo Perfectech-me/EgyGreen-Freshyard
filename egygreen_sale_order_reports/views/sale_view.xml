@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='fiscal_position_id']" position="after">
                 <field name="partner_bank_id" attrs="{'readonly':[('state','in',['sale','done'])]}"/>
-                <field name="data_loger"/>
+                <field name="data_loger" readonly="1" force_save="1"/>
                 <field name="total_amount_egp" readonly="1" force_save="1"/>
             </xpath>
             <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
@@ -21,7 +21,7 @@
 
             <xpath expr="//group[@name='sale_header']" position="inside">
                 <group>
-                    <field name="data_loger" readonly="1" force_save="1"/>
+                    <field name="data_loger"/>
                 </group>
             </xpath>
 
