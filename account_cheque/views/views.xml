@@ -90,7 +90,7 @@
         <field name="arch" type="xml">
             <tree string="">
                 <field name="name"/>
-                <field name="payer_user_id"/>
+                <field name="payee_user_id"/>
                 <field name="chq_no"/>
                 <field name="cheque_date"/>
                 <field name="cheque_given_date"/>
