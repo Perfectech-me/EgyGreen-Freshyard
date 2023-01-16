@@ -15,6 +15,8 @@ class SaleOrderInherit(models.Model):
     data_loger = fields.Text(string="Data Loger")
     total_amount_egp = fields.Float(string="Total Amount EGP")
 
+
+
     @api.model
     def create(self, vals):
         result = super(SaleOrderInherit, self).create(vals)

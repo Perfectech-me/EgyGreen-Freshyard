@@ -45,6 +45,10 @@ class SaleWizardReport(models.TransientModel):
         ('finish_products', 'Finish Products'), ('other', 'Other')],)
 
     company_id = fields.Many2one(comodel_name="res.company", string="Company", default=lambda self: self.env.company.id)
-
+    invoice_status = fields.Selection(
+        [('invoiced', 'Fully Invoiced'),
+         ('to invoice', 'To Invoice'),
+         ('no', 'Nothing to Invoice')],
+        string='Invoice Status')
     def button_print(self):
         return self.env.ref('egygreen_sale_order_reports.sale_wizard_report_xlsx').report_action(self)
