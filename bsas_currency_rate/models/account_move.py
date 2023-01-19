@@ -6,7 +6,7 @@ class AccountMoveInherit(models.Model):
     @api.onchange('date','line_ids')
     def _reset_currency_rate(self):
         for line in self.line_ids:
-            line._currency_rate()
+            line.get_currency_rate()
 
 class AccountMoveLine(models.Model):
     _inherit='account.move.line'
