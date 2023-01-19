@@ -257,12 +257,12 @@ class account_cheque(models.Model):
             debit=self.amount
             credit=self.amount
         else:
-            if self.debit_account_id.currency_id.rate>0:
-                debit=self.amount / self.debit_account_id.currency_id.rate
+            if self.currency_id.rate>0:
+                debit=self.amount / self.currency_id.rate
             else:
                 debit=0
-            if self.debit_account_id.currency_id.rate>0:
-                credit=self.amount / self.debit_account_id.currency_id.rate
+            if self.currency_id.rate>0:
+                credit=self.amount / self.currency_id.rate
             else:
                 credit=0
         object1 = (
@@ -275,7 +275,7 @@ class account_cheque(models.Model):
                 'journal_id': self.journal_id.id,
                 'partner_id': x.id,
                 'analytic_account_id': self.analytic_account_id.id,
-                'currency_id': self.debit_account_id.currency_id.id,
+                'currency_id': self.currency_id.id,
             })
         object2 = (
             0, 0, {'name': self.name,
@@ -286,7 +286,7 @@ class account_cheque(models.Model):
                    'journal_id': self.journal_id.id,
                    'partner_id': x.id,
                    'analytic_account_id': self.analytic_account_id.id,
-                   'currency_id': self.credit_account_id.currency_id.id,
+                   'currency_id': self.currency_id.id,
 
                    })
 
@@ -617,7 +617,7 @@ class account_cheque(models.Model):
         x = self.env['res.config.settings'].search([], order='id desc',
                                                    limit=1)
         print(x.incoming_chq_credit_account_id.id)
-        print("hsihama,a,a.a")
+
         tree_view_id = self.env.ref('account_cheque.incoming_cheque_tree').id
         form_view = self.env.ref('account_cheque.cheque_form_view')
         return {
