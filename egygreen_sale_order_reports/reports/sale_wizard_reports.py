@@ -121,6 +121,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
 
 
         sale_order=self.env['sale.order'].search(domain)
+
         worksheet.write(row, col, 'Sales Order', header_format)
         worksheet.write(row, col + 1, 'Customer Name', header_format)
         worksheet.write(row, col + 2, 'Continent', header_format)
@@ -217,7 +218,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                 worksheet.write(row, col + 30, "", header_format_lines)
 
 
-            # row += 1
+            row += 1
             # worksheet.write(row, col, 'Product Name', header_format)
             # worksheet.write(row, col + 1, 'Quantity', header_format)
             # worksheet.write(row, col + 2, 'Container Equipment Number', header_format)
