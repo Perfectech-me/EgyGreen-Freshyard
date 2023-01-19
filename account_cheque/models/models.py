@@ -107,11 +107,10 @@ class account_cheque(models.Model):
     def create(self, waltz):
 
         account_type_test=self.env['account.account'].search_read([])
-        for a in account_type_test:
-            print('a.type',a)
+
         if waltz:
             waltz['sequence'] = self.env['ir.sequence'].next_by_code('cheque')
-            print(waltz['sequence'])
+
         return super(account_cheque, self).create(waltz)
     type = fields.Selection(string="", selection=[('incoming', 'incoming'), ('outgoing', 'outgoing'), ],
                             required=True, )
@@ -166,10 +165,8 @@ class account_cheque(models.Model):
             com = self.env['res.company'].browse(self._context.get('allowed_company_ids')).ids
             domain = [('id', 'in', com)]
             res['domain'] = {'company_id': domain}
-        print(self.env['res.company'].search([]))
 
-        for rec in self.env.company:
-            print('rec',rec)
+
         return res
 
 
@@ -177,7 +174,7 @@ class account_cheque(models.Model):
     def _chq_no_constraint(self):
         if self.chq_no:
             for sympol in self.chq_no:
-                print(sympol)
+
                 if sympol not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
                     raise ValidationError('Your Cheque Number Must Be Only Numbers !')
 
@@ -214,7 +211,6 @@ class account_cheque(models.Model):
         if self.payer_user_id:
             x = self.env['account.move'].search(
                 [('partner_id', '=', self.payer_user_id.id), ('move_type', '=', 'out_invoice')])
-            print(x)
             self.invoice_ids = x
 
     @api.onchange('payee_user_id')
@@ -257,14 +253,23 @@ class account_cheque(models.Model):
             debit=self.amount
             credit=self.amount
         else:
-            if self.currency_id.rate>0:
-                debit=self.amount / self.currency_id.rate
+            rate=0
+            rates_current=[]
+            if self.currency_id:
+                rates = self.currency_id.rate_ids.mapped('name')
+                for line in rates:
+                    if line <= date:
+                        rates_current.append(line)
+                for line in self.currency_id.rate_ids:
+                    if rates_current and max(set(rates_current)) == line.name:
+                        rate = line.inverse_company_rate
+
+            if rate>0:
+                credit=debit= self.amount*rate
             else:
                 debit=0
-            if self.currency_id.rate>0:
-                credit=self.amount / self.currency_id.rate
-            else:
-                credit=0
+                credit = 0
+
         object1 = (
             0, 0, {
                 'name': self.name,
@@ -311,8 +316,6 @@ class account_cheque(models.Model):
             credit = self.debit_account_id
             if(self.journal_items_count==4):
                credit = self.cheq_under_collection_account_id
-            print("self.debit_account_id",self.debit_account_id.name,"self.debit_account_id",self.credit_account_id.name)
-
             self.journal_items_count += 2
             self.current_state_date = datetime.today().strftime('%Y-%m-%d')
             records = []
@@ -361,7 +364,6 @@ class account_cheque(models.Model):
 
     def set_to_bank(self):
         self.status = 'bank'
-        print(self.cheq_under_collection_account_id)
         if self.type == 'incoming':
             x = self.payer_user_id
             date = self.cheque_receive_date
@@ -422,7 +424,7 @@ class account_cheque(models.Model):
             action_context.update({'mode': 'suppliers'})
         if move_line_id:
             action_context.update({'move_line_id': move_line_id})
-        print(action_context)
+
         return {
             'type': 'ir.actions.client',
             'tag': 'manual_reconciliation_view',
@@ -604,7 +606,7 @@ class account_cheque(models.Model):
         x = self.env['account.move'].search([('cheque_id', '=', self.id)], )
         for rec in x:
             if rec.state:
-                print(rec.state)
+
                 rec.sudo().unlink()
             else:
                 raise ValidationError('This Cheque Cannot be Canceled Because of its Posted JE')
@@ -616,7 +618,6 @@ class account_cheque(models.Model):
     def incoming_action_return(self):
         x = self.env['res.config.settings'].search([], order='id desc',
                                                    limit=1)
-        print(x.incoming_chq_credit_account_id.id)
 
         tree_view_id = self.env.ref('account_cheque.incoming_cheque_tree').id
         form_view = self.env.ref('account_cheque.cheque_form_view')
@@ -643,8 +644,7 @@ class account_cheque(models.Model):
         x = self.env['res.config.settings'].search([], order='id desc', limit=1)
         tree_view_id = self.env.ref('account_cheque.outgoing_cheque_tree').id
         form_view = self.env.ref('account_cheque.cheque_form_view')
-        print(x.outgoing_chq_credit_account_id.id)
-        print("hsihama,a,a.a")
+
         return {
             'name': ("Outgoing Cheque"),
             'type': 'ir.actions.act_window',
@@ -671,7 +671,7 @@ class account_cheque(models.Model):
 
         for record in x:
             m = (record.cheque_date - today).days
-            print(m, record.no_of_days_to_reminder, "record.no_of_days_to_reminder")
+
             if m == record.no_of_days_to_reminder:
                 for user in users:
                     if user.has_group('account_cheque.group_cheque_notification'):
@@ -685,21 +685,18 @@ class account_cheque(models.Model):
         x = self.search([('type', '=', 'outgoing'), ])
         today = fields.Date.today()
         users = self.env['res.users'].search([])
-        print("hiiiiii")
 
         for record in x:
             m = (record.cheque_date - today).days
-            print(m,record.no_of_days_to_reminder,"record.no_of_days_to_reminder")
+
             if m == record.no_of_days_to_reminder:
                 for user in users:
                     if user.has_group('account_cheque.group_cheque_notification'):
-                        print('hiiil')
+
                         record.activity_schedule('account_cheque.schdule_activity_manager_id', record.cheque_date,
                                               user_id=user.id,
                                               summary="Your Cheque Will be Due in %s Days !" % m)
 
-                print(record.create_uid.name)
-                print('yalla ')
 
 
 class ResConfigSettings(models.TransientModel):
