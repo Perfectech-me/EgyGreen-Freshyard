@@ -1,11 +1,18 @@
 from odoo import models, fields, api,_
 
+class AccountMoveInherit(models.Model):
+    _inherit='account.move'
+
+    @api.onchange('date','line_ids')
+    def _reset_currency_rate(self):
+        for line in self.line_ids:
+            line._currency_rate()
 
 class AccountMoveLine(models.Model):
     _inherit='account.move.line'
-    currency_rate = fields.Float(string='Currency Rate', compute="_currency_rate" )
+    currency_rate = fields.Float(string='Currency Rate')
 
-    @api.depends('currency_id','date')
+    @api.onchange('currency_id','date')
     def _currency_rate(self):
         for rec in self:
             rec.currency_rate = 0.0
