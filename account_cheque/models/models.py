@@ -248,12 +248,12 @@ class account_cheque(models.Model):
         self.journal_items_count += 2
         self.current_state_date = datetime.today().strftime('%Y-%m-%d')
         records = []
-
+        rate = 0
         if self.currency_id.id==self.company_id.currency_id.id:
             debit=self.amount
             credit=self.amount
         else:
-            rate=0
+
             rates_current=[]
             if self.currency_id:
                 rates = self.currency_id.rate_ids.mapped('name')
@@ -306,7 +306,10 @@ class account_cheque(models.Model):
             'state': 'draft',
             'cheque_id': self.id
         }
-        self.env['account.move'].create(move_vals)
+        account_move=self.env['account.move'].create(move_vals)
+        if account_move and account_move.line_ids:
+            for line in account_move.line_ids:
+                line.get_currency_rate()
 
     def set_cashed(self):
         if self.type == 'incoming':

@@ -13,7 +13,7 @@ class AccountMoveLine(models.Model):
     currency_rate = fields.Float(string='Currency Rate')
 
     @api.onchange('currency_id','date')
-    def _currency_rate(self):
+    def get_currency_rate(self):
         for rec in self:
             rec.currency_rate = 0.0
             rates_current = []

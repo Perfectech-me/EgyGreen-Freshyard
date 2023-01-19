@@ -7,7 +7,7 @@
     """,
     'category': 'Accounting',
     'version': '15.1',
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account','bsas_currency_rate'],
     'data': [
         'security/cheque_security.xml',
         'security/ir.model.access.csv',
