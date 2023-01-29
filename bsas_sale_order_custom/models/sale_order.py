@@ -84,12 +84,12 @@ class SaleOrderInherit(models.Model):
     container_type_id = fields.Many2one(comodel_name="container.type.config", string="Container/Equipment Type")
 
 
-    @api.constrains('order_line','state')
-    def check_analytic_tag(self):
-        if self.state in ['sale','done','cancel','sent']:
-            for line in self.order_line:
-                if not line.analytic_tag_ids:
-                    raise ValidationError('Please Enter Analytic Tage in Order Lines !')
+    # @api.constrains('order_line','state')
+    # def check_analytic_tag(self):
+    #     if self.state in ['sale','done','cancel','sent']:
+    #         for line in self.order_line:
+    #             if not line.analytic_tag_ids:
+    #                 raise ValidationError('Please Enter Analytic Tage in Order Lines !')
 
     @api.onchange('shipment_line_id')
     def _get_shipping_line_type(self):
