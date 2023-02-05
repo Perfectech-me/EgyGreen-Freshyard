@@ -1,68 +1,6 @@
 <odoo>
     <template id="print_cheque1">
 
-        <!--            <div t-attf-class="header " t-att-style="report_header_style">-->
-        <!--                <t t-set="o" t-value="o.with_context(lang=lang)" />-->
-        <!--                    <div class="float-right"  dir="rtl"  name="company_info">-->
-        <!--                        <div class="col text-right font-weight-bold" style="padding-right:20px;font-size:14px;" name="cheque_date">-->
-        <!--                            <span t-field="o.cheque_date"/>-->
-        <!--                        </div>-->
-
-        <!--                        <br/>-->
-
-        <!--                        <div class="col text-right font-weight-bold" style="padding-right:60px" name="payee">-->
-        <!--                            <span t-field="o.payee_user_id"/>-->
-
-        <!--                        </div>-->
-
-        <!--                        <div class="col text-right" style="padding-right:60px;font-size:11px;" name="num_to_words_ar" >-->
-        <!--                            <span class="font-weight-bold">فقط: </span>-->
-        <!--                            <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>-->
-        <!--                            <span class="font-weight-bold"> لاغير</span>-->
-
-        <!--                        </div>-->
-
-        <!--                        <div style="float:right;text-align:right;width:100%">-->
-        <!--                            <span t-field="o.amount" style="float:right;text-align:right;"/>-->
-        <!--                        </div>-->
-        <!--                        </div>-->
-
-
-        <!--            </div>-->
-        <!--        <div t-attf-class="header " t-att-style="report_header_style">-->
-        <!--            <t t-set="o" t-value="o.with_context(lang=lang)"/>-->
-        <!--            <div dir="rtl">-->
-        <!--                <div style="float:right;text-align:right;padding-right:23px;font-size:14px;width:100%;">-->
-        <!--                    <span t-esc="o.cheque_date"/>-->
-        <!--                </div>-->
-        <!--                <div style="float:right;text-align:right;padding-right:60px;width:100%;" name="payee">-->
-        <!--                    <br/>-->
-        <!--                    <span t-field="o.payee_user_id"/>-->
-        <!--                </div>-->
-
-        <!--                <div class="col text-right" style="padding-right:60px;font-size:11px;width:100%;padding-top:65px;">-->
-        <!--                    <br/>-->
-        <!--                    <span class="font-weight-bold">فقط:</span>-->
-        <!--                    <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>-->
-        <!--                    <span class="font-weight-bold">لاغير</span>-->
-
-        <!--                </div>-->
-
-        <!--                <div style="float:right;text-align:right;width:100%;padding-top:11px;">-->
-
-        <!--                    <span t-field="o.amount" style="float:right;text-align:right;"/>-->
-        <!--                </div>-->
-
-        <!--                <div style="float:right;text-align:right;width:100%;padding-right:30px;padding-top:20px;">-->
-
-        <!--                    <span style="float:right;text-align:right;">أحمد يحيي حنفى أحمد</span>-->
-        <!--                </div>-->
-
-        <!--            </div>-->
-
-
-        <!--        </div>-->
-
         <div t-attf-class="header " t-att-style="report_header_style">
             <t t-set="o" t-value="o.with_context(lang=lang)"/>
             <style type="text/css">
@@ -97,44 +35,50 @@
             <div dir="rtl">
 
 
-                <div style="float:right;text-align:right;width:70%">
-                    <div style="float:right;text-align:right;padding-right:23px;font-size:14px;width:100%;">
-                        <span t-esc="o.cheque_date"/>
+                <div style="float:right;text-align:right;width:100%">
+                    <div style="float:right;text-align:right;font-size:14px;width:100%;padding-right:32px;">
+                        <span t-esc="o.cheque_date" style="float:right;text-align:right;"/>
                     </div>
-                    <div style="float:right;text-align:right;padding-right:60px;width:100%;" name="payee">
+                    <div style="float:right;text-align:right;padding-right:55px;width:100%;" name="payee">
                         <br/>
                         <span t-field="o.beneficiary_name"/>
                     </div>
                 </div>
-                <div style="float:left;text-align:left;width:15%;height:100px;border-top:1px solid black;" id="hr3">
-                </div>
-                <div style="float:left;text-align:center;width:15%;height:100px;border-top:1px solid black;" id="hr3">
-                </div>
+                <!--<div style="float:left;text-align:left;width:15%;height:100px;border-top:1px solid black;" id="hr3">-->
+                <!--</div>-->
+                <!--<div style="float:left;text-align:center;width:15%;height:100px;border-top:1px solid black;" id="hr3">-->
+                <!--</div>-->
 
 
-                <div class="col text-right" style="padding-right:60px;font-size:11px;width:100%;padding-top:65px;">
+                <div class="col text-right" style="padding-right:75px;font-size:11px;width:100%;padding-top:68px;">
                     <br/>
                     <span class="font-weight-bold">فقط:</span>
-                    <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>
+                    <span class="font-weight-bold" t-field="o.total_amount_arabic_word"/>
                     <span class="font-weight-bold">لاغير</span>
 
                 </div>
 
-                <div style="float:right;text-align:right;width:100%;padding-top:11px;">
+                <div style="float:right;text-align:right;width:100%;padding-top:15px;padding-left:30px;font-size:14px;">
 
-                    <span t-field="o.amount" style="float:right;text-align:right;"/>
+                    <!--#<span t-field="o.amount" style="float:right;text-align:right;padding-left:100px;"/>#-->
+                    #<span t-field="o.amount"/>#
                 </div>
 
-                <div style="float:right;text-align:right;width:100%;padding-right:30px;padding-top:20px;">
+                <div style="float:right;text-align:right;width:100%;padding-top:20px;">
 
-                    <span style="float:right;text-align:right;width:100%;">أحمد يحيي حنفى أحمد</span>
+                    <!--<span style="float:right;text-align:right;width:100%;">أحمد يحيي حنفى أحمد</span>-->
+                    <!--<br/>-->
+                    <br/>
+
+                    <span style="float:left;text-align:right;padding-left:130px;padding-top:10px;">غير قابل للتظهير
+                    </span>
+
                 </div>
 
             </div>
 
 
         </div>
-
 
     </template>
     <template id="print_cheque">

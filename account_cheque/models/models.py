@@ -19,32 +19,86 @@ class account_cheque(models.Model):
 
     analytic_account_id = fields.Many2one(comodel_name="account.analytic.account", string="Analytic Account")
 
+    total_amount_arabic_word = fields.Char(string="Arabic Amount", compute='compute_amount_arabic_word')
 
+    @api.depends('amount','currency_id')
+    def compute_amount_arabic_word(self):
+        for rec in self:
+            rec.total_amount_arabic_word = ''
+            if rec.currency_id:
+                amount = round(rec.amount, 4)
+                text = rec.currency_id.amount_to_text(amount)
+                integer = int(amount)
+                decimal = round((amount - integer), 2) * 100
+                riyal = num2words(integer, lang='ar')
+                halala = num2words(decimal, lang='ar')
+                text_ar = riyal
+                text_ar += " " + str(rec.currency_id.currency_unit_arabic)
+                if decimal:
+                    text_ar += ' و'
+                    text_ar += halala
+                    text_ar += " " + str(rec.currency_id.currency_subunit_arabic)
 
-    def num_to_words_ar(self, numbers):
-        str=num2words(numbers,to='currency',lang='ar')
-        if "ريال" in str:
-            str=str.replace( "ريال","جنيه")
-        if "هللة" in str:
-            str=str.replace("هللة","قروش")
-        if "عشرين" in str:
-            str=str.replace( "عشرين","عشرون")
-        if "ثلاثين" in str:
-            str=str.replace( "ثلاثين","ثلاثون")
-        if "اربعين" in str:
-            str=str.replace( "اربعين","اربعون")
-        if "خمسين" in str:
-            str=str.replace( "خمسين","خمسون")
-        if "ستين" in str:
-            str=str.replace("ستين","ستون")
-        if "سبعين" in str:
-            str.replace( "سبعين","سبعون")
-        if "ثمانين" in str:
-            str.replace( "ثمانين","ثمانون")
-        if "تسعين" in str:
-            str.replace("تسعين", "تسعون")
-        return str
+                    # total_amount=str(text_ar).split()
+                amount_text = text_ar
+                line_list = str(text_ar).split()
+                if 'عشرين' in line_list:
+                    amount_text = str(str(text_ar).replace("عشرين", "عشرون"))
 
+                if 'وعشرين' in line_list:
+                    amount_text = str(str(text_ar).replace("وعشرين", "وعشرون"))
+
+                if 'ثلاثين' in line_list:
+                    amount_text = str(str(text_ar).replace("ثلاثين", "ثلاثون"))
+
+                if 'وثلاثين' in line_list:
+                    amount_text = str(str(text_ar).replace("وثلاثين", "وثلاثون"))
+
+                if 'أربعين' in line_list:
+                    amount_text = str(str(text_ar).replace("أربعين", "أربعون"))
+                if 'وأربعين' in line_list:
+                    amount_text = str(str(text_ar).replace("وأربعين", "وأربعون"))
+
+                if 'خمسين' in line_list:
+                    amount_text = str(str(text_ar).replace("خمسين", "خمسون"))
+                if 'وخمسين' in line_list:
+                    amount_text = str(str(text_ar).replace("وخمسين", "وخمسون"))
+
+                if 'ستين' in line_list:
+                    amount_text = str(str(text_ar).replace("ستين", "ستون"))
+                if 'وستين' in line_list:
+                    amount_text = str(str(text_ar).replace("وستين", "وستون"))
+
+                if 'سبعين' in line_list:
+                    amount_text = str(str(text_ar).replace("سبعين", "سبعون"))
+                if 'وسبعين' in line_list:
+                    amount_text = str(str(text_ar).replace("وسبعين", "وسبعون"))
+
+                if 'ثمانين' in line_list:
+                    amount_text = str(str(text_ar).replace("ثمانين", "ثمانون"))
+
+                if 'وثمانين' in line_list:
+                    amount_text = str(str(text_ar).replace("وثمانين", "وثمانون"))
+
+                if 'تسعين' in line_list:
+                    amount_text = str(str(text_ar).replace("تسعين", "تسعون"))
+
+                if 'وتسعين' in line_list:
+                    amount_text = str(str(text_ar).replace("وتسعين", "وتسعون"))
+                if 'مئة' in amount_text:
+                    amount_text = str(str(amount_text).replace("مئة", "مائة"))
+                if 'ومئة' in amount_text:
+                    amount_text = str(str(amount_text).replace("ومئة", "ومائة"))
+
+                if 'مئتين' in amount_text:
+                    amount_text = str(str(amount_text).replace("مئتين", "مائتين"))
+                if 'ومئتين' in amount_text:
+                    amount_text = str(str(amount_text).replace("ومئتين", "ومائتين"))
+
+                if '،' in amount_text:
+                    amount_text = str(str(amount_text).replace("،", ","))
+
+                rec.total_amount_arabic_word = amount_text
 
     def _get_report_base_filename(self):
         return self.name
@@ -53,11 +107,10 @@ class account_cheque(models.Model):
     def create(self, waltz):
 
         account_type_test=self.env['account.account'].search_read([])
-        for a in account_type_test:
-            print('a.type',a)
+
         if waltz:
             waltz['sequence'] = self.env['ir.sequence'].next_by_code('cheque')
-            print(waltz['sequence'])
+
         return super(account_cheque, self).create(waltz)
     type = fields.Selection(string="", selection=[('incoming', 'incoming'), ('outgoing', 'outgoing'), ],
                             required=True, )
@@ -68,12 +121,15 @@ class account_cheque(models.Model):
     chq_no = fields.Char(string="Cheque Number", required=True, )
     cheque_date = fields.Date(string="Cheque Date", required=True, )
     payer_bank = fields.Text(string="Payer Bank", required=False, )
-    company_id = fields.Many2one(comodel_name="res.company", string="Company", required=False,default=lambda self: self.env.company.id)
+    company_id = fields.Many2one(comodel_name="res.company", string="Company", required=True,default=lambda self: self.env.company.id)
     amount = fields.Float(string="Amount", required=True, )
+    amount_egy = fields.Float(string="Amount EGY",compute='compute_amount_egy')
+
+
     cheque_given_date = fields.Date(string="Cheque Given Date", required=False, )
     cheque_receive_date = fields.Date(string="", required=False, )
     cheque_return_date = fields.Date(string="", required=False, )
-    journal_id = fields.Many2one(comodel_name="account.journal", string="Journal"  )
+    journal_id = fields.Many2one(comodel_name="account.journal", string="Journal" , required=True, )
     credit_account_id = fields.Many2one(comodel_name="account.account", string="Credit Account", required=True, )
     debit_account_id = fields.Many2one(comodel_name="account.account", string="Debit Account", required=True, )
     cheq_under_collection_account_id = fields.Many2one(comodel_name="account.account",
@@ -89,8 +145,17 @@ class account_cheque(models.Model):
     journal_items_count = fields.Integer(string="", required=False, )
     attachment = fields.Many2many('ir.attachment')
     current_state_date = fields.Date(string="Current State Date", required=False, default=datetime.today().date())
-
     beneficiary_name = fields.Char(string="إسم المستفيد")
+
+    currency_id = fields.Many2one(comodel_name="res.currency", string="Currency")
+
+    @api.depends('amount','currency_id')
+    def compute_amount_egy(self):
+        for rec in self:
+            if rec.currency_id.rate>0 and rec.currency_id.id != self.env.ref('base.EGP').id:
+                rec.amount_egy=rec.amount / rec.currency_id.rate
+            else:
+                rec.amount_egy =rec.amount
 
     def check_company(self):
         res={}
@@ -100,10 +165,8 @@ class account_cheque(models.Model):
             com = self.env['res.company'].browse(self._context.get('allowed_company_ids')).ids
             domain = [('id', 'in', com)]
             res['domain'] = {'company_id': domain}
-        print(self.env['res.company'].search([]))
 
-        for rec in self.env.company:
-            print('rec',rec)
+
         return res
 
 
@@ -111,7 +174,7 @@ class account_cheque(models.Model):
     def _chq_no_constraint(self):
         if self.chq_no:
             for sympol in self.chq_no:
-                print(sympol)
+
                 if sympol not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
                     raise ValidationError('Your Cheque Number Must Be Only Numbers !')
 
@@ -148,7 +211,6 @@ class account_cheque(models.Model):
         if self.payer_user_id:
             x = self.env['account.move'].search(
                 [('partner_id', '=', self.payer_user_id.id), ('move_type', '=', 'out_invoice')])
-            print(x)
             self.invoice_ids = x
 
     @api.onchange('payee_user_id')
@@ -186,25 +248,50 @@ class account_cheque(models.Model):
         self.journal_items_count += 2
         self.current_state_date = datetime.today().strftime('%Y-%m-%d')
         records = []
+        rate = 0
+        if self.currency_id.id==self.company_id.currency_id.id:
+            debit=self.amount
+            credit=self.amount
+        else:
+
+            rates_current=[]
+            if self.currency_id:
+                rates = self.currency_id.rate_ids.mapped('name')
+                for line in rates:
+                    if line <= date:
+                        rates_current.append(line)
+                for line in self.currency_id.rate_ids:
+                    if rates_current and max(set(rates_current)) == line.name:
+                        rate = line.inverse_company_rate
+
+            if rate>0:
+                credit=debit= self.amount*rate
+            else:
+                debit=0
+                credit = 0
+
         object1 = (
             0, 0, {
                 'name': self.name,
                 'account_id': self.debit_account_id.id,
-                'debit': self.amount,
+                'debit': debit,
+                'amount_currency': self.amount ,
                 'credit': 0.0,
                 'journal_id': self.journal_id.id,
                 'partner_id': x.id,
                 'analytic_account_id': self.analytic_account_id.id,
-                # 'currency_id': self.currency_id.id,
+                'currency_id': self.currency_id.id,
             })
         object2 = (
             0, 0, {'name': self.name,
                    'account_id': self.credit_account_id.id,
                    'debit': 0.0,
-                   'credit': self.amount,
+                   'credit': credit,
+                   'amount_currency': -self.amount,
                    'journal_id': self.journal_id.id,
                    'partner_id': x.id,
                    'analytic_account_id': self.analytic_account_id.id,
+                   'currency_id': self.currency_id.id,
 
                    })
 
@@ -219,7 +306,10 @@ class account_cheque(models.Model):
             'state': 'draft',
             'cheque_id': self.id
         }
-        self.env['account.move'].create(move_vals)
+        account_move=self.env['account.move'].create(move_vals)
+        if account_move and account_move.line_ids:
+            for line in account_move.line_ids:
+                line.get_currency_rate()
 
     def set_cashed(self):
         if self.type == 'incoming':
@@ -229,8 +319,6 @@ class account_cheque(models.Model):
             credit = self.debit_account_id
             if(self.journal_items_count==4):
                credit = self.cheq_under_collection_account_id
-            print("self.debit_account_id",self.debit_account_id.name,"self.debit_account_id",self.credit_account_id.name)
-
             self.journal_items_count += 2
             self.current_state_date = datetime.today().strftime('%Y-%m-%d')
             records = []
@@ -279,7 +367,6 @@ class account_cheque(models.Model):
 
     def set_to_bank(self):
         self.status = 'bank'
-        print(self.cheq_under_collection_account_id)
         if self.type == 'incoming':
             x = self.payer_user_id
             date = self.cheque_receive_date
@@ -340,7 +427,7 @@ class account_cheque(models.Model):
             action_context.update({'mode': 'suppliers'})
         if move_line_id:
             action_context.update({'move_line_id': move_line_id})
-        print(action_context)
+
         return {
             'type': 'ir.actions.client',
             'tag': 'manual_reconciliation_view',
@@ -522,7 +609,7 @@ class account_cheque(models.Model):
         x = self.env['account.move'].search([('cheque_id', '=', self.id)], )
         for rec in x:
             if rec.state:
-                print(rec.state)
+
                 rec.sudo().unlink()
             else:
                 raise ValidationError('This Cheque Cannot be Canceled Because of its Posted JE')
@@ -534,8 +621,7 @@ class account_cheque(models.Model):
     def incoming_action_return(self):
         x = self.env['res.config.settings'].search([], order='id desc',
                                                    limit=1)
-        print(x.incoming_chq_credit_account_id.id)
-        print("hsihama,a,a.a")
+
         tree_view_id = self.env.ref('account_cheque.incoming_cheque_tree').id
         form_view = self.env.ref('account_cheque.cheque_form_view')
         return {
@@ -561,8 +647,7 @@ class account_cheque(models.Model):
         x = self.env['res.config.settings'].search([], order='id desc', limit=1)
         tree_view_id = self.env.ref('account_cheque.outgoing_cheque_tree').id
         form_view = self.env.ref('account_cheque.cheque_form_view')
-        print(x.outgoing_chq_credit_account_id.id)
-        print("hsihama,a,a.a")
+
         return {
             'name': ("Outgoing Cheque"),
             'type': 'ir.actions.act_window',
@@ -589,7 +674,7 @@ class account_cheque(models.Model):
 
         for record in x:
             m = (record.cheque_date - today).days
-            print(m, record.no_of_days_to_reminder, "record.no_of_days_to_reminder")
+
             if m == record.no_of_days_to_reminder:
                 for user in users:
                     if user.has_group('account_cheque.group_cheque_notification'):
@@ -603,21 +688,18 @@ class account_cheque(models.Model):
         x = self.search([('type', '=', 'outgoing'), ])
         today = fields.Date.today()
         users = self.env['res.users'].search([])
-        print("hiiiiii")
 
         for record in x:
             m = (record.cheque_date - today).days
-            print(m,record.no_of_days_to_reminder,"record.no_of_days_to_reminder")
+
             if m == record.no_of_days_to_reminder:
                 for user in users:
                     if user.has_group('account_cheque.group_cheque_notification'):
-                        print('hiiil')
+
                         record.activity_schedule('account_cheque.schdule_activity_manager_id', record.cheque_date,
                                               user_id=user.id,
                                               summary="Your Cheque Will be Due in %s Days !" % m)
 
-                print(record.create_uid.name)
-                print('yalla ')
 
 
 class ResConfigSettings(models.TransientModel):
@@ -699,3 +781,9 @@ class invoice_inherit(models.Model):
 class journal_item_inherit(models.Model):
     _inherit = 'account.move'
     cheque_id = fields.Many2one(comodel_name="account.cheque", string="", required=False, )
+
+class ResCurrencyInherit(models.Model):
+    _inherit = 'res.currency'
+
+    currency_unit_arabic = fields.Char(string="Arabic Currency Unit")
+    currency_subunit_arabic = fields.Char(string="Arabic Currency Subunit")

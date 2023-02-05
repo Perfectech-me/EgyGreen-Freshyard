@@ -1,0 +1,423 @@
+<odoo>
+    <data>
+
+
+        <record id="paperformat_print_shipping_declaration_invoice" model="report.paperformat">
+            <field name="name">Shipping Declaration</field>
+            <field name="format">custom</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">35</field>
+            <field name="margin_bottom">32.00</field>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+          <record id="action_report_proforma_invoice_sale" model="ir.actions.report">
+            <field name="name">Shipping Declaration</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">egygreen_shipping_declaration_reports.shipping_declaration_templates</field>
+            <field name="report_file">egygreen_shipping_declaration_reports.shipping_declaration_templates</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="paperformat_id" ref="egygreen_shipping_declaration_reports.paperformat_print_shipping_declaration_invoice" />
+
+        </record>
+
+         <template id="shipping_declaration_templates">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="header" style="margin-top:0px;width:100%;">
+
+
+                            <div style="width:30%;float:right;text-align:right">
+                                <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
+                                     style="max-height: 80px;"/>
+                            </div>
+                            <div style="width:70%;float:left;">
+                                <h3 style="width:100%;">
+                                    Shipping Declaration
+                                </h3>
+                                <h5 style="color:gray"><span t-field="o.name"/>,Date:<span t-field="o.date_order"/> </h5>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="page" >
+                            <div style="width:100%">
+
+
+                                 <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                       class="table table-sm table-bordered oe_inline">
+
+                                    <tr>
+                                        <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                            <strong style="float:left;text-decoration: underline;background: #d4eceb;">SHIPPER :  </strong>
+                                            <br/>
+
+                                            <strong t-field="o.company_id"/>
+                                            <br/>
+
+                                            <strong t-field="o.company_id.street"/>
+                                            <t t-if="o.company_id.street2">
+                                                ,<strong t-field="o.company_id.street2"/>
+                                            </t>
+                                            <br/>
+                                            <t t-if="o.company_id.city">
+                                                ,<strong t-field="o.company_id.city"/>
+                                            </t>
+                                            <br/>
+                                            <t t-if="o.company_id.state_id">
+                                                ,<strong t-field="o.company_id.state_id"/>
+                                            </t>
+                                            <br/>
+                                            <t t-if="o.company_id.state_id">
+                                                ,<strong t-field="o.company_id.country_id"/>
+                                            </t>
+                                            <br/>
+                                            <t t-if="o.company_id.mobile"> <strong>Mob:</strong><strong t-field="o.company_id.mobile"/>,</t> <t t-if="o.company_id.phone">Tel: <span t-field="o.company_id.phone"/>,</t>
+                                            <br/>
+                                            <t t-if="o.company_id.email">
+                                            <strong>Email:</strong><strong t-field="o.company_id.email"/>
+                                            </t>
+                                            <br/>
+                                            <t t-if="o.company_id.website">
+                                            <strong t-field="o.company_id.website"/>
+                                            </t>
+                                        </td>
+                                         <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:50%;">
+                                            <strong style="text-decoration: underline;background: #d4eceb;">Consignee</strong>
+                                            <br/>
+                                              <t t-foreach="o.partner_consignee_ids" t-as="cons">
+<!--                                                  <span t-field="cons.name"/> -->
+<!--                                             <br/> -->
+                                            <t t-if="cons.street">
+                                               <span t-field="cons.street"/>
+                                            </t>    
+                                            <t t-if="cons.street2">
+                                                ,<span t-field="cons.street2"/>
+                                            </t>
+                                            <t t-if="cons.city">
+                                                ,<span t-field="cons.city"/>
+                                            </t>
+                                            <t t-if="cons.state_id">
+                                                ,<span t-field="cons.state_id"/>
+                                            </t>
+                                            <t t-if="cons.country_id">
+                                                ,<span t-field="cons.country_id"/>
+                                            </t>
+                                             <t t-if="cons.continent">
+                                                ,<span t-field="cons.continent"/>
+                                            </t>
+                                            </t>
+                                            <br/>
+                                             <strong style="text-decoration: underline;background: #d4eceb;">Notify</strong>
+                                             <br/>
+                                            <t t-foreach="o.partner_notify_ids" t-as="notify">
+                                            <t t-if="notify.street">
+                                               <span t-field="notify.street"/>
+                                            </t>    
+                                            <t t-if="notify.street2">
+                                                ,<span t-field="notify.street2"/>
+                                            </t>
+                                            <t t-if="notify.city">
+                                                ,<span t-field="notify.city"/>
+                                            </t>
+                                            <t t-if="notify.state_id">
+                                                ,<span t-field="notify.state_id"/>
+                                            </t>
+                                            <t t-if="notify.country_id">
+                                                ,<span t-field="notify.country_id"/>
+                                            </t>
+                                             <t t-if="notify.continent">
+                                                ,<span t-field="notify.continent"/>
+                                            </t>
+                                            </t>
+
+                                        </td>
+
+                                    </tr>
+                                     <tr style="border-bottom:0px">
+                                         <td colspan="2" style="border-bottom:0px;text-align:center;background: #d4eceb;text-decoration: underline;border-color:black;"><strong style=" text-align:center;float:center;">Shipping Information :  </strong></td>
+
+                                     </tr>
+                                     <tr>
+                                         <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-top:0px;border-right:0px;border-color:black;font-size:12px;">
+                                            <span style="float:left;text-decoration: underline;white-space: nowrap;">P.O.L. : (Port of Loading):</span>
+                                             <br/>
+                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.port_loading_id"/>
+                                             <br/>
+                                            <span style="float:left;text-decoration: underline;white-space: nowrap;">P.O.D.: (Port of Discharge):</span>
+                                             <br/>
+
+                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.discharge_city_id"/>
+                                             <br/>
+                                            <span style="float:left;text-decoration: underline;white-space: nowrap;">FINAL DELIVERY:</span>
+                                             <br/>
+                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.final_destination_country_id"/>
+
+                                        </td>
+                                        <td clospan="1" style="text-align:left;border-width:1px;border-top:0px;border-left:0px;border-color:black;font-size:12px;">
+                                            <strong>Number of Containers</strong>
+                                            <span style="float: right; text-align:right;" t-field="o.container_number"/>
+                                            <br/>
+                                            <br/>
+                                            <strong>Container Type</strong>
+                                            <span style="float: right; text-align:center;" t-field="o.container_type_id"/>
+                                            <br/>
+                                            <br/>
+                                            <strong>Shipping Line</strong>
+                                            <span style="float: right; text-align:center;" t-field="o.shipment_line_id"/>
+                                        </td>
+
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2" style="text-align:center;border-bottom: 0px;text-decoration: underline;background: #d4eceb;border-color:black;"><strong style=" text-align:center;float:center;">Shipping Time  </strong></td>
+
+                                     </tr>
+                                     <tr>
+                                       <td clospan="1" width="50%" style="text-align:left;border-width:1px;border-top:0px;border-right:0px;border-color:black;font-size:12px;">
+                                            <strong>Departure Date</strong>
+                                            <span style="float: right; text-align:right;" t-field="o.deprture_date"/>
+                                            <br/>
+                                            <br/>
+                                            <strong>ETA</strong>
+                                            <span style="float: right; text-align:right;" t-field="o.commitment_date"/>
+                                        </td>
+                                         <td clospan="1" width="50%" style="text-align:left;border-width:1px;border-top:0px;border-left:0px;border-color:black;font-size:12px;">
+                                            <strong>Free Time</strong>
+                                            <span style="float: right; text-align:right;" t-field="o.free_duamrage"/>
+                                            <br/>
+                                            <br/>
+                                            <strong>Loading Date</strong>
+                                            <span style="float: right; text-align:center;" t-field="o.loading_date"/>
+                                            <br/>
+                                            <br/>
+
+                                        </td>
+
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2" style="text-align:left;border-width:0px;border-top:0px;border-left:0px;border-color:black;font-size:12px;">
+                                             <span>The Shipping Line Will be Fully Responsible for all the consequence of the delay if the cargo arrive lately than ETA and Temperature fluctuation on the ETA</span>
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2" style="text-align:center;border-bottom: 0px;text-decoration: underline;border-color:black;background: #d4eceb;"><strong style=" text-align:center;float:center;">Description of Goods</strong></td>
+
+                                     </tr>
+                                     <tr>
+                                       <td clospan="1" style="text-align:left;border-width:1px;border-top:0px;border-right:0px;border-color:black;font-size:12px;">
+                                          <table width="90%">
+                                              <t t-set="total_net_weight" t-value="0"/>
+                                              <t t-set="total_gross_weight" t-value="0"/>
+                                              <t t-set="total_quantity" t-value="0"/>
+
+                                             <t t-foreach="o.order_line" t-as="line">
+
+
+                                              <t t-set="total_quantity" t-value="total_quantity+line.product_uom_qty"/>
+                                             <t t-set="total_gross_weight" t-value="total_gross_weight+line.gross_weight_per_unit*line.product_uom_qty"/>
+                                                 <t t-set="total_net_weight" t-value="total_net_weight+line.net_weight_per_unit*line.product_uom_qty"/>
+                                             </t>
+
+                                              <tr>
+                                                  <td style="background: #d4eceb;"><strong>Net Weight</strong></td>
+                                                  <td style="background: #d4eceb;"><strong>Gross Weight</strong></td>
+                                              </tr>
+                                              <tr t-foreach="o.order_line" t-as="line">
+                                                  <td><span style="float: right; text-align:center;" t-esc="line.net_weight_per_unit"/></td>
+
+                                                  <td>
+                                                      <span style="float: right; text-align:center;" t-esc="line.gross_weight_per_unit"/>
+                                                  </td>
+                                              </tr>
+                                          </table>
+                                            <strong>Total Net Weight</strong>
+                                            <span style="float: right; text-align:right;" t-esc="round(total_net_weight,3)"/>
+                                            <br/>
+                                            <br/>
+                                            <strong>Total Gross Weight</strong>
+                                            <span style="float: right; text-align:center;" t-esc="round(total_gross_weight,3)"/>
+                                            <br/>
+
+                                        </td>
+                                         <td clospan="1" style="text-align:left;border-width:1px;border-top:0px;border-left:0px;border-color:black;font-size:12px;">
+                                             <t t-set="total_quantity" t-value="0"/>
+                                             <t t-foreach="o.order_line" t-as="line">
+
+
+                                              <t t-set="total_quantity" t-value="total_quantity+line.product_uom_qty"/>
+                                             </t>
+
+
+                                            <strong>Total Quantity</strong>
+                                            <span style="float: right; text-align:right;" t-esc="total_quantity"/>
+                                            <br/>
+                                            <br/>
+                                            <strong>Commodity</strong>
+                                            <span style="float: right; text-align:center;" t-field="o.order_line[0].product_id.name"/>
+                                            <br/>
+                                            <br/>
+
+                                        </td>
+
+                                     </tr>
+                                                                          <tr>
+                                         <td colspan="2" style="background: #d4eceb;text-align:center;border-bottom: 0px;text-decoration: underline;border-color:black;"><strong style=" text-align:center;float:center;">CONTAINER Details </strong></td>
+
+                                     </tr>
+                                     <tr>
+                                         <td colspan="1"
+                                            style="text-align:left;border-width:1px;border-top:0px;border-right:0px;border-color:black;font-size:12px;">
+                                            <span style="float:left;text-decoration: underline;white-space: nowrap;">Temperature</span>
+                                             <br/>
+                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.order_line[0].product_id.temperature"/>
+                                             <br/>
+                                            <span style="float:left;text-decoration: underline;white-space: nowrap;">Humidity</span>
+                                             <br/>
+
+                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.order_line[0].product_id.humidity"/>
+                                             <br/>
+                                            <span style="float:left;text-decoration: underline;white-space: nowrap;">Ventilation</span>
+                                             <br/>
+                                            <span style="float:left;text-align:left;white-space: nowrap;" t-field="o.order_line[0].product_id.ventilation"/>
+
+                                        </td>
+                                        <td clospan="1" style="text-align:left;border-width:1px;border-top:0px;border-left:0px;border-color:black;font-size:12px;">
+                                            <strong>Cold Treatment</strong>
+                                            <span style="float: right; text-align:right;" t-field="o.cold_treatment"/>
+                                            <br/>
+                                            <br/>
+                                            <strong>Genest</strong>
+                                            <span style="float: right; text-align:center;" t-field="o.genest"/>
+                                            <br/>
+                                        </td>
+
+                                     </tr>
+                                     <tr>
+                                         <td width="25%" style="border-width:1px;border-top:0px;border-right:0px;border-color:black;">
+                                             <span>B/AWB:</span>
+
+                                             <span style="margin-left:25%">FREIGHT PAYABLE AT:</span>
+                                             <br/>
+                                             <t t-foreach="o.invoice_ids" t-as="inv">
+                                                 <t t-if="inv.original_bl">
+                                                     <span >Original Bl &#160;&#160;&#160;&#160;&#160;&#160;</span><input name="original_bl" string="Original Bl" type="checkbox" checked="checked"/>
+                                                 </t>
+                                                 <t t-else="">
+                                                     <span >Original Bl  &#160;&#160;&#160;&#160;&#160;&#160;</span><input name="original_bl" string="Original Bl" type="checkbox" />
+
+                                                 </t>
+
+
+
+                                                 <t t-if="inv.prepaid">
+                                                     <span style="margin-left:25%" width="15%">Prepaid</span><input string="Prepaid" name="prepaid" type="checkbox" checked="checked"/>
+                                                 </t>
+                                                 <t t-else="">
+                                                      <span style="margin-left:25%" width="15%">Prepaid</span><input string="Prepaid" name="prepaid" type="checkbox" />
+
+                                                 </t>
+<!--                                                  <t t-if="!inv.original_bl">-->
+<!--                                                     <span>Original Bl</span><input name="original_bl" string="Original Bl" type="checkbox" />-->
+<!--                                                 </t>-->
+<!--                                                 <t t-if="!inv.prepaid">-->
+<!--                                                     <span style="margin-left:25%">Prepaid</span><input string="Prepaid" name="prepaid"  checked="checked"/>-->
+<!--                                                 </t>-->
+                                                 <br/>
+                                                 <t t-if="inv.telex_release">
+                                                     <span>Telex Release</span><input name="telex_release" string="Telex Release" type="checkbox" checked="checked"/>
+                                                 </t>
+                                                 <t t-else="">
+                                                     <span>Telex Release</span><input name="telex_release" string="Telex Release" type="checkbox" />
+
+                                                 </t>
+
+
+
+                                                 <t t-if="inv.collect">
+                                                     <span style="margin-left:25%">Collect&#160;&#160;</span><input string="Collect" name="collect" type="checkbox" checked="checked"/>
+                                                 </t>
+                                                 <t t-else="">
+                                                     <span style="margin-left:25%">Collect&#160;&#160;</span><input string="Collect" name="collect" type="checkbox" />
+
+                                                 </t>
+
+
+
+
+
+                                             </t>
+
+
+
+                                         </td>
+                                         <td  width="25%" style="border-width:1px;border-top:0px;border-left:0px;border-color:black;">
+                                             <span>CLEARANCE Company:</span>
+
+
+                                            <span style="margin-left:25%">Subsidies Letter:</span>
+                                             <br/>
+
+                                                      <span t-field="o.partner_clearance_ids"/>
+                                             <t t-foreach="o.invoice_ids" t-as="i">
+                                                 <t t-if="i.subsidies_latter_yes">
+
+                                                     <input style="margin-right:30%;float:right;" name="subsidies_latter_yes" string="Yes" type="checkbox" checked="checked"/><span style="float:right;text-align:right">Yes</span>
+                                                 </t>
+                                                 <t t-else="">
+                                                     <input style="margin-right:30%;float:right;" name="subsidies_latter_yes" string="Yes" type="checkbox"/><span style="float:right;text-align:right">Yes</span>
+
+                                                 </t>
+                                             </t>
+
+
+                                                 <br/>
+                                              <t t-foreach="o.invoice_ids" t-as="i">
+                                                 <t t-if="i.subsidies_latter_no">
+                                                     <input style="margin-right:30%;float:right;" name="subsidies_latter_no" string="no" type="checkbox" checked="checked"/><span style="float:right;text-align:right">No</span>
+                                                 </t>
+                                                 <t t-else="">
+                                                     <input style="margin-right:30%;float:right;" name="subsidies_latter_no" string="no" type="checkbox" /><span style="float:right;text-align:right">No</span>
+
+                                                 </t>
+                                             </t>
+
+
+
+
+
+
+
+                                         </td>
+
+                                     </tr>
+
+
+
+
+
+
+                                 </table>
+
+
+
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+         </template>
+
+
+
+
+
+    </data>
+</odoo>

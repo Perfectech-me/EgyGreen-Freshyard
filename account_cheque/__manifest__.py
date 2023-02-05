@@ -7,7 +7,7 @@
     """,
     'category': 'Accounting',
     'version': '15.1',
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account','bsas_currency_rate'],
     'data': [
         'security/cheque_security.xml',
         'security/ir.model.access.csv',
@@ -20,6 +20,8 @@
         'reports/epe_check.xml',
         'reports/cib_cheque.xml',
         'reports/wafa_cheque.xml',
+        'reports/alexbank.xml',
+        'reports/ebank.xml',
     ],
 
     'license': 'LGPL-3',

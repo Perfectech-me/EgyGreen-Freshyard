@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+
+
+         <record id="form_view_sale_wizard_report" model="ir.ui.view">
+            <field name="name">name.sale.wizard.report.form</field>
+            <field name="model">sale.wizard.report</field>
+            <field name="arch" type="xml">
+                <form string="Sale Report">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_from" required="1"/>
+                                <field name="partner_ids" widget="many2many_tags"/>
+                                <field name="country_ids" widget="many2many_tags"/>
+                                <field name="export_type"/>
+                                <field name="analytic_account_id"/>
+                                <field name="incoterm_id"/>
+                                <field name="partner_shipping_ids" widget="many2many_tags"/>
+                                <field name="partner_clearance_ids" widget="many2many_tags"/>
+                                <field name="partner_insurance_ids" widget="many2many_tags"/>
+                            </group>
+                             <group>
+                                 <field name="date_to" required="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="continent"/>
+                                    <field name="order_category"/>
+                                    <field name="packing_place_id"/>
+                                    <field name="discharge_country_id"/>
+                                    <field name="pricelist_id"/>
+                                    <field name="shipping_type"/>
+                                    <field name="sales_person_user_ids" widget="many2many_tags"/>
+                                    <field name="invoice_status"/>
+                            </group>
+                        </group>
+
+                        <footer>
+
+                            <button name="button_print" type="object" string="Print Excel"
+                                    class="oe_highlight"/>
+                            <button string="Cancel" class="btn-default" special="cancel"/>
+
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_sale_wizard_report" model="ir.actions.act_window">
+            <field name="name">Sale Reports</field>
+            <field name="res_model">sale.wizard.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+
+        <menuitem id="menu_action_sale_wizard_report" name="Sale Reports"
+                  parent="sale.sale_menu_root" action="action_sale_wizard_report" sequence="3"/>
+
+
+    </data>
+</odoo>

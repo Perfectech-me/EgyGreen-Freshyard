@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+
+
+
+        <record id="view_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+<!--                name="other_info" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))]}">-->
+                <xpath expr="//notebook//page[@name='other_info']//group[@id='other_tab_group']" position="inside">
+                    <group name="B_AWB" string="B/AWB"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}">
+                        <field name="original_bl"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                        <field name="telex_release"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                    </group>
+                    <group name="freight_payable" string="FREIGHT PAYABLE AT"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}">
+                        <field name="prepaid"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                        <field name="collect"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                    </group>
+                    <group name="subsidies_letter" string="Subsidies Letter"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}">
+                        <field name="subsidies_latter_yes"  attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                        <field name="subsidies_latter_no" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                    </group>
+                </xpath>
+            </field>
+    </record>
+
+
+  </data>
+</odoo>

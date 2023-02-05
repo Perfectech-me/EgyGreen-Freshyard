@@ -1,0 +1,230 @@
+<odoo>
+    <data>
+
+        <record id="action_report_shipping_order_warehouse" model="ir.actions.report">
+            <field name="name">Shipping Order Warehouse</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">egygreen_sale_order_reports.shipping_order_templates</field>
+            <field name="report_file">egygreen_sale_order_reports.shipping_order_templates</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="paperformat_id" ref="egygreen_sale_order_reports.paperformat_print_sale_order_proforma_invoice" />
+        </record>
+
+         <template id="shipping_order_templates">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;">
+
+                            <div style="width:30%;float:left;text-align:left">
+                                <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
+                                     style="max-height: 80px;"/>
+                            </div>
+                            <div style="width:30%;float:right;text-align:right">
+                                <h5 style="width:100%;">
+                                    Shipping Order Warehouse
+                                    <br/>
+                                    <span t-field="o.name"/><br/>
+                                    <span t-field="o.date_order"  t-options='{"widget": "date","format": "dd/MM/yyyy"}'/>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="page">
+                            <div style="width:100%">
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <t t-if="not line.product_id.additional_service">
+                                    <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                           class="table table-sm table-bordered oe_inline" dir="rtl">
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>التعبئة</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>إجمالي العدد</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.product_uom_qty"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>ETA</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.order_id.commitment_date" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>ETD</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.order_id.deprture_date"/>
+                                            </td>
+                                        </tr>
+
+                                         <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>Temperature</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.product_id.temperature"/>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>Humidity</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.product_id.humidity"/>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>Ventilation</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.product_id.ventilation"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>ميعاد التحميل</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.order_id.loading_date"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>البلد</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.order_id.final_destination_country_id"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>ميناء التحميل</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.order_id.port_loading_id"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>مكان التحميل</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                 <span t-field="line.order_id.packing_place_id"/>
+                                            </td>
+                                        </tr>
+
+
+                                         <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>الفحص</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <t t-foreach="line.order_id.invoice_ids" t-as="invoice">
+<!--                                                    <span t-field="invoice.inspection1_partner_id"/><br/>-->
+<!--                                                    <span t-field="invoice.inspection2_partner_id"/><br/>-->
+<!--                                                    <span t-field="invoice.other_cost"/>- -->
+                                                    <span t-field="invoice.other_cost_partner_id"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>شركة الشحن</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <t t-foreach="line.order_id.partner_shipping_ids" t-as="ship">
+                                                        <span t-field="ship.name"/>,
+                                                </t>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>شركة التخليص</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                 <t t-foreach="line.order_id.partner_clearance_ids" t-as="clear">
+                                                        <span t-field="clear.name"/>,
+                                                </t>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                             <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:20%;">
+                                                <strong>مواصفات وملاحظات</strong>
+                                            </td>
+                                            <td colspan="1"
+                                                style="text-align:right;border-width:1px;border-color:black;font-size:15px;width:80%;">
+                                                <span t-field="line.order_id.note"/>
+                                            </td>
+                                        </tr>
+
+
+                                    </table>
+                                        </t>
+                                </t>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </t>
+                </t>
+            </t>
+         </template>
+    </data>
+</odoo>

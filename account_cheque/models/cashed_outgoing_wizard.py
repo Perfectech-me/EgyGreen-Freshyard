@@ -13,23 +13,52 @@ class cashedWizard(models.TransientModel):
         credit = self.bank_account_id
         self.cheque_id.journal_items_count += 2
         records = []
+
+        rate = 0
+        debit_amount = 0
+        credit_amount = 0
+        if self.cheque_id.currency_id.id == self.cheque_id.company_id.currency_id.id:
+            debit_amount = self.cheque_id.amount
+            credit_amount = self.cheque_id.amount
+        else:
+
+            rates_current = []
+            if self.cheque_id.currency_id:
+                rates = self.cheque_id.currency_id.rate_ids.mapped('name')
+                for line in rates:
+                    if line <= self.date:
+                        rates_current.append(line)
+                for line in self.cheque_id.currency_id.rate_ids:
+                    if rates_current and max(set(rates_current)) == line.name:
+                        rate = line.inverse_company_rate
+
+            if rate > 0:
+                credit_amount = debit_amount = self.cheque_id.amount * rate
+            else:
+                debit_amount = 0
+                credit_amount = 0
+
         object1 = (
             0, 0, {
                 'name': self.cheque_id.name,
                 'account_id': debit.id,
-                'debit': self.cheque_id.amount,
+                'amount_currency': self.cheque_id.amount,
+                'debit': debit_amount,
                 'credit': 0.0,
                 'journal_id': self.cheque_id.journal_id.id,
                 'partner_id': x.id,
-                # 'currency_id': self.currency_id.id,
+                'currency_id': self.cheque_id.currency_id.id,
             })
         object2 = (
             0, 0, {'name': self.cheque_id.name,
                    'account_id': credit.id,
                    'debit': 0.0,
-                   'credit': self.cheque_id.amount,
+                   'amount_currency': -self.cheque_id.amount,
+                   'credit': credit_amount,
                    'journal_id': self.cheque_id.journal_id.id,
                    'partner_id': x.id,
+                   'currency_id': self.cheque_id.currency_id.id,
+
                    })
 
         records.append(object1)
@@ -42,4 +71,7 @@ class cashedWizard(models.TransientModel):
             'state': 'draft',
             'cheque_id': self.cheque_id.id
         }
-        self.env['account.move'].create(move_vals)
+        account_move=self.env['account.move'].create(move_vals)
+        if account_move and account_move.line_ids:
+            for line in account_move.line_ids:
+                line.get_currency_rate()

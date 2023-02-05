@@ -16,13 +16,13 @@
                 <t t-call="web.external_layout">
                     <div class="page">
                         <font face="KacstOne">
-                            <h1 align="center">Report Date :
+                            <h1 align="center" style="background-color:#006699;color:#ffffff;">Report Date :
                                 <td>
                                     <t t-esc="o.get_today()" t-field-options='{"format": "d/M/yy"}'/>
                                 </td>
                             </h1>
                             <table class="table table-condensed"
-                                   style="border:8px solid black;width:90%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
+                                   style="border:8px solid black;width:100%;margin-left: auto;margin-right: auto;text-align: center;font-weight:bold;">
                                 <tbody>
                                     <tr style="white-space: nowrap;">
                                         <td align="right">From :</td>
@@ -64,44 +64,66 @@
                                 <thead>
 
                                     <tr>
-                                        <td class="tg-hmp3">Payee</td>
-                                        <td class="tg-hmp3">Ch.NO</td>
-                                        <td class="tg-hmp3">Amount</td>
-                                        <td class="tg-hmp3">Ch Given Date</td>
-                                        <td class="tg-hmp3">Due Date</td>
-                                        <td class="tg-hmp3">Bank Account</td>
-                                        <td class="tg-hmp3">Analytic Account</td>
-                                        <td class="tg-hmp3">State</td>
-                                        <td class="tg-hmp3">State Date</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Cheque Number</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Currency</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Amount</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Amount EGP</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Ch Given Date</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Cheque Date</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Bank Account</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Payee</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">إسم المستفيد</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Analytic Account</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Cheque State</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">State Date</td>
+                                        <td class="tg-hmp3" style="background-color:#006699;color:#ffffff;">Description</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <t t-set="total_amount" t-value="0"/>
-                                    <t t-foreach="o.generate_cheque_report()" t-as="rec">
+                                    <t t-set="total_amount_egy" t-value="0"/>
+                                    <t t-foreach="o.generate_cheque_report()[0]" t-as="rec">
                                         <t t-set="total_amount" t-value="(total_amount+rec.amount)"/>
+                                        <t t-set="total_amount_egy" t-value="(total_amount_egy+rec.amount_egy)"/>
                                         <tr>
                                             <td class="td-lrbotborder">
-                                                <span t-field="rec.payee_user_id.name" style=" font-size:13px;"/>
+                                                <span t-field="rec.chq_no" style=" font-size:13px;"/>
 
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.chq_no" style=" font-size:13px;"/>
+                                                    <span t-field="rec.currency_id" style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.amount"
+                                                    <span t-field="rec.amount"
                                                           style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.cheque_given_date"
+                                                    <span t-field="rec.amount_egy"
                                                           style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
-                                                    <span t-esc="rec.cheque_date"
+                                                    <span t-field="rec.cheque_given_date"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.cheque_date"
                                                           style=" font-size:13px;"/>
                                                 </td>
                                                 <td class="td-lrbotborder">
                                                     <span t-field="rec.bank_account_id"
                                                           style=" font-size:13px;"/>
                                                 </td>
+
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.payee_user_id"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.beneficiary_name"
+                                                          style=" font-size:13px;"/>
+                                                </td>
+
+
                                                 <td class="td-lrbotborder">
                                                     <span t-field="rec.analytic_account_id"
                                                           style=" font-size:13px;"/>
@@ -114,15 +136,24 @@
                                                     <span t-field="rec.current_state_date"
                                                           style=" font-size:13px;"/>
                                                 </td>
+                                                <td class="td-lrbotborder">
+                                                    <span t-field="rec.comment"
+                                                          style=" font-size:13px;"/>
+                                                </td>
                                             </td>
 
                                         </tr>
                                     </t>
+
                                     <tr>
-                                        <th class="tg-baqh" colspan="2">Total Amount</th>
+                                        <th class="tg-baqh" colspan="3" style="background-color:#006699;color:#ffffff;"><span t-esc="len(o.generate_cheque_report()[0])"/> </th>
 
                                         <td>
-                                            <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>
+<!--&lt;!&ndash;                                            <span t-esc="round(total_amount,2)" style=" font-size:16px;"/>&ndash;&gt;-->
+                                        </td>
+                                        <td style="background-color:#006699;color:#ffffff;">
+                                            <span t-esc="'{0:,.2f}'.format(round(total_amount_egy,2))"/>&#160;&#160;EGP
+
                                         </td>
                                         <td>
                                         </td>
@@ -136,11 +167,36 @@
                                         </td>
                                         <td>
                                         </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+
 
                                     </tr>
 
                                 </tbody>
                             </table>
+
+                            <table class="table table-condensed"
+                                   style="border:0px solid black;text-align: left;font-weight:bold;font-size:20px;width:40%">
+                                <thead>
+                                    <tr>
+                                        <td colspan="2" style="background-color:#006699;color:#ffffff;">
+                                            <strong>Total Amount per month in EGP</strong>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="o.generate_cheque_report()[1]" t-as="month_amount">
+                                        <tr style="background-color:#006699;color:#ffffff;">
+                                            <td style="width:20%;"><span t-esc="month_amount['month']"/> </td>
+                                            <td style="width:80%;float:left">
+                                                <span t-esc="'{0:,.2f}'.format(month_amount['total_amount'])"/>&#160;&#160;EGP </td>
+                                        </tr>
+                                    </t>
+                                </thead>
+                            </table>
+
+
                         </font>
                     </div>
 

@@ -1,0 +1,91 @@
+
+<odoo>
+    <template id="print_alex_cheque1">
+        <div t-attf-class="header " t-att-style="report_header_style">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <style type="text/css">
+                #hr1 {
+                -moz-transform: rotate(20deg);
+                -o-transform: rotate(20deg);
+                -webkit-transform: rotate(100deg);
+                -ms-transform: rotate(100deg);
+                transform: rotate(100deg);
+                }
+
+                #hr2 {
+                -moz-transform: rotate(20deg);
+                -o-transform: rotate(20deg);
+                -webkit-transform: rotate(100deg);
+                -ms-transform: rotate(100deg);
+                transform: rotate(100deg);
+                }
+
+                #hr3 {
+                -moz-transform: rotate(40deg);
+                -o-transform: rotate(40deg);
+                -webkit-transform: rotate(125deg);
+                -ms-transform: rotate(125deg);
+                transform: rotate(125deg);
+                }
+
+
+            </style>
+
+
+            <div dir="rtl">
+
+
+                <div style="float:right;text-align:right;width:100%">
+                    <div style="float:right;text-align:right;padding-right:23px;font-size:14px;width:100%;">
+                        <span t-esc="o.cheque_date"/>
+                    </div>
+                    <div style="float:right;text-align:right;padding-right:60px;width:100%;" name="payee">
+                        <br/>
+                        <span t-field="o.beneficiary_name"/>
+                    </div>
+                </div>
+<!--                <div style="float:left;text-align:left;width:15%;height:100px;border-top:1px solid black;" id="hr3">-->
+<!--                </div>-->
+<!--                <div style="float:left;text-align:center;width:15%;height:100px;border-top:1px solid black;" id="hr3">-->
+<!--                </div>-->
+
+
+                <div class="col text-right" style="padding-right:60px;font-size:11px;width:100%;padding-top:65px;">
+                    <br/>
+                    <span class="font-weight-bold">فقط:</span>
+                    <span class="font-weight-bold" t-field="o.total_amount_arabic_word"/>
+                    <span class="font-weight-bold">لاغير</span>
+
+                </div>
+
+                <div style="float:right;text-align:right;width:100%;padding-top:11px;">
+
+                    <span t-field="o.amount" style="float:right;text-align:right;"/>
+                </div>
+
+                <div style="float:right;text-align:right;width:100%;padding-right:30px;padding-top:20px;">
+
+                    <span style="float:right;text-align:right;width:100%;">أحمد يحيي حنفى أحمد</span>
+                    <br/>
+                    <br/>
+
+                    <span style="float:left;text-align:right;padding-left:90px;padding-top:10px;">غير قابل للتظهير
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </template>
+    <template id="print_alex_cheque">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="account_cheque.print_alex_cheque1" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

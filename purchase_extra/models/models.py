@@ -72,20 +72,32 @@ class PurchaseOrder(models.Model):
         #     ('id', '=', self.purchase_id.id)
         # ])
         wizard_line_ids = []
+        balance = self.env['account.move'].search([
+            ('partner_id', '=', self.partner_id.id),
+
+        ])
+        total_balance=0
+        for r in balance:
+            total_balance=total_balance+r.amount_total_signed
+
+        print("total_payment",total_balance,self.partner_id.total_invoiced)
 
         for line in self.order_line:
             print('product', line.product_id)
             order = self.env['purchase.order.line'].search([
-                ('partner_id', '=', line.partner_id.id),
+                # ('partner_id', '=', line.partner_id.id),
                 ('product_id', '=', line.product_id.id),
                 ('order_id','!=',self.id)
             ], limit=1)
             print(order.price_unit,'sssss')
+
             wizard_line_ids.append((0, 0, {
                 'product_id': line.product_id.id,
                 'purchase_id': order.order_id.id,
 
-                'price_unit': order.price_unit
+                'price_unit': order.price_unit,
+                'product_quantity':line.product_id.qty_available,
+                'balance':total_balance
 
             }))
         return {
@@ -118,26 +130,23 @@ class PurchaseOrder(models.Model):
 
         # return res
 
-    @api.onchange('order_line')
-    def _compute_percentage(self):
-        qty_total=0
-        for order in self.order_line:
-            # order.estimate_unit_price=order.price_unit
-            print("qtyyy",order.product_qty)
-            qty_total+= order.product_qty
-        for order in self.order_line:
-            if qty_total !=0:
-             order.product_qty_percentage=order.product_qty / qty_total
 
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    product_qty_percentage = fields.Float('Qty percentage')
+    product_qty_percentage = fields.Float('Qty percentage',compute='get_product_qty_percentage')
     estimate_unit_price = fields.Float('Estimate price')
     estimate_subtotal = fields.Float('Estimate subtotal')
 
-
+    @api.depends('order_id','product_id','product_qty')
+    def get_product_qty_percentage(self):
+        for rec in self:
+            rec.product_qty_percentage=0
+            qty_total = sum(line.product_qty for line in rec.order_id.order_line)
+            for order in rec.order_id.order_line:
+                if qty_total > 0:
+                    order.product_qty_percentage = order.product_qty / qty_total
 
 
     def _prepare_account_move_line(self, move=False):

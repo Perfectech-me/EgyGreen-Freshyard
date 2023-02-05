@@ -6,34 +6,33 @@
                 <div style="float:right;text-align:right;font-size:14px;width:100%;">
                     <span t-esc="o.cheque_date"/>
                 </div>
-                <div style="float:right;text-align:right;padding-right:33px;width:100%;padding-top:22px;" name="payee">
+                <div style="float:right;text-align:right;padding-right:100px;width:100%;padding-top:22px;" name="payee">
                     <!--<br/>-->
                     <span t-field="o.beneficiary_name"/>
                 </div>
 
-                <div class="col text-right" style="padding-right:33px;font-size:11px;width:100%;padding-top:33px;">
+                <div class="col text-right" style="padding-right:220px;font-size:11px;width:85%;padding-top:33px;height:2.5cm;">
                     <br/>
                     <br/>
                     <br/>
 
                     <span class="font-weight-bold">فقط:</span>
-                    <span class="font-weight-bold" t-esc="o.num_to_words_ar(o.amount)"/>
+                    <span class="font-weight-bold" t-field="o.total_amount_arabic_word"/>
                     <span class="font-weight-bold">لاغير</span>
 
                 </div>
 
-                <div style="float:right;text-align:right;width:32%;padding-top:57px;">
-                    <span t-field="o.amount" style="float:right;text-align:right;"/> &#160;&#160;&#160;<span
-                        t-field="o.bank_account_id.sudo().currency_id"/>
+                <div style="float:right;text-align:right;width:100%;padding-top:10px;font-size:14px;" dir="rtl">
+                    <span style="float:right;text-align:right">#</span><span t-field="o.amount" style="float:right;text-align:right;"/>#     &#160;&#160;&#160;&#160;&#160;<span t-field="o.bank_account_id.sudo().currency_id"/>
                 </div>
 
                 <div style="float:right;text-align:right;width:68%;padding-top:8px;">
 
-                    <span style="float:right;text-align:right;width:100%;">أحمد يحيي حنفى أحمد</span>
-                    <br/>
+                    <!--<span style="float:right;text-align:right;width:100%;">أحمد يحيي حنفى أحمد</span>-->
+                    <!--<br/>-->
                     <br/>
 
-                    <span style="float:left;text-align:right;padding-left:90px;padding-top:10px;">غير قابل للتظهير
+                     <span style="float:left;text-align:right;padding-left:20px;padding-top:35px;">غير قابل للتظهير
                     </span>
 
                 </div>
@@ -43,8 +42,6 @@
 
 
         </div>
-
-
     </template>
     <template id="print_epe_cheque">
         <t t-call="web.html_container">
