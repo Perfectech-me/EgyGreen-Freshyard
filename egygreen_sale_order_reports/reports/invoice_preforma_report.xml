@@ -37,7 +37,7 @@
                                     <tr>
                                         <td rowspan="5"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:50%;">
-                                            <strong style="float:left;border-bottom: 2px solid black">Exporter :  </strong>
+                                            <strong style="float:left;border-bottom: 2px solid black;width:15%;">Exporter :  </strong>
                                             <span t-field="o.company_id"/>
                                             <br/>
                                             <br/>
