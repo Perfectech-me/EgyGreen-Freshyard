@@ -56,12 +56,12 @@ class AccountMoveInherit(models.Model):
     @api.constrains('bl_awb','form13number','not_local_sale_order','company_id')
     def _check_bl_awb_form13number(self):
         for rec in self:
-            for move in self.search([('id','!=',rec.id),('move_type' ,'=', 'out_invoice'),('company_id','!=',rec.company_id.id)]):
+            for move in self.search([('id','!=',rec.id),('move_type' ,'=', 'out_invoice'),('company_id','=',rec.company_id.id)]):
                 if rec.move_type=='out_invoice' and move.sales_order_id :
-                    if move.bl_awb==rec.bl_awb:
+                    if rec.bl_awb and move.bl_awb==rec.bl_awb:
                         raise ValidationError(("bl_awb Must Be Unique And Exist in Invoice "+str(move.name)))
 
-                    if move.form13number==rec.form13number :
+                    if rec.form13number and move.form13number==rec.form13number :
                         raise ValidationError(("From13 Number Must Be Unique And Exist in Invoice "+str(move.name)))
 
 
