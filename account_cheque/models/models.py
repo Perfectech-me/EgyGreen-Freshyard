@@ -459,11 +459,13 @@ class account_cheque(models.Model):
                     'credit': self.amount,
                     'journal_id': self.journal_id.id,
                     'partner_id': x.id,
+                    'currency_id' : self.debit_account_id.currency_id.id or self.company_id.currency_id.id,
                     # 'currency_id': self.currency_id.id,
                 })
             object2 = (
                 0, 0, {'name': self.name,
                        'account_id': self.credit_account_id.id,
+                       'currency_id' : self.credit_account_id.currency_id.id or self.company_id.currency_id.id,
                        'debit': self.amount,
                        'credit': 0.0,
                        'journal_id': self.journal_id.id,
@@ -500,6 +502,8 @@ class account_cheque(models.Model):
                     'credit': self.amount,
                     'journal_id': self.journal_id.id,
                     'partner_id': self.payer_user_id.id,
+                    'currency_id' : self.debit_account_id.currency_id.id or self.company_id.currency_id.id,
+
                     # 'currency_id': self.currency_id.id,
                 })
             object2 = (
@@ -509,6 +513,7 @@ class account_cheque(models.Model):
                        'credit': 0.0,
                        'journal_id': self.journal_id.id,
                        'partner_id': self.payer_user_id.id,
+                        'currency_id' : self.credit_account_id.currency_id.id or self.company_id.currency_id.id,
                        })
             object3 = (
                 0, 0, {
@@ -518,6 +523,7 @@ class account_cheque(models.Model):
                     'credit': 0.0,
                     'journal_id': self.journal_id.id,
                     'partner_id': self.payer_user_id.id,
+                        'currency_id' : self.debit_account_id.currency_id.id or self.company_id.currency_id.id,
                     # 'currency_id': self.currency_id.id,
                 })
             object4 = (
@@ -527,6 +533,7 @@ class account_cheque(models.Model):
                        'credit': self.amount,
                        'journal_id': self.journal_id.id,
                        'partner_id': self.payer_user_id.id,
+                        'currency_id' : self.cheq_under_collection_account_id.currency_id.id or self.company_id.currency_id.id,
                        })
 
             records.append(object1)
@@ -563,6 +570,7 @@ class account_cheque(models.Model):
                     'credit': self.amount,
                     'journal_id': self.journal_id.id,
                     'partner_id': x.id,
+                        'currency_id' : self.debit_account_id.currency_id.id or self.company_id.currency_id.id,
 
                     # 'currency_id': self.currency_id.id,
                 })
@@ -573,6 +581,7 @@ class account_cheque(models.Model):
                        'credit': 0.0,
                        'journal_id': self.journal_id.id,
                        'partner_id': x.id,
+                        'currency_id' : self.credit_account_id.currency_id.id or self.company_id.currency_id.id,
                        })
             object3 = (
                 0, 0, {
@@ -582,6 +591,8 @@ class account_cheque(models.Model):
                     'credit': self.amount,
                     'journal_id': self.journal_id.id,
                     'partner_id': x.id,
+                        'currency_id' : debit.currency_id.id or self.company_id.currency_id.id,
+
                     # 'currency_id': self.currency_id.id,
                 })
             object4 = (
@@ -591,6 +602,8 @@ class account_cheque(models.Model):
                        'credit': 0.0,
                        'journal_id': self.journal_id.id,
                        'partner_id': x.id,
+                        'currency_id' : credit.currency_id.id or self.company_id.currency_id.id,
+
                        })
 
             records.append(object1)
