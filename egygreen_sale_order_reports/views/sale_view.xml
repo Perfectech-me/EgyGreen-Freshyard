@@ -14,7 +14,7 @@
                 <field name="total_amount_egp" readonly="1" force_save="1"/>
             </xpath>
             <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
-                <field name="container_equipment_number"/>
+                <field name="container_equipment_number" invisible="1"/>
                 <field name="net_weight_per_unit" required="1"/>
                 <field name="gross_weight_per_unit" required="1"/>
             </xpath>
@@ -22,6 +22,7 @@
             <xpath expr="//group[@name='sale_header']" position="inside">
                 <group>
                     <field name="data_loger"/>
+                    <field name="container_equipment_number"/>
                 </group>
             </xpath>
 

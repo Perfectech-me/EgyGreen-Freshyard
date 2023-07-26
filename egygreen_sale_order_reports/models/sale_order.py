@@ -14,6 +14,7 @@ class SaleOrderInherit(models.Model):
     partner_bank_id = fields.Many2one(comodel_name="res.partner.bank", string="Recipient Bank")
     data_loger = fields.Text(string="Data Loger")
     total_amount_egp = fields.Float(string="Total Amount EGP")
+    container_equipment_number = fields.Char(string="Container Equipment Number")
 
 
 
