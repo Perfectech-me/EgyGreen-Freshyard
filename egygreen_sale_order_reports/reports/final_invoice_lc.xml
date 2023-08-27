@@ -1,34 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
-        <record id="action_report_final_invoice_clearance" model="ir.actions.report">
-            <field name="name">Final Invoice Clearance</field>
+        <record id="action_report_invoice_lc" model="ir.actions.report">
+            <field name="name">FINAL INVOICE LC</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">egygreen_sale_order_reports.invoice_clearance_templates</field>
-            <field name="report_file">egygreen_sale_order_reports.invoice_clearance_templates</field>
+            <field name="report_name">egygreen_sale_order_reports.report_invoice_lc_template</field>
+            <field name="report_file">egygreen_sale_order_reports.report_invoice_lc_template</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
-            <field name="paperformat_id"
-                   ref="egygreen_sale_order_reports.paperformat_print_sale_order_proforma_invoice"/>
         </record>
 
 
-        <template id="invoice_clearance_templates">
+        <template id="report_invoice_lc_template">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
                         <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;">
-
                             <div style="width:30%;float:left;text-align:left">
                                 <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
                                      style="max-height: 80px;"/>
                             </div>
-                            <div style="width:70%;float:right;">
-                                <h3 style="width:100%;">
-                                    Final Invoice
-                                    <span t-field="o.name"/>
-                                </h3>
-                            </div>
-
                         </div>
 
                         <div class="page">
@@ -253,21 +244,6 @@
                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
                                    class="table table-sm table-bordered oe_inline">
                                 <tr>
-                                    <td colspan="6" style="text-align: center;">
-                                        فواتير أرقام (153 – 154 ) شركة الرحمة لتجارة وتصنيع البالتات فواتير أرقام (
-                                        294327 - 294189 – 294190 – 294483 ) شركة فيرست للتنمية الصناعية فاتورة رقم
-                                        (1896) شركة اسكورت كولد اتشين سوليوشن ايجيبت فواتير أرقام (2006 – 1999 – 1982 –
-                                        2086 – 2112 – 2145 – 2134) شركة العالمية للتعبئة والتغليف فاتورة (950) شركة
-                                        نورتك انترناشونال
-                                    </td>
-                                </tr>
-                                <!-- Other rows and cells in the table -->
-                            </table>
-
-
-                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
-                                   class="table table-sm table-bordered oe_inline">
-                                <tr>
                                     <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             Incoterm:
@@ -284,7 +260,7 @@
                                     </td>
                                     <td colspan="1"
                                         style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
-                                        <!--                                        <span t-field="o.final_destination_country_id"/>-->
+                                        <span t-field="o.partner_id.country_id"/>
                                     </td>
 
                                 </tr>
@@ -325,7 +301,7 @@
                                     </td>
                                     <td colspan="1"
                                         style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
-                                        <!--                                            <span t-field="o.o.final_destination_country_id"/>-->
+                                        <span t-field="o.no_of_pallets"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -350,6 +326,98 @@
                                 </tr>
                             </table>
 
+                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                   class="table table-sm table-bordered oe_inline">
+                                <tr>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            HS Code
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.hs_code"/>
+                                    </td>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            IP Date
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <!--                                            <span t-field="o.o.final_destination_country_id"/>-->
+                                    </td>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            LC Date
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.lc_date"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            LC Number
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.lc_no"/>
+                                    </td>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            IP Number
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.ip_number"/>
+                                    </td>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            IRC Number
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.irc_no"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            LCAF Number
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.irc_no"/>
+                                    </td>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            Partial Shipments
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.partial_shipments"/>
+                                    </td>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            Transshipment
+                                        </strong>
+                                    </td>
+                                    <td
+                                            style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:15%;">
+                                        <span t-field="o.transshipment"/>
+                                    </td>
+                                </tr>
+
+                            </table>
 
                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
                                    class="table table-sm table-bordered oe_inline">
@@ -593,13 +661,9 @@
                                 </strong>
                             </center>
                         </div>
-
-
                     </t>
                 </t>
             </t>
         </template>
-
-
     </data>
 </odoo>

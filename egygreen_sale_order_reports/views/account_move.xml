@@ -11,9 +11,21 @@
 
                 <xpath expr="//notebook" position="before">
                     <group>
-                    <group>
-                    <field name="data_loger" attrs="{'invisible':[('move_type','!=','out_invoice')]}"/>
-                    </group>
+                        <group>
+                            <field name="no_of_pallets"/>
+                            <field name="no_of_cartons"/>
+                            <field name="hs_code"/>
+                            <field name="ip_number"/>
+                            <field name="irc_no"/>
+                            <field name="partial_shipments"/>
+                            <field name="transshipment"/>
+                            <field name="lc_no"/>
+                            <field name="lc_date"/>
+                            <field name="lcaf_no"/>
+                        </group>
+                        <group>
+                            <field name="data_loger" attrs="{'invisible':[('move_type','!=','out_invoice')]}"/>
+                        </group>
                     </group>
                 </xpath>
 

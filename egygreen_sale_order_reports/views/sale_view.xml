@@ -1,33 +1,46 @@
 <odoo>
-  <data>
+    <data>
 
 
-    <!-- Inherit Form View to Modify it -->
-    <record id="form_view_sale_order_inherit" model="ir.ui.view">
-        <field name="name">name.sale.order.inherit.form</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='fiscal_position_id']" position="after">
-                <field name="partner_bank_id" attrs="{'readonly':[('state','in',['sale','done'])]}"/>
-                <field name="data_loger" readonly="1" force_save="1"/>
-                <field name="total_amount_egp" readonly="1" force_save="1"/>
-            </xpath>
-            <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
-                <field name="container_equipment_number"/>
-                <field name="net_weight_per_unit" required="1"/>
-                <field name="gross_weight_per_unit" required="1"/>
-            </xpath>
+        <!-- Inherit Form View to Modify it -->
+        <record id="form_view_sale_order_inherit" model="ir.ui.view">
+            <field name="name">name.sale.order.inherit.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                    <field name="partner_bank_id" attrs="{'readonly':[('state','in',['sale','done'])]}"/>
+                    <field name="data_loger" readonly="1" force_save="1"/>
+                    <field name="total_amount_egp" readonly="1" force_save="1"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
+                    <field name="container_equipment_number" invisible="1"/>
+                    <field name="net_weight_per_unit" required="1"/>
+                    <field name="gross_weight_per_unit" required="1"/>
+                </xpath>
 
-            <xpath expr="//group[@name='sale_header']" position="inside">
-                <group>
-                    <field name="data_loger"/>
-                </group>
-            </xpath>
+                <xpath expr="//group[@name='sale_header']" position="inside">
+                    <group>
+                        <field name="data_loger"/>
+                        <field name="container_equipment_number"/>
+                    </group>
+                    <group>
+                        <field name="no_of_pallets"/>
+                        <field name="no_of_cartons"/>
+                        <field name="hs_code"/>
+                        <field name="ip_number"/>
+                        <field name="irc_no"/>
+                        <field name="partial_shipments"/>
+                        <field name="transshipment"/>
+                        <field name="lc_no"/>
+                        <field name="lc_date"/>
+                        <field name="lcaf_no"/>
+                    </group>
+                </xpath>
 
 
-        </field>
-    </record>
+            </field>
+        </record>
 
-  </data>
+    </data>
 </odoo>
