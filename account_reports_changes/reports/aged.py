@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
+
+
 from odoo import models, api, fields, _
 from odoo.tools.misc import format_date, get_lang
 from odoo.exceptions import ValidationError
