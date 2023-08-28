@@ -31,6 +31,7 @@
                                     <field name="shipping_type"/>
                                     <field name="sales_person_user_ids" widget="many2many_tags"/>
                                     <field name="invoice_status"/>
+                                    <field name="report_type"/>
                             </group>
                         </group>
 

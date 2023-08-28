@@ -50,5 +50,11 @@ class SaleWizardReport(models.TransientModel):
          ('to invoice', 'To Invoice'),
          ('no', 'Nothing to Invoice')],
         string='Invoice Status')
+    report_type = fields.Selection([
+        ('f','Full'),
+        ('t','Trucking'),
+        ('n','New Shippment'),
+        ('s','Subsidy'),
+    ],default = 'f',required = 'f')
     def button_print(self):
         return self.env.ref('egygreen_sale_order_reports.sale_wizard_report_xlsx').report_action(self)
