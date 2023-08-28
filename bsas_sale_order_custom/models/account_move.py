@@ -7,7 +7,11 @@ class AccountMoveInherit(models.Model):
     sales_order_id = fields.Many2one(comodel_name="sale.order")
     not_local_sale_order = fields.Boolean(compute='_get_check_not_local_sale_order')
     supplier_invoice = fields.Char(string="Supplier Invoice")
-
+    amount_8 = fields.Float(compute = '_set_amount_8')
+    @api.depends('amount_residual')
+    def _set_amount_8(self):
+        for rec in self:
+            rec.amount_8 = rec.amount_residual * (0.8) * (0.08)
     @api.depends('sales_order_id')
     def _get_check_not_local_sale_order(self):
         for rec in self:

@@ -11,6 +11,7 @@
 
                 <xpath expr="//field[@name='payment_reference']" position="after">
                    <field name="supplier_invoice"/>
+                   <field name="amount_8"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_user_id']" position="after">
