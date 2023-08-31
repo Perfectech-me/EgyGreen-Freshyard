@@ -4,21 +4,22 @@
 
 from odoo import models, fields, api
 class sale_purchase_report_changes(models.Model):
-    _inherit = 'sale.order.line'
-    cost = fields.Float(related = 'product_id.standard_price',store = True)
-class sale_purchase_report_changes(models.Model):
     _inherit = 'sale.report'
-    cost = fields.Float('Cost', readonly=True)
-    margin = fields.Float()
-    margin_perc = fields.Float(string = 'Margin %')
-    taxed_amount = fields.Float()
-    city = fields.Char('Customer Area', readonly=True)
+    order_category = fields.Selection(string="Order Catrgory", selection=[
+                                                                            ('International', 'International'),
+                                                                            ('Local', 'Local'),
+                                                                            ('Export', 'Export'),
+                                                                          ],default='International' )
+
+    export_type = fields.Selection(string="Type", selection=[('fresh', 'Fresh'),('frozen','Frozen'), ('food_products', 'Food Products'),('other','Other') ],default='fresh')
+    product_type = fields.Selection(string="Product Type", selection=[
+        ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
 
     def _select_sale(self, fields=None):
         if not fields:
             fields = {}
         select_ = """
-            coalesce(min(l.id), -s.id) as id,
+            min(l.id) as id,
             l.product_id as product_id,
             t.uom_id as product_uom,
             CASE WHEN l.product_id IS NOT NULL THEN sum(l.product_uom_qty / u.factor * u2.factor) ELSE 0 END as product_uom_qty,
@@ -30,7 +31,6 @@ class sale_purchase_report_changes(models.Model):
             CASE WHEN l.product_id IS NOT NULL THEN sum(l.price_subtotal / CASE COALESCE(s.currency_rate, 0) WHEN 0 THEN 1.0 ELSE s.currency_rate END) ELSE 0 END as price_subtotal,
             CASE WHEN l.product_id IS NOT NULL THEN sum(l.untaxed_amount_to_invoice / CASE COALESCE(s.currency_rate, 0) WHEN 0 THEN 1.0 ELSE s.currency_rate END) ELSE 0 END as untaxed_amount_to_invoice,
             CASE WHEN l.product_id IS NOT NULL THEN sum(l.untaxed_amount_invoiced / CASE COALESCE(s.currency_rate, 0) WHEN 0 THEN 1.0 ELSE s.currency_rate END) ELSE 0 END as untaxed_amount_invoiced,
-            sum(l.price_total - l.price_subtotal) as taxed_amount,
             count(*) as nbr,
             s.name as name,
             s.date_order as date,
@@ -48,16 +48,16 @@ class sale_purchase_report_changes(models.Model):
             s.team_id as team_id,
             p.product_tmpl_id,
             partner.country_id as country_id,
-            partner.city as city,
             partner.industry_id as industry_id,
             partner.commercial_partner_id as commercial_partner_id,
             CASE WHEN l.product_id IS NOT NULL THEN sum(p.weight * l.product_uom_qty / u.factor * u2.factor) ELSE 0 END as weight,
             CASE WHEN l.product_id IS NOT NULL THEN sum(p.volume * l.product_uom_qty / u.factor * u2.factor) ELSE 0 END as volume,
             l.discount as discount,
             CASE WHEN l.product_id IS NOT NULL THEN sum((l.price_unit * l.product_uom_qty * l.discount / 100.0 / CASE COALESCE(s.currency_rate, 0) WHEN 0 THEN 1.0 ELSE s.currency_rate END))ELSE 0 END as discount_amount,
-            l.cost as cost,
-            l.margin_percent as margin_perc,
-            s.id as order_id
+            s.id as order_id,
+            s.order_category as order_category,
+            s.export_type as export_type,
+            s.product_type as product_type
         """
 
         for field in fields.values():
@@ -84,25 +84,27 @@ class sale_purchase_report_changes(models.Model):
             p.product_tmpl_id,
             partner.country_id,
             partner.industry_id,
-            partner.city,
             partner.commercial_partner_id,
             l.discount,
-            l.cost,
-            l.margin_percent,
+            s.order_category,
+            s.export_type,
+            s.product_type,
             s.id %s
         """ % (groupby)
         return groupby_
 class sale_purchase_report_changes(models.Model):
-    _inherit = 'purchase.order.line'
-    cost = fields.Float(related = 'product_id.standard_price',store = True)
-class sale_purchase_report_changes(models.Model):
     _inherit = 'purchase.report'
-    cost = fields.Float('Cost', readonly=True)
-    subtotal = fields.Float()
-    taxed_amount = fields.Float()
+    order_category = fields.Selection(string="Order Catrgory", selection=[
+                                                                            ('International', 'International'),
+                                                                            ('Local', 'Local'),
+                                                                            ('Export', 'Export'),
+                                                                          ],default='International' )
+
+    export_type = fields.Selection(string="Type", selection=[('fresh', 'Fresh'),('frozen','Frozen'), ('food_products', 'Food Products'),('other','Other') ],default='fresh')
+    product_type = fields.Selection(string="Product Type", selection=[
+        ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
     def _select(self):
         select_str = """
-            WITH currency_rate as (%s)
                 SELECT
                     po.id as order_id,
                     min(l.id) as id,
@@ -117,7 +119,7 @@ class sale_purchase_report_changes(models.Model):
                     l.product_id,
                     p.product_tmpl_id,
                     t.categ_id as category_id,
-                    po.currency_id,
+                    c.currency_id,
                     t.uom_id as product_uom,
                     extract(epoch from age(po.date_approve,po.date_order))/(24*60*60)::decimal(16,2) as delay,
                     extract(epoch from age(l.date_planned,po.date_order))/(24*60*60)::decimal(16,2) as delay_pass,
@@ -133,14 +135,14 @@ class sale_purchase_report_changes(models.Model):
                     sum(l.product_qty / line_uom.factor * product_uom.factor) as qty_ordered,
                     sum(l.qty_received / line_uom.factor * product_uom.factor) as qty_received,
                     sum(l.qty_invoiced / line_uom.factor * product_uom.factor) as qty_billed,
-                    sum(l.cost) as cost,
-                    sum(l.price_total) as subtotal,
-                    sum(l.price_total - l.price_subtotal) as taxed_amount,
                     case when t.purchase_method = 'purchase' 
                          then sum(l.product_qty / line_uom.factor * product_uom.factor) - sum(l.qty_invoiced / line_uom.factor * product_uom.factor)
                          else sum(l.qty_received / line_uom.factor * product_uom.factor) - sum(l.qty_invoiced / line_uom.factor * product_uom.factor)
-                    end as qty_to_be_billed
-        """ % self.env['res.currency']._select_companies_rates()
+                    end as qty_to_be_billed,
+            po.order_category as order_category,
+            po.export_type as export_type,
+            po.product_type as product_type
+        """
         return select_str
 
 
