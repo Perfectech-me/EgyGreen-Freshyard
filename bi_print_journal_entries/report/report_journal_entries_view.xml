@@ -16,8 +16,7 @@
                     </div>
                     <br/>
 
-                    <table style="width:100%;margin:0px auto;background:white;border:1px solid #e1e1e1;"
-                           class="table table-condensed">
+                    <table style="border-spacing:0;margin-bottom:0;height:122px;" class="table">
                         <tbody>
                             <tr>
                                 <td>
@@ -52,26 +51,48 @@
 
                     <br/>
 
-                    <table style="width:100%;margin:0px auto;background:white;border:1px solid #e1e1e1;"
-                           class="table table-condensed">
+                    <table style="border-spacing:0;margin-bottom:0;height:122px;" class="table">
                         <thead>
                             <tr>
-                                <th>Partner</th>
-                                <th>Account</th>
-                                <th>Label</th>
-                                <th>Due Date</th>
-                                <th>Analytic Account</th>
-                                <th>Analytic Tags</th>
-                                <th>Currency Rate</th>
-                                <th>Amount Currency</th>
-                                <th>Taxes(%)</th>
-                                <th>Debit</th>
-                                <th>Credit</th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Partner</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Account</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Label</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Due Date</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Analytic Account</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Analytic Tags</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Currency Rate</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Taxes(%)</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Amount Currency</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Debit</span>
+                                </th>
+                                <th class="text-center" style="background-color: #C9D4E8;">
+                                    <span>Credit</span>
+                                </th>
                             </tr>
                         </thead>
-                        <tbody class="consumed_tbody">
+                        <tbody>
                             <t t-set="total" t-value="0.0"/>
                             <t t-set="total1" t-value="0.0"/>
+                            <t t-set="total_amount_currency" t-value="0.0"/>
                             <t t-foreach="o.line_ids" t-as="line">
                                 <tr>
                                     <td>
@@ -96,12 +117,12 @@
                                         <span t-field="line.currency_rate"/>
                                     </td>
                                     <td>
+                                        <span t-field="line.tax_ids"/>
+                                    </td>
+                                    <td>
                                         <span style="font-size: 12px;">
                                             <span t-field="line.amount_currency"/>
                                         </span>
-                                    </td>
-                                    <td>
-                                        <span t-field="line.tax_ids"/>
                                     </td>
                                     <td>
                                         <span t-field="line.debit"/>
@@ -112,6 +133,8 @@
                                 </tr>
                                 <t t-set="total" t-value="total + line.debit"/>
                                 <t t-set="total1" t-value="total1 + line.credit"/>
+                                <t t-set="total_amount_currency"
+                                   t-value="total_amount_currency + line.amount_currency"/>
                             </t>
                             <tr>
                                 <td></td>
@@ -121,10 +144,15 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
                                 <td>
                                     <strong>Total:</strong>
+                                </td>
+                                <td width="10%">
+                                    <strong>
+                                        <span>
+                                            <t t-esc="total_amount_currency"/>
+                                        </span>
+                                    </strong>
                                 </td>
                                 <td width="10%">
                                     <strong>

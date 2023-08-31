@@ -429,7 +429,7 @@
                                         </strong>
                                         <td colspan="6"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
-                                            <span t-field="line.container_equipment_number"/>
+                                            <span t-field="o.container_equipment_number"/>
                                         </td>
                                     </td>
                                 </tr>
