@@ -7,6 +7,9 @@ class AccountMoveInherit(models.Model):
     bl_awb = fields.Char(string="BL/AWB")
     inspection1_partner_id = fields.Many2one(comodel_name="res.partner", string="Inspection 1")
     inspection2_partner_id = fields.Many2one(comodel_name="res.partner", string="Inspection 2")
+    container_equipment_number = fields.Char(string="Container/Equipment Number",
+                                             compute='compute_container_equipment_number')
+
     insurance_customer_id = fields.Many2one(comodel_name="res.partner", string="Insurance Customer")
 
     other_cost = fields.Char(string="Other Cost")
