@@ -14,7 +14,12 @@ class sale_purchase_report_changes(models.Model):
     export_type = fields.Selection(string="Type", selection=[('fresh', 'Fresh'),('frozen','Frozen'), ('food_products', 'Food Products'),('other','Other') ],default='fresh')
     product_type = fields.Selection(string="Product Type", selection=[
         ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
-
+    sales_person_user_id = fields.Many2one(comodel_name="sales.person.users", string="Sales Person Real")
+    continent = fields.Selection(string="Continent", selection=[('Africa', 'Africa'), ('Antarctica', 'Antarctica'),
+                                                   ('Asia', 'Asia'),('Australia', 'Australia'),('Europe', 'Europe'),
+                                                   ('North_America', 'North America'),('South_America', 'South America')
+                                                   ],default='Africa')
+    container_number = fields.Float(string = 'Container/Equipment Quantity')
     def _select_sale(self, fields=None):
         if not fields:
             fields = {}
@@ -57,7 +62,10 @@ class sale_purchase_report_changes(models.Model):
             s.id as order_id,
             s.order_category as order_category,
             s.export_type as export_type,
-            s.product_type as product_type
+            s.product_type as product_type,
+            s.sales_person_user_id as sales_person_user_id,
+            partner.continent as continent,
+            s.container_number as container_number
         """
 
         for field in fields.values():
@@ -89,6 +97,8 @@ class sale_purchase_report_changes(models.Model):
             s.order_category,
             s.export_type,
             s.product_type,
+            s.sales_person_user_id,
+            partner.continent,
             s.id %s
         """ % (groupby)
         return groupby_
@@ -103,13 +113,28 @@ class sale_purchase_report_changes(models.Model):
     export_type = fields.Selection(string="Type", selection=[('fresh', 'Fresh'),('frozen','Frozen'), ('food_products', 'Food Products'),('other','Other') ],default='fresh')
     product_type = fields.Selection(string="Product Type", selection=[
         ('row_materials', 'Row Materials'),('sort','Sort'),('packing','Packing'), ('finish_products', 'Finish Products'),('other','Other') ],default='row_materials')
+    continent = fields.Selection(string="Continent", selection=[('Africa', 'Africa'), ('Antarctica', 'Antarctica'),
+                                                   ('Asia', 'Asia'),('Australia', 'Australia'),('Europe', 'Europe'),
+                                                   ('North_America', 'North America'),('South_America', 'South America')
+                                                   ],default='Africa')
     def _select(self):
         st = super()._select()
         st += """
             ,po.order_category as order_category,
             po.export_type as export_type,
-            po.product_type as product_type
+            po.product_type as product_type,
+            partner.continent as continent
         """
         return st
+    def _group_by(self):
+        group_by_str = super()._group_by()
+        group_by_str += """
+            ,po.order_category,
+            po.export_type,
+            po.product_type,
+            partner.continent 
+        """
+      
+        return group_by_str
 
 
