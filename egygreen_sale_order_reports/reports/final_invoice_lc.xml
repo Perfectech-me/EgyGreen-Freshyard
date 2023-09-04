@@ -15,7 +15,7 @@
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
-                        <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;">
+                        <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;font-size:12px">
                             <div style="width:30%;float:left;text-align:left">
                                 <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
                                      style="max-height: 80px;"/>
@@ -432,7 +432,7 @@
                                         </strong>
                                         <td colspan="6"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
-                                            <span t-field="line.container_equipment_number"/>
+                                            <span t-field="o.container_equipment_number"/>
                                         </td>
                                     </td>
                                 </tr>

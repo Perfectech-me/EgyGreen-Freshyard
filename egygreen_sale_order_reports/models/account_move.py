@@ -15,3 +15,4 @@ class AccountMoveInherit(models.Model):
     lc_date = fields.Char(string="LC Date")
     lcaf_no = fields.Char(string="LCAF No")
     data_loger = fields.Text(string="Data Loger")
+    container_equipment_number = fields.Char(string="Container Equipment Number")

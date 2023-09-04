@@ -12,6 +12,7 @@
                 <xpath expr="//notebook" position="before">
                     <group>
                         <group>
+                            <field name="container_equipment_number" readonly="0"/>
                             <field name="no_of_pallets"/>
                             <field name="no_of_cartons"/>
                             <field name="hs_code"/>

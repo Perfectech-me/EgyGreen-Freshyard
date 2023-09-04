@@ -67,6 +67,7 @@ class SaleOrderInherit(models.Model):
             'no_of_cartons': self.no_of_cartons,
             'hs_code': self.hs_code,
             'ip_number': self.ip_number,
+            'container_equipment_number': self.container_equipment_number,
             'irc_no': self.irc_no,
             'partial_shipments': self.partial_shipments,
             'transshipment': self.transshipment,
