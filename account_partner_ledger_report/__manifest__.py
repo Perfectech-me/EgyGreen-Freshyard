@@ -15,7 +15,7 @@
     # always loaded
     'data': [
             'security/ir.model.access.csv',
-            # 'views/search_template_view.xml',
+            'views/search_template_view.xml',
             'wizard/partner_ledger_custom_report.xml',
             'reports/partner_ledger_report.xml',
 

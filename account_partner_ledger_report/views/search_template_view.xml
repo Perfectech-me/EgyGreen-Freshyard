@@ -21,27 +21,50 @@
 
 
         <template id="search_template_account">
+            <button type="button" class="o-no-caret btn btn-secondary dropdown-toggle currency_filter" data-toggle="dropdown">
+                <span class="fa fa-folder-open"/> Currency :  
+                <t t-set="currency_id"></t>
+                <t t-foreach="options['currency']" t-as="c">
+                <t t-if="c.get('selected') == True">
+                    <t t-set="currency_id" t-value="''"/>
+                   <a><t t-esc="c.get('name')"/></a>
+                </t>
+                <t t-esc="currency_id"/>
 
-
-
-
-
-            <button t-if="options.get('currency')" type="button"
-                    class="o-no-caret btn btn-secondary dropdown-toggle account_account_filter" data-toggle="dropdown">
-                <span class="fa fa-folder-open"/>
-                Currency
+            </t>
             </button>
-            <ul class="dropdown-menu o_filter_menu" role="menu">
-                <li class="o_account_report_search js_account_account_m2m"/>
-            </ul>
+            <div class="dropdown-menu o_filter_menu" role="menu">
+                <t t-foreach="options['currency']" t-as="a">
+                    <a role="menuitem" class="dropdown-item js_account_report_choice_filter"
+                       t-att-title="a['name']" t-att-data-id="a['id']" data-filter="currency">
+    
+                        <t t-esc="a['name']"/>
+                    </a>
+                </t>
+            </div>
         </template>
         <template id="browseinfo_search_template" inherit_id="account_reports.search_template">
             <xpath expr="//div[@class='btn-group dropdown o_account_reports_filter_analytic']" position="after">
-                <div class="btn-group dropdown o_account_reports_filter_analytic" t-if="options.get('currency')">
+                <div class="btn-group dropdown o_account_reports_filter_analytic" t-if = 'options.get("currency")'>
                     <t t-call="account_partner_ledger_report.search_template_account"/>
                 </div>
             </xpath>
         </template>
+        <!-- <template id="browseinfo_search_template_info" inherit_id="account_reports.filter_info_template">
+            <xpath expr="//div[@class='print_only']//div[2]//div[2]" position="after">
+            <div class="col-12">
+                <t t-if="options.get('currncy') != None">
+                    Currency:
+                    <t t-set="currency_value">All</t>
+                    <t t-if = "selected_currency_name">
+                        <t t-set="currency_value" t-value="''"/>
+                        <t t-esc="selected_currency_name"/>
+                    </t>
+                    <t t-esc="currency_value"/>
+                </t>
+            </div>
+            </xpath>
+        </template> -->
 
 
     </data>
