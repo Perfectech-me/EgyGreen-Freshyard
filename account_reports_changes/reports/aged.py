@@ -136,8 +136,8 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 self._field_column('currency_id'),
             ]
         return columns
-    # def _format_total_line(self, res, value_dict, options):
-    #     # raise ValidationError(value_dict['amount_currency'])
-    #     res['name'] = _('Total')
-    #     res['colspan'] = len(self._get_column_details(options)) - 11
-    #     res['columns'] = res['columns'][res['colspan']-1:]
+    def _format_total_line(self, res, value_dict, options):
+        # raise ValidationError(value_dict['amount_currency'])
+        res['name'] = _('Total')
+        res['colspan'] = len(self._get_column_details(options)) - 11
+        res['columns'] = res['columns'][res['colspan']-1:]
