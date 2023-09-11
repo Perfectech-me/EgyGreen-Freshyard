@@ -27,5 +27,6 @@
         'security/ir.model.access.csv',
         'wizard/gogs.xml',
         'report/gogs.xml',
+        'wizard/cond.xml',
     ],
 }

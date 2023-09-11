@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cond_report_options_form" model="ir.ui.view">
+            <field name="name">Print Report</field>
+            <field name="model">cond_report_options</field>
+            <field name="arch" type="xml">
+                <form string="Report Options">
+                    <group>
+                        <group>
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print" string="Print" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="start_cond_report_options_action" model="ir.actions.act_window">
+            <field name="name">Financial Condition options</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cond_report_options</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="cond_report_options_form"/>
+            <field name="target">new</field>
+        </record>
+        <menuitem name="Financial Condition" parent="account.menu_finance_reports" id="cond_menu_cost" action="start_cond_report_options_action" groups="base.group_user"/>
+
+    </data>
+</odoo>
