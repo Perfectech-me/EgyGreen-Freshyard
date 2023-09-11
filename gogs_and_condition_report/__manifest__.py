@@ -28,5 +28,6 @@
         'wizard/gogs.xml',
         'report/gogs.xml',
         'wizard/cond.xml',
+        'report/cond.xml'
     ],
 }

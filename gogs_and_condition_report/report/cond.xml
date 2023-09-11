@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="cond_xlsx"
+            model="account.move"
+            string="Report"
+            report_type="xlsx"
+            name="cond_xlsx"
+            file="cond_xlsx"
+            attachment_use="False"
+        />
+    </data>
+</odoo>
