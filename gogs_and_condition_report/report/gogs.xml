@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="gogs_xlsx"
+            model="account.move"
+            string="Report"
+            report_type="xlsx"
+            name="gogs_xlsx"
+            file="gogs_xlsx"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

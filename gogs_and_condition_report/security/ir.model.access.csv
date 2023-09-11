@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gogs_and_condition_report_gogs_and_condition_report,gogs_and_condition_report.gogs_and_condition_report,model_gogs_report_options,base.group_user,1,1,1,1

@@ -141,3 +141,6 @@ class ReportAccountAgedPartner(models.AbstractModel):
         res['name'] = _('Total')
         res['colspan'] = len(self._get_column_details(options)) - 11
         res['columns'] = res['columns'][res['colspan']-1:]
+        res['columns'][0] = {'name': value_dict['amount_currency'], 'class': 'number'}
+        
+        
