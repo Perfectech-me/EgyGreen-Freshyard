@@ -14,10 +14,18 @@ from itertools import chain
     
 class ReportAccountAgedPartner(models.AbstractModel):
     _inherit = "account.aged.partner"
+    filter_currency_2 = True
+    filter_currency = [{'id':1, 'name': 'EUR', 'selected': False},{'id':2, 'name': 'USD', 'selected': False},{'id':74, 'name': 'EGP', 'selected': False},{'id':142, 'name': 'GBP', 'selected': False},]
     invoice_date = fields.Date(string='Invoice Date')
     @api.model
     def _get_sql(self):
         options = self.env.context['report_options']
+        currency_id = 0
+        for c in options['currency']:
+            if c['selected']:
+                currency_id = c['id']
+        currency_where = f"AND account_move_line.currency_id = {currency_id}" if  currency_id else ''
+
         query = ("""
             SELECT
                 {move_line_fields},
@@ -88,7 +96,7 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 AND account_tr.type = 'model'
                 AND account_tr.lang = %(lang)s
             )
-            WHERE account.internal_type = %(account_type)s
+            WHERE account.internal_type = %(account_type)s {currency_where}
             AND account.exclude_from_aged_reports IS NOT TRUE
             GROUP BY account_move_line.id, partner.id, trust_property.id, journal.id, move.id, account.id,
                      period_table.period_index, currency_table.rate, currency_table.precision, account_name
@@ -97,6 +105,8 @@ class ReportAccountAgedPartner(models.AbstractModel):
             move_line_fields=self._get_move_line_fields('account_move_line'),
             currency_table=self.env['res.currency']._get_query_currency_table(options),
             period_table=self._get_query_period_table(options),
+            currency_where = currency_where
+            
         )
         params = {
             'account_type': options['filter_account_type'],
