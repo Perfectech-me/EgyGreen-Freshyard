@@ -28,17 +28,34 @@ class Bom(models.TransientModel):
         datas = []
         for cheque in cheques:
             
+            date = cheque.cheque_receive_date if cheque.type == 'incoming' else cheque.cheque_given_date
+            
+            rate = 0
+            amount_egy = 0
+            if cheque.currency_id.id == cheque.company_id.currency_id.id:
+                amount_egy = cheque.amount
+            else:
+                rates_current=[]
+                if cheque.currency_id:
+                    rates = cheque.currency_id.rate_ids.mapped('name')
+                    for line in rates:
+                        if line <= date:
+                            rates_current.append(line)
+                    for line in cheque.currency_id.rate_ids:
+                        if rates_current and max(set(rates_current)) == line.name:
+                            rate = line.inverse_company_rate
+                amount_egy = cheque.amount * rate   
             datas.append({
                 'date' : cheque.cheque_date,
                 'amount_currency' : cheque.amount,
-                'amount_egp' : cheque.amount_egy,
+                'amount_egp' : amount_egy,
                 'cheque_number' : cheque.chq_no,
                 'bank_account' : cheque.bank_account_id.name,
                 'payee' : cheque.payee_user_id.name,
             })
         return datas
     def get_invoices(self):
-        invoices = self.env['account.move'].search([('state','=','posted'),('move_type','=','out_invoice'),('invoice_date','>=',self.date_from),('invoice_date','<=',self.date_to)])
+        invoices = self.env['account.move'].search([('state','=','posted'),('move_type','=','out_invoice'),('invoice_date_due','>=',self.date_from),('invoice_date_due','<=',self.date_to)])
         datas = []
         for invoice in invoices:
             credit_note = self.env['account.move'].search([('reversed_entry_id','=',invoice.id),('state','=','posted')])
@@ -60,7 +77,7 @@ class Bom(models.TransientModel):
             })
         return datas
     def get_bills(self):
-        invoices = self.env['account.move'].search([('state','=','posted'),('move_type','=','in_invoice'),('invoice_date','>=',self.date_from),('invoice_date','<=',self.date_to)])
+        invoices = self.env['account.move'].search([('state','=','posted'),('move_type','=','in_invoice'),('invoice_date_due','>=',self.date_from),('invoice_date_due','<=',self.date_to)])
         datas = []
         for invoice in invoices:
             if not invoice.amount_residual_signed:

@@ -17,9 +17,20 @@ class PartnerXlsx(models.AbstractModel):
             'font_size':heading_font_size,
             'align':'vcenter',
         }
+        heading_base_format_blue = {
+            'border':border,
+            'bold':True,
+            'font_size':heading_font_size,
+            'align':'vcenter',
+            'bg_color' : '#1f497d',
+            'font_color' : 'white',
+        }
         formats['normal'] = workbook.add_format(heading_base_format)
+        formats['normal_blue'] = workbook.add_format(heading_base_format_blue)        
         formats['normal'].set_align('center')
         formats['normal'].set_text_wrap()
+        formats['normal_blue'].set_align('center')
+        formats['normal_blue'].set_text_wrap()
         return formats
     def set_headers(self,sheet,formats):
 
@@ -35,7 +46,6 @@ class PartnerXlsx(models.AbstractModel):
                     "Total Product or BOM Cost",
                     "Shipping Type",
                     "Total Services Cost",
-                    "Admin Fees",
                     "Landed Cost",
                     "Grand Total Cost",
                     "Total Amount Currency",
@@ -47,17 +57,27 @@ class PartnerXlsx(models.AbstractModel):
                     "Invoice Amount Due",
                     "Payment Terms"
             ]
-        self.write_line(sheet,formats,header_cells,1)
+        self.write_line(sheet,formats,header_cells,1,'normal_blue')
+    def get_analyc_tags_cost(self,rec):
+        tags = []
+        cost = 0
+        for line in rec.invoice_line_ids:
+            for tag in line.analytic_tag_ids:
+                tags.append(tag.id)
+        for tag in tags:
+            bill_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',[tag]),('move_id.state','=','posted'),('move_id.move_type','=','in_invoice')])
+            cost += sum(bill_lines.mapped('price_subtotal'))
+        return cost
     def get_analytic_tags(self,rec):
         tags = []
         for line in rec.invoice_line_ids:
             for tag in line.analytic_tag_ids:
-                tags.append(tag.name)
+                tags.append(tag.name or '')
         return ','.join(list(set(tags)))
     def get_analytic_account(self,rec):
         tags = []
         for line in rec.invoice_line_ids:
-            tags.append(line.analytic_account_id.name)
+            tags.append(line.analytic_account_id.name or '')
         return ','.join(list(set(tags)))
     def get_sale_order(self,rec):
         order = self.env['sale.order'].search([('invoice_ids','in',[rec.id])],limit = 1)
@@ -84,8 +104,7 @@ class PartnerXlsx(models.AbstractModel):
             net_weight = sum(line.net_weight_per_unit for line in so.order_line or [])
             total_cost = sum(line.product_id.standard_price for line in rec.invoice_line_ids)
             shipping_type = so.shipping_line_type or ''
-            total_service_cost = 0 #TODO
-            admin_fees = 0 #TODO
+            total_service_cost = self.get_analyc_tags_cost(rec)
             landed_cost = self.get_landed_cost(so)
             credit_note_amount_in_currency = abs(sum(credit_notes.mapped('amount_total_in_currency_signed')))
             credit_note_amount_egp = abs(sum(credit_notes.mapped('amount_total_signed')))
@@ -101,7 +120,6 @@ class PartnerXlsx(models.AbstractModel):
                      total_cost,
                      shipping_type,
                      total_service_cost,
-                     admin_fees,
                      landed_cost,
                      grand_total_cost,
                      rec.amount_total_in_currency_signed,
@@ -116,10 +134,10 @@ class PartnerXlsx(models.AbstractModel):
             self.write_line(sheet,formats,cells,row_start)
             row_start += 1
             i += 1
-    def write_line(self,sheet,formats,cells,row_start):
+    def write_line(self,sheet,formats,cells,row_start,format_name = 'normal'):
         cell_start = 0
         for cell in cells:
-            sheet.write(row_start,cell_start,cell,formats['normal'])
+            sheet.write(row_start,cell_start,cell,formats[format_name])
             cell_start += 1
 
 
