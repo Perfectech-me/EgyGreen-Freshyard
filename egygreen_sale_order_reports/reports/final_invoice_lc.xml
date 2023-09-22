@@ -90,6 +90,12 @@
                                                 <span t-field="o.company_id.mobile"/>
                                             </div>
                                         </div>
+                                         <div class="row">
+                                            <div class="col-auto">
+                                                <strong>phone:</strong>
+                                                <span t-field="o.company_id.phone"/>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-auto">
                                                 <strong>Vat:</strong>
@@ -520,6 +526,8 @@
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <span t-field="line.quantity"/>
+                                            <t t-set="total_qty" t-value="total_qty + line.quantity"/>
+                                            
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">

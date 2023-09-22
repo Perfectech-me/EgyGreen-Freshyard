@@ -24,85 +24,97 @@
                         </div>
 
                         <div class="page">
-                            <div style="width:100%">
-                                <div>
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <strong>Date:</strong>
-                                            <span t-field="o.invoice_date"/>
+ <div class="row">
+                                <div class="col-6">
+                                    <div style="width:100%">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <strong>Date:</strong>
+                                                    <span t-field="o.invoice_date"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <strong>Sales Order No:</strong>
+                                                    <span t-field="o.sales_order_id"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <strong>Final Invoice No:</strong>
+                                                    <span t-field="o.name"/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <strong>Sales Order No:</strong>
-                                            <span t-field="o.sales_order_id"/>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Exporter/Shipper:</strong>
+                                                <span t-field="o.company_id.name"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <strong>Final Invoice No:</strong>
-                                            <span t-field="o.name"/>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Trademark Certificate (Brand):</strong>
+                                                <span t-field="o.company_id.name"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <strong>Exporter/Shipper:</strong>
-                                        <span t-field="o.company_id.name"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <strong>Trademark Certificate (Brand):</strong>
-                                        <span t-field="o.company_id.name"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <strong>Address:</strong>
-                                        <span t-field="o.company_id.street"/>
-                                        <t t-if="o.company_id.street2">
-                                            ,
-                                            <span t-field="o.company_id.street2"/>
-                                        </t>
-                                        <t t-if="o.company_id.city">
-                                            ,
-                                            <span t-field="o.company_id.city"/>
-                                        </t>
-                                        <t t-if="o.company_id.state_id">
-                                            ,
-                                            <span t-field="o.company_id.state_id.name"/>
-                                        </t>
-                                        <t t-if="o.company_id.country_id">
-                                            ,
-                                            <span t-field="o.company_id.country_id.name"/>
-                                        </t>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <strong>Mobile:</strong>
-                                        <span t-field="o.company_id.mobile"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <strong>Vat:</strong>
-                                        <span t-field="o.company_id.vat"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <strong>Email:</strong>
-                                        <span t-field="o.company_id.email"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <strong>Website:</strong>
-                                        <span t-field="o.company_id.website"/>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Address:</strong>
+                                                <span t-field="o.company_id.street"/>
+                                                <t t-if="o.company_id.street2">
+                                                    ,
+                                                    <span t-field="o.company_id.street2"/>
+                                                </t>
+                                                <t t-if="o.company_id.city">
+                                                    ,
+                                                    <span t-field="o.company_id.city"/>
+                                                </t>
+                                                <t t-if="o.company_id.state_id">
+                                                    ,
+                                                    <span t-field="o.company_id.state_id.name"/>
+                                                </t>
+                                                <t t-if="o.company_id.country_id">
+                                                    ,
+                                                    <span t-field="o.company_id.country_id.name"/>
+                                                </t>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Mobile:</strong>
+                                                <span t-field="o.company_id.mobile"/>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-auto">
+                                                <strong>phone:</strong>
+                                                <span t-field="o.company_id.phone"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Vat:</strong>
+                                                <span t-field="o.company_id.vat"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Email:</strong>
+                                                <span t-field="o.company_id.email"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Website:</strong>
+                                                <span t-field="o.company_id.website"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -425,6 +437,8 @@
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <span t-field="line.quantity"/>
+                                            <t t-set="total_qty" t-value="total_qty + line.quantity"/>
+                                            
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
