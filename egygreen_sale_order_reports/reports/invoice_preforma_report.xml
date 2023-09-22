@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="page">
- <div class="row">
+                             <div class="row">
                                 <div class="col-6">
                                     <div style="width:100%">
                                         <div>
@@ -454,8 +454,9 @@
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <!--                                            <span t-esc="total_gross_weight"/>-->
-                                            <span t-esc="'{0:,.2f}'.format(total_gross_weight)"/>
-
+                                            <t t-foreach="line.sale_line_ids" t-as="sale_line">
+                                                <span t-esc="'{0:,.2f}'.format(sale_line.gross_weight_per_unit * line.quantity)"/>
+                                            </t>
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">

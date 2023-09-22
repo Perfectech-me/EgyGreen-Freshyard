@@ -8,6 +8,8 @@
             <field name="report_name">egygreen_sale_order_reports.report_invoice_lc_template</field>
             <field name="report_file">egygreen_sale_order_reports.report_invoice_lc_template</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="paperformat_id"
+                   ref="egygreen_sale_order_reports.paperformat_print_sale_order_proforma_invoice"/>
         </record>
 
 
@@ -15,7 +17,7 @@
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
-                        <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;font-size:12px">
+                        <div class="header" style="margin-top:0px;width:100%;">
                             <div style="width:30%;float:left;text-align:left">
                                 <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
                                      style="max-height: 80px;"/>
@@ -543,8 +545,9 @@
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <!--                                            <span t-esc="total_gross_weight"/>-->
-                                            <span t-esc="'{0:,.2f}'.format(total_gross_weight)"/>
-
+                                            <t t-foreach="line.sale_line_ids" t-as="sale_line">
+                                                <span t-esc="'{0:,.2f}'.format(sale_line.gross_weight_per_unit * line.quantity)"/>
+                                            </t>
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
