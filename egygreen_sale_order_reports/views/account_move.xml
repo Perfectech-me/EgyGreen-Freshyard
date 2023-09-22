@@ -26,6 +26,8 @@
                         </group>
                         <group>
                             <field name="data_loger" attrs="{'invisible':[('move_type','!=','out_invoice')]}"/>
+                            <field name="final_destination_country_id" attrs="{'invisible':[('move_type','!=','out_invoice')]}"/>
+                            <field name="discharge_country_id" attrs="{'invisible':[('move_type','!=','out_invoice')]}"/>
                         </group>
                     </group>
                 </xpath>

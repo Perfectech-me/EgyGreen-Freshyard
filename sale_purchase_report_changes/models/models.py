@@ -20,12 +20,15 @@ class sale_purchase_report_changes(models.Model):
                                                    ('North_America', 'North America'),('South_America', 'South America')
                                                    ],default='Africa')
     container_number = fields.Float(string = 'Container/Equipment Quantity')
+    net_weight_per_unit = fields.Float(string = 'Net Weight')
+    
     def _select_sale(self, fields=None):
         if not fields:
             fields = {}
         select_ = """
             min(l.id) as id,
             l.product_id as product_id,
+            l.net_weight_per_unit as net_weight_per_unit,
             t.uom_id as product_uom,
             CASE WHEN l.product_id IS NOT NULL THEN sum(l.product_uom_qty / u.factor * u2.factor) ELSE 0 END as product_uom_qty,
             CASE WHEN l.product_id IS NOT NULL THEN sum(l.qty_delivered / u.factor * u2.factor) ELSE 0 END as qty_delivered,
@@ -66,6 +69,7 @@ class sale_purchase_report_changes(models.Model):
             s.sales_person_user_id as sales_person_user_id,
             partner.continent as continent,
             s.container_number as container_number
+            
         """
 
         for field in fields.values():
@@ -75,6 +79,7 @@ class sale_purchase_report_changes(models.Model):
         groupby_ = """
             l.product_id,
             l.order_id,
+            l.net_weight_per_unit,
             t.uom_id,
             t.categ_id,
             s.name,

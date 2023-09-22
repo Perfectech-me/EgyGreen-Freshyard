@@ -84,10 +84,16 @@
                                                 </t>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                         <div class="row">
                                             <div class="col-auto">
                                                 <strong>Mobile:</strong>
-                                                <span t-field="o.company_id.phone"/>
+                                                <span t-field="o.company_id.mobile"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <strong>Vat:</strong>
+                                                <span t-field="o.company_id.vat"/>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -424,7 +430,7 @@
 
                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
                                    class="table table-sm table-bordered oe_inline">
-                                <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                <tr>
                                     <td colspan="2"
                                         style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
@@ -522,6 +528,8 @@
                                                 <!--                                            <span t-esc="sale_line.net_weight_per_unit * line.quantity"/>-->
                                                 <t t-set="total_net_weight"
                                                    t-value="total_net_weight+(sale_line.net_weight_per_unit * line.quantity)"/>
+                                                <t t-set="total_gross_weight"
+                                                   t-value="total_gross_weight+(sale_line.gross_weight_per_unit * line.quantity)"/>
                                             </t>
                                         </td>
                                         <td
@@ -540,6 +548,7 @@
                                         </td>
 
                                     </t>
+                                </tr>
                                     <tr>
                                         <td colspan="3"
                                             style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
@@ -596,7 +605,6 @@
                                             <span t-field="o.invoice_payment_term_id"/>
                                         </td>
                                     </tr>
-                                </tr>
                             </table>
 
 

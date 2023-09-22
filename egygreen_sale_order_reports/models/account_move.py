@@ -16,3 +16,5 @@ class AccountMoveInherit(models.Model):
     lcaf_no = fields.Char(string="LCAF No")
     data_loger = fields.Text(string="Data Loger")
     container_equipment_number = fields.Char(string="Container Equipment Number")
+    final_destination_country_id = fields.Many2one('res.country')
+    discharge_country_id = fields.Many2one('res.country')

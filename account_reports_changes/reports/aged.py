@@ -146,11 +146,21 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 self._field_column('currency_id'),
             ]
         return columns
+    def _format_partner_id_line(self, res, value_dict, options):
+        res['name'] = value_dict['partner_name'][:128] if value_dict['partner_name'] else _('Unknown Partner')
+        res['colspan'] -= 4
+        res['columns'].insert(6, {'name': round(value_dict['amount_currency'],2), 'class': 'number'})
+        res['columns'].insert(7, {'name': '', 'class': 'number'})
+        res['columns'].insert(8, {'name': '', 'class': 'number'})
+        res['columns'].insert(9, {'name': '', 'class': 'number'})
+        
+        
+        res['trust'] = value_dict['partner_trust']
     def _format_total_line(self, res, value_dict, options):
         # raise ValidationError(value_dict['amount_currency'])
         res['name'] = _('Total')
         res['colspan'] = len(self._get_column_details(options)) - 11
         res['columns'] = res['columns'][res['colspan']-1:]
-        res['columns'][0] = {'name': value_dict['amount_currency'], 'class': 'number'}
+        res['columns'][0] = {'name': round(value_dict['amount_currency'],2), 'class': 'number'}
         
         

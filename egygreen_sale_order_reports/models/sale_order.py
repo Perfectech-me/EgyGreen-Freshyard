@@ -45,6 +45,12 @@ class SaleOrderInherit(models.Model):
             'campaign_id': self.campaign_id.id,
             'medium_id': self.medium_id.id,
             'source_id': self.source_id.id,
+            'data_loger' : self.data_loger,
+            'invoice_incoterm_id' : self.incoterm,
+            'final_destination_country_id' : self.final_destination_country_id.id,
+            'discharge_country_id' : self.final_destination_country_id.id,
+            
+            
             'user_id': self.user_id.id,
             'invoice_user_id': self.user_id.id,
             'team_id': self.team_id.id,

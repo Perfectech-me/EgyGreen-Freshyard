@@ -177,7 +177,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                 cells.extend([str(line.commitment_date) or ""])
             cells.extend([str(line.container_number) or ""])
             if partners.report_type in ['f']:
-                cells.extend([str(line.container_type_id.name) or "",sum(rec.net_weight_per_unit for rec in line.order_line)  or "",sum(rec.gross_weight_per_unit for rec in line.order_line)  or ""])
+                cells.extend([str(line.container_type_id.name) or "",sum(rec.net_weight_per_unit * rec.product_uom_qty for rec in line.order_line)  or "",sum(rec.gross_weight_per_unit * rec.product_uom_qty for rec in line.order_line)  or ""])
             name_freight=''
             for fright in line.partner_shipping_ids:
                 name_freight+=fright.name+""
@@ -210,9 +210,9 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                 cells.extend([line.order_line[0]['container_equipment_number']])
             if partners.report_type in ['f','t','n']:
                 cells.extend([str(line.deprture_date) or "",])
-            if partners.report_type in ['f']:
-                cells.extend([])
             invoice = self.env['account.move'].search([('id','in',line.invoice_ids.ids)],limit = 1)
+            if partners.report_type in ['f']:
+                cells.extend([invoice.state])
             if partners.report_type in ['f','s']:
                 cells.extend([invoice.bl_awb or  '',invoice.form13number or ''])
             if partners.report_type in ['f','s','t']:
