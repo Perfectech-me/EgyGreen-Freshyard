@@ -101,7 +101,7 @@ class PartnerXlsx(models.AbstractModel):
         for rec in recs:
             credit_notes = self.get_credit_notes(rec)
             so = self.get_sale_order(rec)
-            net_weight = sum(line.net_weight_per_unit for line in so.order_line or [])
+            net_weight = sum(line.net_weight_per_unit * line.product_uom_qty for line in so.order_line or [])
             total_cost = sum(line.product_id.standard_price for line in rec.invoice_line_ids)
             shipping_type = so.shipping_line_type or ''
             total_service_cost = self.get_analyc_tags_cost(rec)
@@ -112,7 +112,7 @@ class PartnerXlsx(models.AbstractModel):
             cells = [self.get_analytic_tags(rec),
                      self.get_analytic_account(rec),
                      rec.name,
-                     rec.invoice_date,
+                     rec.invoice_date.strftime('%d-%m-%Y'),
                      rec.partner_id.name,
                      rec.invoice_person_user_id.name,
                      rec.container_equipment_number,

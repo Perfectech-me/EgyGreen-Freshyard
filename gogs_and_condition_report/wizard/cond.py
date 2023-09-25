@@ -24,7 +24,7 @@ class Bom(models.TransientModel):
             datas.append(data)
         return datas
     def get_cheque(self):
-        cheques = self.env['account.cheque'].search([('type', '=', 'outgoing'),('status','not in',['draft','done'])])
+        cheques = self.env['account.cheque'].search([('type', '=', 'outgoing'),('status','not in',['draft','done']),('cheque_date','>=',self.date_from),('cheque_date','<=',self.date_to)])
         datas = []
         for cheque in cheques:
             
