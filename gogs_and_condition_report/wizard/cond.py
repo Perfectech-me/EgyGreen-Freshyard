@@ -14,6 +14,8 @@ class Bom(models.TransientModel):
                 'name' : journal.name,
                 'balance_currency' : 0,
                 'balance_egp' : 0,
+                'end_balance' : journal.default_account_id.current_balance,
+                
             }
             amls = self.env['account.move.line'].search([('move_id.state','=','posted'),('account_id','=',journal.default_account_id.id),('date','>=',self.date_from),('date','<=',self.date_to)])
             if not amls:
