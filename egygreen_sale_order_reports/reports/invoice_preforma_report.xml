@@ -46,6 +46,24 @@
                                                     <span t-field="o.name"/>
                                                 </div>
                                             </div>
+                                              <div class="row">
+                                                    <div class="col-auto">
+                                                        <strong>Vat:</strong>
+                                                        <span t-field="o.company_id.vat"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-auto">
+                                                        <strong>Email:</strong>
+                                                        <span t-field="o.company_id.email"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-auto">
+                                                        <strong>Website:</strong>
+                                                        <span t-field="o.company_id.website"/>
+                                                    </div>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -97,24 +115,7 @@
                                                 <span t-field="o.company_id.phone"/>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Vat:</strong>
-                                                <span t-field="o.company_id.vat"/>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Email:</strong>
-                                                <span t-field="o.company_id.email"/>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Website:</strong>
-                                                <span t-field="o.company_id.website"/>
-                                            </div>
-                                        </div>
+  
                                     </div>
                                 </div>
                             </div>
@@ -168,10 +169,8 @@
                                         <t t-foreach="o.sales_order_id.partner_consignee_ids" t-as="cons">
                                             <span t-field="cons.street"/>
                                             <t t-if="cons.street2">
-                                                <br/>
                                                 <span t-field="cons.street2"/>
                                             </t>
-                                            <br/>
                                             <t t-if="cons.city">
                                                 ,
                                                 <span t-field="cons.city"/>
@@ -181,7 +180,6 @@
                                                 ,
                                                 <span t-field="cons.state_id"/>
                                             </t>
-                                            <br/>
                                             <t t-if="cons.country_id">
                                                 ,
                                                 <span t-field="cons.country_id"/>
@@ -381,15 +379,15 @@
 
                                 <tr style="background-color:#c2d6d6;">
                                     <td
-                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:55%;">
                                         <strong>Item</strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                         <strong>N.W</strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                         <strong>G.W</strong>
                                     </td>
                                     <td
@@ -419,17 +417,17 @@
                                     <t t-if="not line.product_id.additional_service">
 
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:11px;width:55%;">
                                             <span t-field="line.product_id"/>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
                                                 <span t-field="sale_line.net_weight_per_unit"/>
                                             </t>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
                                                 <span t-field="sale_line.gross_weight_per_unit"/>
                                             </t>
