@@ -154,7 +154,6 @@ class AccountPaymentTerm(models.Model):
     def compute(self, value, date_ref=False, currency=None,eta = False):
         self.ensure_one()
         date_ref = eta or date_ref or fields.Date.context_today(self)
-        
         amount = value
         sign = value < 0 and -1 or 1
         result = []

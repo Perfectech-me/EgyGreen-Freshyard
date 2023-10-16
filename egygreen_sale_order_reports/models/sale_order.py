@@ -81,6 +81,8 @@ class SaleOrderInherit(models.Model):
             'lc_date': self.lc_date,
             'lcaf_no': self.lcaf_no,
         }
+        invoice_vals['sales_order_id'] = self.id
+        
         return invoice_vals
 
     @api.model

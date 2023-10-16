@@ -4,7 +4,6 @@ from odoo.exceptions import UserError, ValidationError
 
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
-
     def _default_validity_date(self):
         if self.env['ir.config_parameter'].sudo().get_param('sale.use_quotation_validity_days'):
             days = self.env.company.quotation_validity_days
