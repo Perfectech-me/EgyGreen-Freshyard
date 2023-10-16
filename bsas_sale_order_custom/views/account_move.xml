@@ -11,7 +11,7 @@
 
                 <xpath expr="//field[@name='payment_reference']" position="after">
                    <field name="supplier_invoice"/>
-                   <field name="amount_8"/>
+                   <field name="amount_8" attrs = "{'invisible' : [('move_type','!=','out_invoice')]}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_user_id']" position="after">

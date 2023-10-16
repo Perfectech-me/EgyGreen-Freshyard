@@ -87,7 +87,7 @@
 
                                      <td colspan="1"
                                             style="background-color:#d9d9d9;text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
-                                            Partner
+                                            Date
                                      </td>
                                      <td colspan="2"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
@@ -163,7 +163,7 @@
                                     <tr style="background-color:#d9d9d9;">
                                         <th colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;font-size:14px;width:10%;">
-                                            Partner
+                                            Date
                                         </th>
                                         <th colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;width:10%;">
@@ -192,10 +192,7 @@
                                             style="text-align:left;border-width:1px;border-color:black;width:9%;">
                                             Matching Number
                                         </th>
-                                        <th colspan="1"
-                                            style="text-align:left;border-width:1px;border-color:black;width:8%;">
-                                            Initial Balance
-                                        </th>
+
                                         <th colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;width:8%;">
                                            Debit
@@ -221,7 +218,7 @@
                                     <tr>
                                         <td colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;">
-                                                <span t-esc="line['partner']"/>
+                                                <span t-esc="line['date']"/>
                                         </td>
 
                                         <td colspan="1"
@@ -254,11 +251,7 @@
                                                 <span t-esc="line['matching_number']"/>
                                         </td>
 
-                                        <td colspan="1"
-                                            style="text-align:left;border-width:1px;border-color:black;">
-                                            <span t-esc="'{0:,.2f}'.format(line['initial_balance'])"/> <span t-esc="line['currency_id']"/>
 
-                                        </td>
 
                                         <td colspan="1"
                                             style="text-align:left;border-width:1px;border-color:black;">

@@ -153,7 +153,9 @@ class AccountPaymentTerm(models.Model):
 
     def compute(self, value, date_ref=False, currency=None,eta = False):
         self.ensure_one()
-        date_ref = eta or date_ref or fields.Date.context_today(self)
+        date_ref_eta = eta or date_ref or fields.Date.context_today(self)
+        date_ref = date_ref or fields.Date.context_today(self)
+        
         amount = value
         sign = value < 0 and -1 or 1
         result = []
@@ -168,13 +170,16 @@ class AccountPaymentTerm(models.Model):
                 amt = currency.round(value * (line.value_amount / 100.0))
             elif line.value == 'balance':
                 amt = currency.round(amount)
+            next_date_eta = fields.Date.from_string(date_ref_eta)
             next_date = fields.Date.from_string(date_ref)
+            
 
             if line.option == 'eta_delivery_date':
-                next_date += relativedelta(days=line.days)
+                next_date_eta += relativedelta(days=line.days)
                 if line.day_of_the_month > 0:
-                    months_delta = (line.day_of_the_month < next_date.day) and 1 or 0
-                    next_date += relativedelta(day=line.day_of_the_month, months=months_delta)
+                    months_delta = (line.day_of_the_month < next_date_eta.day) and 1 or 0
+                    next_date_eta += relativedelta(day=line.day_of_the_month, months=months_delta)
+                next_date = next_date_eta
             else:
                 if line.option == 'day_after_invoice_date':
                     next_date += relativedelta(days=line.days)

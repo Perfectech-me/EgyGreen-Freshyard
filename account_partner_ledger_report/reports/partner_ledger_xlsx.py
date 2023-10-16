@@ -94,17 +94,16 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                 currency_name += currency.symbol + " , "
             worksheet.write('C7', currency_name, header_format_lines_left)
 
-        worksheet.write('A10', 'Partner', header_format)
+        worksheet.write('A10', 'Date', header_format)
         worksheet.write('B10', 'Journal', header_format)
         worksheet.write('C10', 'Account', header_format)
         worksheet.write('D10', 'Desc', header_format)
         worksheet.write('E10', 'Ref', header_format)
         worksheet.write('F10', ' Due Date ', header_format)
         worksheet.write('G10', '  Matching Number', header_format)
-        worksheet.write('H10', ' Initial Balance ', header_format)
-        worksheet.write('I10', 'Debit', header_format)
-        worksheet.write('J10', 'Credit', header_format)
-        worksheet.write('K10', ' Balance', header_format)
+        worksheet.write('H10', 'Debit', header_format)
+        worksheet.write('I10', 'Credit', header_format)
+        worksheet.write('J10', ' Balance', header_format)
 
         account_type = [self.env.ref('account.data_account_type_receivable').id,
                         self.env.ref('account.data_account_type_payable').id]
@@ -174,7 +173,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
 
                         account_move_line_initial_balance = self.env['account.move.line'].search(
                             [('date', '<', partners.date_from), ('partner_id', '=', line.partner_id.id),
-                             ('date_maturity', '!=', False)], order='date_maturity asc')
+                             ('date_maturity', '!=', False)],limit = 1, order='date_maturity asc')
                         if account_move_line_initial_balance and count == 0:
 
                             if partners.account_type == 'receivable' and account_move_line_initial_balance.account_id.user_type_id.id == self.env.ref(
@@ -202,10 +201,11 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                             'desc': line.name or "",
                             'ref': line.ref or "",
                             'date_maturity': line.date_maturity or "",
-                            'matching_number': line.matching_number or "",
+                            'matching_number': line.move_id.name or "",
                             'initial_balance': initial_balance or 0,
                             "debit": debit,
                             "credit": credit,
+                            "date" : line.date,
                             "amount_currency": line.amount_currency or 0,
                             "balance": balance or 0,
                             "currency_id": line.currency_id.symbol,
@@ -213,16 +213,15 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                         initial_balance = balance
                         count += 1
             for lines in account_move_lines:
-                    worksheet.write(row, col, str(lines['partner']), header_format_lines)
+                    worksheet.write(row, col, str(lines['date']), header_format_lines)
                     worksheet.write(row, col + 1, str(lines['journal_id']), header_format_lines)
                     worksheet.write(row, col + 2, str(lines['account_id']), header_format_lines)
                     worksheet.write(row, col + 3, str(lines['desc']), header_format_lines)
                     worksheet.write(row, col + 4, str(lines['ref']), header_format_lines)
                     worksheet.write(row, col + 5, str(lines['date_maturity']), header_format_lines)
                     worksheet.write(row, col + 6, str(lines['matching_number']), header_format_lines)
-                    worksheet.write(row, col + 7, str("{:,.2f}".format(lines['initial_balance'])) +" "+ str(lines['currency_id']), header_format_lines)
-                    worksheet.write(row, col + 8, str("{:,.2f}".format(lines['debit'])) +" "+ str(lines['currency_id']), header_format_lines)
-                    worksheet.write(row, col + 9, str("{:,.2f}".format(lines['credit'])) +" "+ str(lines['currency_id']), header_format_lines)
-                    worksheet.write(row, col + 10, str("{:,.2f}".format(lines['balance'])) +" "+ str(lines['currency_id']), header_format_lines)
+                    worksheet.write(row, col + 7, str("{:,.2f}".format(lines['debit'])) +" "+ str(lines['currency_id']), header_format_lines)
+                    worksheet.write(row, col + 8, str("{:,.2f}".format(lines['credit'])) +" "+ str(lines['currency_id']), header_format_lines)
+                    worksheet.write(row, col + 9, str("{:,.2f}".format(lines['balance'])) +" "+ str(lines['currency_id']), header_format_lines)
                     number += 1
                     row += 1

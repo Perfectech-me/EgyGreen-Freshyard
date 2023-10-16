@@ -95,7 +95,8 @@ class PartnerReportLedgerCustom(models.TransientModel):
                             credit=line.amount_currency if line.amount_currency>0 else line.amount_currency*-1
 
                         account_move_line_initial_balance = self.env['account.move.line'].search(
-                            [('date', '<', self.date_from),('partner_id','=',line.partner_id.id),('date_maturity','!=',False)],order='date_maturity asc')
+                            [('date', '<', self.date_from),('partner_id','=',line.partner_id.id),('date_maturity','!=',False)],limit 
+= 1,order='date_maturity asc')
 
                         if account_move_line_initial_balance and counter==0:
 
@@ -123,10 +124,11 @@ class PartnerReportLedgerCustom(models.TransientModel):
                         'desc': line.name or "",
                         'ref': line.ref or "",
                         'date_maturity': line.date_maturity or "",
-                        'matching_number': line.matching_number or "",
+                        'matching_number': line.move_id.name or "",
                         'initial_balance':  initial_balance or 0,
                         "debit": debit,
                         "credit": credit,
+                        'date' : line.date,
                         "amount_currency": line.amount_currency or 0,
                         "balance": balance or 0,
                          "currency_id":line.currency_id.symbol,
