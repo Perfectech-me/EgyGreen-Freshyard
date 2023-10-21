@@ -171,6 +171,17 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class = "row">
+                        <div class = "col-4">
+                            المستلم
+                        </div>
+                        <div class = "col-4">
+                            الحسابات
+                        </div>
+                        <div class = "col-4">
+                            المدير المالي
+                        </div>
+                    </div>
                 </div>
             </t>
         </template>

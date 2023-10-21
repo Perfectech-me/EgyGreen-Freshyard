@@ -10,7 +10,7 @@ class Bom(models.TransientModel):
     analytic_account_ids = fields.Many2many('account.analytic.account')
     
     def get_domain(self):
-        domain = [('state','=','posted'),('move_type','=','out_invoice')]
+        domain = [('state','=','posted'),('move_type','=','out_invoice'),('company_id','in',self.env.context.get('allowed_company_ids',[]))]
         if self.date_from and self.date_to:
             domain += [('invoice_date','>=',self.date_from),('invoice_date','<=',self.date_to)]
         if self.partner_ids:
@@ -20,4 +20,6 @@ class Bom(models.TransientModel):
         return domain
     def print(self):
         orders = self.env['account.move'].search(self.get_domain())
+        if not orders:
+            raise ValidationError('no moves')
         return self.env.ref('gogs_and_condition_report.gogs_xlsx').report_action(orders, data={})
