@@ -43,7 +43,7 @@ class PartnerXlsx(models.AbstractModel):
 
 
     def write_cash(self,sheet,formats,data,row_start):
-        headers = ["Bank and Cash item", "Balance Currency", "Balance EGP","Current Balance"]
+        headers = ["Bank and Cash item", "Balance Currency", "Balance EGP","Current Balance","Current Balance Currency"]
         sheet.merge_range(row_start, 0, row_start, len(headers) - 1, 'Bank and Cash Conditions', formats['normal'])
         row_start += 1
         self.write_line(sheet,formats,headers,row_start)

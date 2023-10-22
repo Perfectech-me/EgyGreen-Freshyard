@@ -27,14 +27,15 @@
                     <group>
                         <field name="no_of_pallets"/>
                         <field name="no_of_cartons"/>
-                        <field name="hs_code"/>
-                        <field name="ip_number"/>
-                        <field name="irc_no"/>
-                        <field name="partial_shipments"/>
-                        <field name="transshipment"/>
-                        <field name="lc_no"/>
-                        <field name="lc_date"/>
-                        <field name="lcaf_no"/>
+                        <field name = "lc_info"/>
+                        <field name="hs_code" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
+                        <field name="ip_number" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
+                        <field name="irc_no" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
+                        <field name="partial_shipments" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
+                        <field name="transshipment" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
+                        <field name="lc_no" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
+                        <field name="lc_date" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
+                        <field name="lcaf_no" attrs = "{'invisible' : [('lc_info','=',False)]}"/>
                     </group>
                 </xpath>
 

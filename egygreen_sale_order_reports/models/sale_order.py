@@ -2,15 +2,25 @@ from odoo import models, fields, api
 from datetime import date, datetime
 from odoo.exceptions import AccessError, UserError, ValidationError
 
-
+class SaleOrderLine(models.Model):
+    _inherit = 'product.template'
+    net_weight_per_unit = fields.Float(string="Net Weight Per Unit")
+    gross_weight_per_unit = fields.Float(string="Gross Weight Per Unit")
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     net_weight_per_unit = fields.Float(string="Net Weight Per Unit")
     gross_weight_per_unit = fields.Float(string="Gross Weight Per Unit")
     container_equipment_number = fields.Char(string="Container Equipment Number")
-
-
+    @api.onchange('product_id')
+    def product_id_change(self):
+        res = super().product_id_change()
+        self.update({
+            'net_weight_per_unit': self.product_id.net_weight_per_unit,
+            'gross_weight_per_unit': self.product_id.gross_weight_per_unit,
+            
+        })
+        return res
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
@@ -21,6 +31,7 @@ class SaleOrderInherit(models.Model):
     irc_no = fields.Char(string="IRC No")
     partial_shipments = fields.Char(string="Partial Shipments")
     transshipment = fields.Char(string="Transshipment")
+    lc_info = fields.Boolean(string = "LC Information")
     lc_no = fields.Char(string="LC No")
     lc_date = fields.Char(string="LC Date")
     lcaf_no = fields.Char(string="LCAF No")

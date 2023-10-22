@@ -443,37 +443,37 @@
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-field="sale_line.net_weight_per_unit"/>
+                                                <span t-esc="sale_line.net_weight_per_unit * float(o.no_of_cartons)"/>
                                             </t>
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-field="sale_line.gross_weight_per_unit"/>
+                                                <span t-esc="sale_line.gross_weight_per_unit * float(o.no_of_cartons)"/>
                                             </t>
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
-                                            <span t-field="line.quantity"/>
+                                            <span t-field="line.quantity"/> <span t-field="line.product_uom_id"/>
                                             <t t-set="total_qty" t-value="total_qty + line.quantity"/>
                                             
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-esc="'{0:,.2f}'.format(sale_line.net_weight_per_unit * line.quantity)"/>
+                                                <span t-esc="'{0:,.2f}'.format(sale_line.net_weight_per_unit * line.quantity * float(o.no_of_cartons))"/>
                                                 <!--                                            <span t-esc="sale_line.net_weight_per_unit * line.quantity"/>-->
                                                 <t t-set="total_net_weight"
-                                                   t-value="total_net_weight+(sale_line.net_weight_per_unit * line.quantity)"/>
+                                                   t-value="total_net_weight+(sale_line.net_weight_per_unit * line.quantity * float(o.no_of_cartons))"/>
                                                <t t-set="total_gross_weight"
-                                                   t-value="total_gross_weight+(sale_line.gross_weight_per_unit * line.quantity)"/>
+                                                   t-value="total_gross_weight+(sale_line.gross_weight_per_unit * line.quantity * float(o.no_of_cartons))"/>
                                             </t>
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <!--                                            <span t-esc="total_gross_weight"/>-->
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-esc="'{0:,.2f}'.format(sale_line.gross_weight_per_unit * line.quantity)"/>
+                                                <span t-esc="'{0:,.2f}'.format(sale_line.gross_weight_per_unit * line.quantity * float(o.no_of_cartons))"/>
                                             </t>
                                         </td>
                                         <td
