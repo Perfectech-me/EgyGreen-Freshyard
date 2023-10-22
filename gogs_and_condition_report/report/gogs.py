@@ -65,7 +65,7 @@ class PartnerXlsx(models.AbstractModel):
             for tag in line.analytic_tag_ids:
                 tags.append(tag.id)
         for tag in tags:
-            bill_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',[tag]),('move_id.state','=','posted'),('move_id.move_type','=','in_invoice')])
+            bill_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',[tag]),('move_id.state','=','posted'),('move_id.move_type','=','in_invoice'),('product_id.detailed_type','=','service')])
             cost += abs(sum(bill_lines.mapped('move_id.amount_total_signed')))
         return cost
     def get_analytic_tags(self,rec):
@@ -94,6 +94,15 @@ class PartnerXlsx(models.AbstractModel):
         return landed_cost
     def get_credit_notes(self,rec):
         return self.env['account.move'].search([('reversed_entry_id','=',rec.id),('state','=','posted')])
+    def get_cogs_debit(self,rec):
+        cogs_accounts = []
+        for line in rec.invoice_line_ids:
+            cogs_accounts.append(line.product_id.categ_id.property_account_expense_categ_id.id)
+        s = 0
+        for line in rec.line_ids:
+            if line.account_id.id in cogs_accounts:
+                s += line.debit
+        return s
     def write_lines(self,sheet,formats,recs):
         self.set_headers(sheet,formats)
         row_start = 2
@@ -102,7 +111,7 @@ class PartnerXlsx(models.AbstractModel):
             credit_notes = self.get_credit_notes(rec)
             so = self.get_sale_order(rec)
             net_weight = sum(line.net_weight_per_unit * line.product_uom_qty for line in so.order_line or [])
-            total_cost = sum(line.product_id.standard_price for line in rec.invoice_line_ids)
+            total_cost = self.get_cogs_debit(rec)
             shipping_type = so.shipping_line_type or ''
             total_service_cost = self.get_analyc_tags_cost(rec)
             landed_cost = self.get_landed_cost(so)
