@@ -18,3 +18,8 @@ class AccountMoveInherit(models.Model):
     container_equipment_number = fields.Char(string="Container Equipment Number")
     final_destination_country_id = fields.Many2one('res.country')
     discharge_country_id = fields.Many2one('res.country')
+
+class AccountMoveInherit(models.Model):
+    _inherit = 'account.move.line'
+    no_of_cartons = fields.Char(string="No of Cartons")
+    

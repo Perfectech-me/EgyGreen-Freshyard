@@ -43,7 +43,7 @@ class PartnerXlsx(models.AbstractModel):
 
 
     def write_cash(self,sheet,formats,data,row_start):
-        headers = ["Bank and Cash item", "Balance Currency", "Balance EGP","Current Balance","Current Balance Currency"]
+        headers = ["Bank and Cash item","Current Balance","Current Balance Currency"]
         sheet.merge_range(row_start, 0, row_start, len(headers) - 1, 'Bank and Cash Conditions', formats['normal'])
         row_start += 1
         self.write_line(sheet,formats,headers,row_start)
@@ -121,7 +121,7 @@ class PartnerXlsx(models.AbstractModel):
         total_invoice = sum([i['amount_egp'] for i in data['invoices']])
         total_bill = sum([i['amount_egp'] for i in data['bills']])
         total_cheque = sum([i['amount_egp'] for i in data['cheques']])
-        total_cash = sum([i['balance_egp'] for i in data['bank_cash']])
+        total_cash = sum([i['end_balance'] for i in data['bank_cash']])
         self.write_line(sheet,formats,[f"date from : {data['date_from']}",f"date to : {data['date_to']}"],row_start,'normal_blue')
         row_start += 1
         self.write_line(sheet,formats,['Total Reciveable / EGP'],row_start,'normal_blue')

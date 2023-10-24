@@ -31,6 +31,9 @@
                         </group>
                     </group>
                 </xpath>
+                <xpath expr = "//field[@name = 'invoice_line_ids']//tree//field[@name = 'quantity']" position = "after">
+                    <field name = "no_of_cartons"/>
+                </xpath>
 
             </field>
         </record>

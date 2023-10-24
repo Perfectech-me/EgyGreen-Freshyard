@@ -172,13 +172,13 @@
                         </tbody>
                     </table>
                     <div class = "row">
-                        <div class = "col-4">
+                        <div class = "col-4 text-center" style = "font-weight : bold">
                             المستلم
                         </div>
-                        <div class = "col-4">
+                        <div class = "col-4 text-center" style = "font-weight : bold">
                             الحسابات
                         </div>
-                        <div class = "col-4">
+                        <div class = "col-4 text-center" style = "font-weight : bold">
                             المدير المالي
                         </div>
                     </div>

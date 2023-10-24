@@ -12,21 +12,13 @@ class Bom(models.TransientModel):
         for journal in journals:
             data = {
                 'name' : journal.name,
-                'balance_currency' : 0,
-                'balance_egp' : 0,
                 'end_balance' : journal.default_account_id.current_balance,
                 'end_balance_currency' : 0
             }
             domain_base = [('move_id.state','=','posted'),('account_id','=',journal.default_account_id.id)]
             date_domain = [('date','>=',self.date_from),('date','<=',self.date_to)]
-            amls = self.env['account.move.line'].search(domain_base + date_domain)
             amls_without_date = self.env['account.move.line'].search(domain_base) #for current balance currency
-            
-            if not amls:
-                continue
-            for aml in amls:
-                data['balance_currency'] += aml.amount_currency
-                data['balance_egp'] += aml.balance
+
             for aml in amls_without_date:
                 data['end_balance_currency'] += aml.amount_currency
             datas.append(data)

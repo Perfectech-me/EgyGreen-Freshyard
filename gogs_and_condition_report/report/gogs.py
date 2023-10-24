@@ -64,9 +64,9 @@ class PartnerXlsx(models.AbstractModel):
         for line in rec.invoice_line_ids:
             for tag in line.analytic_tag_ids:
                 tags.append(tag.id)
-        for tag in tags:
-            bill_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',[tag]),('move_id.state','=','posted'),('move_id.move_type','=','in_invoice'),('product_id.detailed_type','=','service')])
-            cost += abs(sum(bill_lines.mapped('move_id.amount_total_signed')))
+        bill_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',tags),('move_id.state','=','posted'),('move_id.move_type','=','in_invoice'),('product_id.detailed_type','=','service')])
+        cost += abs(sum(bill_lines.mapped('balance')))
+            
         return cost
     def get_analytic_tags(self,rec):
         tags = []
