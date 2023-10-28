@@ -4,6 +4,14 @@ from odoo.exceptions import UserError, ValidationError
 
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
+    analytic_tag_ids = fields.Many2many('account.analytic.tag',compute = '_set_analytic_tag_ids',store = True)
+    @api.depends('order_line.analytic_tag_ids')
+    def _set_analytic_tag_ids(self):
+        for rec in self:
+            ids = []
+            for line in rec.order_line:
+                ids += line.analytic_tag_ids.ids
+            rec.analytic_tag_ids = [(6,0,ids)]
     def _default_validity_date(self):
         if self.env['ir.config_parameter'].sudo().get_param('sale.use_quotation_validity_days'):
             days = self.env.company.quotation_validity_days

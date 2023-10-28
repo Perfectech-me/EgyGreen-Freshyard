@@ -16,12 +16,15 @@
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
-                        <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;">
-                            <div style="width:30%;float:left;text-align:left">
+                        <div class="header row" style="margin-top:0px;width:100%;">
+                            <div class = "col-4 text-left">
                                 <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
                                      style="max-height: 80px;"/>
                             </div>
-
+                            <div class = "col-4 text-center">
+                                <img t-if="res_company.company_qr" t-att-src="image_data_uri(res_company.company_qr)"
+                                     style="max-height: 80px;"/>
+                            </div>
                         </div>
 
                         <div class="page">
@@ -377,12 +380,10 @@
                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
                                    class="table table-sm table-bordered oe_inline">
                                 <t t-set="total_qty" t-value="0"/>
-                                <t t-set="qty_name" t-value="''"/>
-                                
 
                                 <tr style="background-color:#c2d6d6;">
                                     <td
-                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:40%;">
+                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:55%;">
                                         <strong>Item</strong>
                                     </td>
                                     <td
@@ -394,24 +395,24 @@
                                         <strong>G.W</strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Qty</strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Total N.W
                                         </strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Total G.W</strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                            style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Price</strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Amount</strong>
                                     </td>
                                 </tr>
@@ -420,80 +421,79 @@
                                     <t t-if="not line.product_id.additional_service">
 
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:11px;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:11px;width:55%;">
                                             <span t-field="line.product_id"/>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-esc="sale_line.net_weight_per_unit *  float(line.no_of_cartons)"/>
+                                                <span t-field="sale_line.net_weight_per_unit"/>
                                             </t>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-esc="sale_line.gross_weight_per_unit *  float(line.no_of_cartons)"/>
+                                                <span t-field="sale_line.gross_weight_per_unit"/>
                                             </t>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
-                                            <span t-esc="round(line.quantity,2)"/>   <span t-field="line.product_uom_id"/>
-                                            <t t-set="qty_name" t-value="line.product_uom_id.name"/>
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            <span t-field="line.quantity"/>
                                             <t t-set="total_qty" t-value="total_qty + line.quantity"/>
                                             
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-esc="'{0:,.2f}'.format(sale_line.net_weight_per_unit * line.quantity * float(line.no_of_cartons))"/>
+                                                <span t-esc="'{0:,.2f}'.format(sale_line.net_weight_per_unit * line.quantity)"/>
                                                 <!--                                            <span t-esc="sale_line.net_weight_per_unit * line.quantity"/>-->
                                                 <t t-set="total_net_weight"
-                                                   t-value="total_net_weight+(sale_line.net_weight_per_unit * line.quantity * float(line.no_of_cartons))"/>
+                                                   t-value="total_net_weight+(sale_line.net_weight_per_unit * line.quantity)"/>
                                                <t t-set="total_gross_weight"
-                                                   t-value="total_gross_weight+(sale_line.gross_weight_per_unit * line.quantity * float(line.no_of_cartons))"/>
+                                                   t-value="total_gross_weight+(sale_line.gross_weight_per_unit * line.quantity)"/>
                                             </t>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <!--                                            <span t-esc="total_gross_weight"/>-->
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
-                                                <span t-esc="'{0:,.2f}'.format(sale_line.gross_weight_per_unit * line.quantity * float(line.no_of_cartons))"/>
+                                                <span t-esc="'{0:,.2f}'.format(sale_line.gross_weight_per_unit * line.quantity)"/>
                                             </t>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
-                                            <span t-esc="round(line.price_unit,2)"/>
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            <span t-field="line.price_unit"/>
                                         </td>
                                         <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <span t-field="line.price_subtotal"/>
                                         </td>
 
                                     </t>
                                 </tr>
                                     <tr>
-                                        <td colspan="2"
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;">
-                                            <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                        <td colspan="3"
+                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                                 Grand Total
                                             </strong>
-                                            <td colspan="2"
-                                                style="text-align:center;border-width:1px;border-color:black;font-size:13px">
-                                                <span t-esc="total_qty"/> <span t-esc = "qty_name"/>
+                                            <td colspan="1"
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                                <span t-esc="total_qty"/>
                                             </td>
                                             <td
-                                                    style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                    style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                                 <!--                                            <span t-esc="total_net_weight"/>-->
-                                                <span t-esc="'{0:,.2f}'.format(total_net_weight)"/> Kg
+                                                <span t-esc="'{0:,.2f}'.format(total_net_weight)"/>
 
                                             </td>
                                             <td
-                                                    style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                    style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                                 <!--                                            <span t-esc="total_gross_weight"/>-->
-                                                <span t-esc="'{0:,.2f}'.format(total_gross_weight)"/> Kg
+                                                <span t-esc="'{0:,.2f}'.format(total_gross_weight)"/>
                                             </td>
                                             <td colspan="2"
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;">
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                                 <span t-field="o.amount_total"/>
                                             </td>
                                         </td>
@@ -539,7 +539,8 @@
                                             <span t-field="o.currency_id"/>
                                             to:
                                         </strong>
-                                        <!-- <span t-field="o.narration" t-if = "o.narration"/> -->
+                                        <br/>
+                                        <span t-field="o.narration"/>
 
                                         Bank Name :
                                         <span t-field="o.partner_bank_id.bank_id.name"/>
@@ -560,7 +561,7 @@
                                         Account Name :
                                         <span t-field="o.partner_bank_id.partner_id"/>
                                         <br/>
-                                        IBAN :
+                                        IBANe :
                                         <span t-field="o.partner_bank_id.bank_id.bic"/>
                                         <br/>
                                         Account Number :
@@ -592,7 +593,6 @@
                                     independent inspection company accepted by the exporter
                                 </strong>
                             </center>
-
                         </div>
                     </t>
                 </t>

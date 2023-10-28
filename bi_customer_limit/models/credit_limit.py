@@ -9,11 +9,26 @@ import werkzeug.urls
 
 class res_pertner(models.Model):
     _inherit = "res.partner"
+    credit_limit_currency = fields.Many2one('res.currency',default = lambda self : self.env.company.currency_id.id,required = True)
+    is_company_currency = fields.Boolean(compute = '_set_is_company_currency')
+    @api.depends('credit_limit_currency')
+    def _set_is_company_currency(self):
+        for rec in self:
+            rec.is_company_currency = rec.credit_limit_currency.id == rec.env.company.currency_id.id
+    credit_limit_in_currency = fields.Integer()
+    Blocking_limit_currency = fields.Integer()
     
-    credit_limit = fields.Integer(string="Credit Limit")
+    credit_limit = fields.Integer(string="Credit Limit",compute = '_set_limits',store = True)
     credit_on_hold = fields.Boolean(string="Put on Hold")
 
-    Blocking_limit = fields.Integer(string="Blocking Limit")
+    Blocking_limit = fields.Integer(string="Blocking Limit",compute = '_set_limits',store = True)
+    @api.depends('credit_limit_currency','credit_limit_in_currency','Blocking_limit_currency','company_id')
+    def _set_limits(self):
+        for rec in self:
+            convert_rate = rec.credit_limit_currency._convert(1, rec.company_id.currency_id, self.company_id, fields.Date().today()) if rec.company_id else 1
+            rec.credit_limit = rec.credit_limit_in_currency * convert_rate if rec.credit_limit_in_currency else rec.credit_limit
+            rec.Blocking_limit = rec.Blocking_limit_currency * convert_rate if rec.Blocking_limit_currency else rec.Blocking_limit
+            
     is_credit_limit = fields.Boolean(String="Active Credit Limit")
     balance_invoice_ids = fields.One2many('account.move', 'partner_id', 'Customer move lines', domain=[('move_type', 'in', ['out_invoice','out_refund']),('payment_state', 'not in', ['paid']),('state','=','posted')]) 
     customer_due_amt = fields.Float("Customer Due Amount",compute="depends_partner_id",store=True, copy=False)

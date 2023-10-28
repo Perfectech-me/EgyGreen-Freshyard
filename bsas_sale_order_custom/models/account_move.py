@@ -1,7 +1,20 @@
 from odoo import models, fields, api
 class AccountMoveInherit(models.Model):
     _inherit = 'account.move'
-
+    analytic_tag_ids = fields.Many2many('account.analytic.tag',compute = '_set_analytic_tag_ids',store = True)
+    analytic_account_ids = fields.Many2many('account.analytic.account',compute = '_set_analytic_tag_ids',store = True)
+    @api.depends('invoice_line_ids.analytic_tag_ids','invoice_line_ids.analytic_account_id',)
+    def _set_analytic_tag_ids(self):
+        for rec in self:
+            ids = []
+            ids_2 = []
+            for line in rec.invoice_line_ids:
+                ids += line.analytic_tag_ids.ids
+                ids_2 += line.analytic_account_id.ids
+                
+            rec.analytic_tag_ids = [(6,0,ids)]
+            rec.analytic_account_ids = [(6,0,ids_2)]
+            
     invoice_person_user_id = fields.Many2one(comodel_name="sales.person.users", string="Sales Person")
     bank_ids = fields.Many2many(comodel_name="res.partner.bank",string="Bank Accounts")
     sales_order_id = fields.Many2one(comodel_name="sale.order")

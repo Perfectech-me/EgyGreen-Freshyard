@@ -16,19 +16,22 @@
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
-                        <div class="header" style="margin-bottom:50;margin-top:0px;width:100%;">
+                        <div class="header row" style="margin-bottom:50;margin-top:0px;width:100%;">
 
-                            <div style="width:30%;float:left;text-align:left">
+                            <div class = "col-4 text-left">
                                 <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
                                      style="max-height: 80px;"/>
                             </div>
-                            <div style="width:70%;float:right;">
+                            <div class = "col-4 text-center">
+                                <img t-if="res_company.company_qr" t-att-src="image_data_uri(res_company.company_qr)"
+                                     style="max-height: 80px;"/>
+                            </div>
+                            <div class = "col-4 text-right">
                                 <h3 style="width:100%;">
                                     Final Invoice
                                     <span t-field="o.name"/>
                                 </h3>
                             </div>
-
                         </div>
 
                         <div class="page">
