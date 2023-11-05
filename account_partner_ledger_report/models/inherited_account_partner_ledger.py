@@ -39,6 +39,7 @@ class report_account_partner_ledger(models.AbstractModel):
         vals = super()._get_report_line_partner( options, partner, initial_balance, debit, credit, balance)
         vals['columns'][-3] = {'name': self.format_value(amount_currency,currency = self.get_currency_id(options)), 'class': 'number'}
         vals['columns'][-2] = {'name': self.format_value(balance * rate,currency = self.get_currency_id(options)), 'class': 'number'}
+        
 
         return vals
 
@@ -139,13 +140,13 @@ class report_account_partner_ledger(models.AbstractModel):
             caret_type = 'account.payment'
         else:
             caret_type = 'account.move'
-
+        matching_number = self.env['account.move.line'].browse(aml['id']).get_matching_number()
         columns = [
             {'name': aml['journal_code']},
             {'name': aml['account_code']},
             {'name': self._format_aml_name(aml['name'], aml['ref'], aml['move_name']), 'class': 'o_account_report_line_ellipsis'},
             {'name': self.format_report_date(aml['date_maturity']), 'class': 'date'},
-            {'name': aml['matching_number'] or ''},
+            {'name': matching_number},
             {'name': self.format_value(cumulated_init_balance), 'class': 'number'},
             {'name': self.format_value(aml['debit'], blank_if_zero=True), 'class': 'number'},
             {'name': self.format_value(aml['credit'], blank_if_zero=True), 'class': 'number'},

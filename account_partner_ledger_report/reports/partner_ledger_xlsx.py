@@ -201,7 +201,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                             'desc': line.name or "",
                             'ref': line.ref or "",
                             'date_maturity': line.date_maturity or "",
-                            'matching_number': line.move_id.name or "",
+                            'matching_number': line.get_matching_number() or "",
                             'initial_balance': initial_balance or 0,
                             "debit": debit,
                             "credit": credit,
