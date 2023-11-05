@@ -12,6 +12,18 @@ class SaleOrderLine(models.Model):
     net_weight_per_unit = fields.Float(string="Net Weight Per Unit")
     gross_weight_per_unit = fields.Float(string="Gross Weight Per Unit")
     container_equipment_number = fields.Char(string="Container Equipment Number")
+    no_of_cartons = fields.Char(string="No of Cartons")
+    def _prepare_invoice_line(self, **optional_values):
+        """
+        Prepare the dict of values to create the new invoice line for a sales order line.
+
+        :param qty: float quantity to invoice
+        :param optional_values: any parameter that should be added to the returned invoice line
+        """
+        vals = super()._prepare_invoice_line(**optional_values)
+        vals['no_of_cartons'] = self.no_of_cartons
+        
+        return vals
     @api.onchange('product_id')
     def product_id_change(self):
         res = super().product_id_change()

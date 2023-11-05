@@ -18,19 +18,19 @@
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
                         <div class="header row" style="margin-top:0px;width:100%;">
-                            <div class = "col-4 text-left">
+                            <div class = "col-6 text-left">
                                 <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
                                      style="max-height: 80px;"/>
                             </div>
-                            <div class = "col-4 text-center">
+                            <div class = "col-6 text-right">
                                 <img t-if="res_company.company_qr" t-att-src="image_data_uri(res_company.company_qr)"
                                      style="max-height: 80px;"/>
                             </div>
                         </div>
 
                         <div class="page">
-                            <div class="row">
-                                <div class="col-6">
+                                                        <div class="row">
+                                <div class="col-7">
                                     <div style="width:100%">
                                         <div>
                                             <div class="row">
@@ -51,6 +51,12 @@
                                                     <span t-field="o.name"/>
                                                 </div>
                                             </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-5 text-left">
+                                    <div>
                                         <div class="row">
                                             <div class="col-auto">
                                                 <strong>Vat:</strong>
@@ -69,58 +75,6 @@
                                                 <span t-field="o.company_id.website"/>
                                             </div>
                                         </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Exporter/Shipper:</strong>
-                                                <span t-field="o.company_id.name"/>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Trademark Certificate (Brand):</strong>
-                                                <span t-field="o.company_id.name"/>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Address:</strong>
-                                                <span t-field="o.company_id.street"/>
-                                                <t t-if="o.company_id.street2">
-                                                    ,
-                                                    <span t-field="o.company_id.street2"/>
-                                                </t>
-                                                <t t-if="o.company_id.city">
-                                                    ,
-                                                    <span t-field="o.company_id.city"/>
-                                                </t>
-                                                <t t-if="o.company_id.state_id">
-                                                    ,
-                                                    <span t-field="o.company_id.state_id.name"/>
-                                                </t>
-                                                <t t-if="o.company_id.country_id">
-                                                    ,
-                                                    <span t-field="o.company_id.country_id.name"/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                         <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Mobile:</strong>
-                                                <span t-field="o.company_id.mobile"/>
-                                            </div>
-                                        </div>
-                                         <div class="row">
-                                            <div class="col-auto">
-                                                <strong>phone:</strong>
-                                                <span t-field="o.company_id.phone"/>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -670,7 +624,7 @@
                                         <br/>
                                         <br/>
                                         <img class="img img-responsive"
-                                             src="/egygreen_sale_order_reports/static/src/img/sign.jpeg"
+                                             src="/egygreen_sale_order_reports/static/src/img/sign.png"
                                              style="max-height:150px;max-width:200px;"
                                         />
                                     </td>
@@ -678,8 +632,21 @@
                             </table>
                             <center>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
-                                    NO Claims accepted after 48 hours from port arrival and should be reported by
-                                    independent inspection company accepted by the exporter
+                                        No claims accepted after 72hours from port arrival and must be reported by 
+                                        independence inspection company agreed by shipper. 
+
+                                </strong>
+                            </center>
+                            <center>
+                                <strong style="background-color:#1f2a54; color:white;font-size:12px;">
+                                    Signing the invoice Or confirmation from the customer is obligation on him to 
+                                    recieve the shipment and pay the invoice. 
+                                </strong>
+                            </center>
+                            <center>
+                                <strong style="background-color:#1f2a54; color:white;font-size:12px;">
+                                    The interest for the late payment is applicable by 5% from total invoice on each 
+                                    month delay from the agreed payment terms.
                                 </strong>
                             </center>
 

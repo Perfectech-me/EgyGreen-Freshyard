@@ -17,6 +17,7 @@
                     <field name="container_equipment_number" invisible="1"/>
                     <field name="net_weight_per_unit" required="1"/>
                     <field name="gross_weight_per_unit" required="1"/>
+                    <field name="no_of_cartons" required="1"/>
                 </xpath>
 
                 <xpath expr="//group[@name='sale_header']" position="inside">
