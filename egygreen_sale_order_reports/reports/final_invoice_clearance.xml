@@ -59,6 +59,12 @@
                                     <div>
                                         <div class="row">
                                             <div class="col-auto">
+                                                <strong>Exporter/Shipper:</strong>
+                                                <span t-field="o.company_id.name"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-auto">
                                                 <strong>Vat:</strong>
                                                 <span t-field="o.company_id.vat"/>
                                             </div>
@@ -69,12 +75,7 @@
                                                 <span t-field="o.company_id.email"/>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-auto">
-                                                <strong>Website:</strong>
-                                                <span t-field="o.company_id.website"/>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -363,8 +364,12 @@
                                         <strong>G.W</strong>
                                     </td>
                                     <td
-                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:15%;">
+                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:5%;">
                                         <strong>Qty</strong>
+                                    </td>
+                                    <td
+                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                        <strong>No Of Cartons</strong>
                                     </td>
                                     <td
                                             style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
@@ -413,6 +418,10 @@
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                            <span t-esc="line.no_of_cartons if qty_name != 'Units' else ''"/>
+                                        </td>
+                                        <td
+                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <t t-foreach="line.sale_line_ids" t-as="sale_line">
                                                 <span t-esc="'{0:,.2f}'.format(sale_line.net_weight_per_unit * line.quantity * float(line.no_of_cartons))"/>
                                                 <!--                                            <span t-esc="sale_line.net_weight_per_unit * line.quantity"/>-->
@@ -441,7 +450,7 @@
                                     </t>
                                 </tr>
                                     <tr>
-                                        <td colspan="2"
+                                        <td colspan="3"
                                             style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 Grand Total
@@ -474,7 +483,7 @@
                                         <!--                                            </td>-->
                                     </tr>
                                     <tr>
-                                        <td colspan="2"
+                                        <td colspan="3"
                                             style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 Amount Chargable
@@ -486,7 +495,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"
+                                        <td colspan="3"
                                             style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 Payment Terms
