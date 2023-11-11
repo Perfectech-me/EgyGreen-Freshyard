@@ -40,7 +40,7 @@
             <field name="inherit_id" ref="account.view_out_invoice_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='amount_untaxed_signed']" position="after">
-                   <field name="amount_8" optional = "show"/>
+                   <field name="amount_8" optional = "show" sum="Subsidy Value"/>
                 </xpath>
             </field>
         </record>

@@ -70,8 +70,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-auto">
-                                                <strong>Email:</strong>
-                                                <span t-field="o.company_id.email"/>
+                                                <strong>Website:</strong>
+                                                <span t-field="o.company_id.website"/>
                                             </div>
                                         </div>
                                     </div>
@@ -356,7 +356,7 @@
                                     </td>
                                     <td
                                             style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
-                                        <strong>No Of Cartons</strong>
+                                        <strong>Cartons</strong>
                                     </td>
                                     <td
                                             style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
@@ -405,7 +405,7 @@
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px">
-                                            <span t-esc="line.no_of_cartons if qty_name != 'Units' else ''"/>
+                                            <span t-esc="line.no_of_cartons if qty_name != 'Units' else ''"/> <span t-esc="' Cartons' if qty_name != 'Units' else ''"/>
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px">
@@ -552,25 +552,25 @@
                                     </td>
                                 </tr>
                             </table>
-                            <center>
+                            <p>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                         No claims accepted after 72hours from port arrival and must be reported by 
                                         independence inspection company agreed by shipper. 
 
                                 </strong>
-                            </center>
-                            <center>
+                            </p>
+                            <p>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                     Signing the invoice Or confirmation from the customer is obligation on him to 
                                     recieve the shipment and pay the invoice. 
                                 </strong>
-                            </center>
-                            <center>
+                            </p>
+                            <p>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                     The interest for the late payment is applicable by 5% from total invoice on each 
                                     month delay from the agreed payment terms.
                                 </strong>
-                            </center>
+                            </p>
 
                         </div>
                     </t>

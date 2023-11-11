@@ -20,12 +20,12 @@ class AccountMoveInherit(models.Model):
     sales_order_id = fields.Many2one(comodel_name="sale.order")
     not_local_sale_order = fields.Boolean(compute='_get_check_not_local_sale_order')
     supplier_invoice = fields.Char(string="Supplier Invoice")
-    amount_8 = fields.Float(compute = '_set_amount_8',string = "Subsidy Value")
+    amount_8 = fields.Monetary(compute = '_set_amount_8',string = "Subsidy Value",currency_field='company_currency_id')
     @api.depends('amount_residual')
     def _set_amount_8(self):
         for rec in self:
             credit_notes = rec.env['account.move'].search([('reversed_entry_id','=',rec.id),('state','=','posted')])
-            amount = rec.amount_total - abs(sum(credit_notes.mapped('amount_total')))
+            amount = abs(rec.amount_total_signed) - abs(sum(credit_notes.mapped('amount_total_signed')))
             rec.amount_8 = amount * (0.8) * (0.08)
     @api.depends('sales_order_id')
     def _get_check_not_local_sale_order(self):
