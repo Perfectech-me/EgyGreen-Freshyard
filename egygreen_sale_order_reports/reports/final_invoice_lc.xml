@@ -592,6 +592,8 @@
                                             <span t-field="o.currency_id"/>
                                             to:
                                         </strong>
+                                        <br/>
+
                                         <!-- <span t-field="o.narration"/> -->
                                         Bank Name :
                                         <span t-field="o.partner_bank_id.bank_id.name"/>

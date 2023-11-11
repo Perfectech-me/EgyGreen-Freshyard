@@ -506,6 +506,7 @@
                                             to:
                                         </strong>
                                         <!-- <span t-field="o.narration"/> -->
+                                        <br/>
 
                                         Bank Name :
                                         <span t-field="o.partner_bank_id.bank_id.name"/>
