@@ -49,6 +49,8 @@ class PartnerXlsx(models.AbstractModel):
                     "Landed Cost",
                     "Grand Total Cost",
                     "Total Amount Currency",
+                    "Currency",
+
                     "Total Amount EGP",
                     "Credit Note Amount Currency",
                     "Credit Note Amount EGP",
@@ -93,7 +95,16 @@ class PartnerXlsx(models.AbstractModel):
                 landed_cost += landed.amount_total
         return landed_cost
     def get_credit_notes(self,rec):
-        return self.env['account.move'].search([('reversed_entry_id','=',rec.id),('state','=','posted')])
+        tags = []
+        for line in rec.invoice_line_ids:
+            for tag in line.analytic_tag_ids:
+                tags.append(tag.id)
+        credit_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',tags),('move_id.state','=','posted'),('move_id.move_type','=','out_refund')])
+        credits = self.env['account.move']
+        for line  in credit_lines:
+            if line.move_id not in credits:
+                credits += line.move_id
+        return credits
     def get_cogs_debit(self,rec):
         cogs_accounts = []
         for line in rec.invoice_line_ids:
@@ -132,6 +143,7 @@ class PartnerXlsx(models.AbstractModel):
                      landed_cost,
                      grand_total_cost,
                      rec.amount_total_in_currency_signed,
+                     rec.currency_id.name,
                      rec.amount_total_signed,
                      credit_note_amount_in_currency,
                      credit_note_amount_egp,

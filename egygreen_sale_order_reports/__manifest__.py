@@ -22,6 +22,7 @@
         'reports/final_invoice_clearance.xml',
         'reports/final_invoice_lc.xml',
         'reports/sale_wizard_reports.xml',
+        'reports/delivery_slip.xml',
         'wizard/sale_wizard_report.xml',
     ],
 

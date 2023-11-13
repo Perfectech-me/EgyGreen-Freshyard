@@ -4,5 +4,8 @@
             <field name="name">Sale To Approve</field>
             <field name="category_id" ref="base.module_category_sales_sales"/>
         </record>
+        <record id="invoice_post" model="res.groups">
+            <field name="name">Can Post Invoice</field>
+        </record>
     </data>
 </odoo>

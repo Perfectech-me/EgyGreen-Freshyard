@@ -101,27 +101,29 @@
                                 </tr>
                                 <tr>
                                     <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
-                                        <span t-field="o.partner_id"/>,
-                                        <span t-field="o.partner_id.street"/>
-                                        <t t-if="o.partner_id.street2">
+                                        <t t-set = "partner" t-value = "o.partner_id.address_get(['delivery', 'invoice'])['invoice']"/>
+                                        <t t-set = "partner" t-value = "o.env['res.partner'].browse(partner)"/>
+                                        <span t-esc="partner.name"/>,
+                                        <span t-esc="partner.street"/>
+                                        <t t-esc="partner.street2">
                                             ,
-                                            <span t-field="o.partner_id.street2"/>
+                                            <span t-fescield="partner.street2"/>
                                         </t>
-                                        <t t-if="o.partner_id.city">
+                                        <t t-esc="partner.city">
                                             ,
-                                            <span t-field="o.partner_id.city"/>
+                                            <span t-esc="partner.city"/>
                                         </t>
-                                        <t t-if="o.partner_id.state_id">
+                                        <t t-if="partner.state_id">
                                             ,
-                                            <span t-field="o.partner_id.state_id"/>
+                                            <span t-esc="partner.state_id.name"/>
                                         </t>
-                                        <t t-if="o.partner_id.state_id">
+                                        <t t-if="partner.state_id">
                                             ,
-                                            <span t-field="o.partner_id.country_id"/>
+                                            <span t-esc="partner.country_id.name"/>
                                         </t>
-                                        <t t-if="o.partner_id.state_id">
+                                        <t t-if="partner.state_id">
                                             ,
-                                            <span t-field="o.partner_id.continent"/>
+                                            <span t-esc="partner.continent"/>
                                         </t>
                                     </td>
                                     <td

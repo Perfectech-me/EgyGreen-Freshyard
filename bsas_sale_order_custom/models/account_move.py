@@ -1,5 +1,13 @@
 from odoo import models, fields, api
 class AccountMoveInherit(models.Model):
+    _inherit = 'stock.picking'
+    @api.model
+    def create(self,vals):
+        res = super().create(vals)
+        if res.partner_id.parent_id:
+            res.partner_id = res.partner_id.parent_id.id
+        return res
+class AccountMoveInherit(models.Model):
     _inherit = 'account.move'
     analytic_tag_ids = fields.Many2many('account.analytic.tag',compute = '_set_analytic_tag_ids',store = True)
     analytic_account_ids = fields.Many2many('account.analytic.account',compute = '_set_analytic_tag_ids',store = True)
@@ -34,8 +42,13 @@ class AccountMoveInherit(models.Model):
                 rec.not_local_sale_order = True
             else:
                 rec.not_local_sale_order = False
-
-
+    @api.model
+    def create(self,vals):
+        res = super().create(vals)
+        if res.partner_id.parent_id:
+            res.partner_id = res.partner_id.parent_id.id
+        return res
+    
 class AccountAnalyticTagInherit(models.Model):
     _inherit = 'account.analytic.tag'
 

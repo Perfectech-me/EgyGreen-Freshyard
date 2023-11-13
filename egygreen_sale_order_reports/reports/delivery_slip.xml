@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+
+
+        <template id="slip_inh" inherit_id = "stock.report_delivery_document">
+            <xpath expr = "//t[@t-set='address']" position = "before">
+                <t t-set = "partner" t-value = "partner.address_get(['delivery', 'invoice'])['delivery']"/>
+                <t t-set = "partner" t-value = "o.env['res.partner'].browse(partner)"/>
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>
