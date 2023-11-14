@@ -99,12 +99,10 @@ class PartnerXlsx(models.AbstractModel):
         for line in rec.invoice_line_ids:
             for tag in line.analytic_tag_ids:
                 tags.append(tag.id)
-        credit_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',tags),('move_id.state','=','posted'),('move_id.move_type','=','out_refund')])
-        credits = self.env['account.move']
-        for line  in credit_lines:
-            if line.move_id not in credits:
-                credits += line.move_id
-        return credits
+        sales_accounts_ids = self.env['account.journal'].search([('type','=','sale')]).mapped('default_account_id.id')
+        credit_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',tags),('move_id.state','=','posted'),('account_id','in',sales_accounts_ids),('debit','!=',0)])
+
+        return credit_lines
     def get_cogs_debit(self,rec):
         cogs_accounts = []
         for line in rec.invoice_line_ids:
@@ -126,8 +124,8 @@ class PartnerXlsx(models.AbstractModel):
             shipping_type = so.shipping_line_type or ''
             total_service_cost = self.get_analyc_tags_cost(rec)
             landed_cost = self.get_landed_cost(so)
-            credit_note_amount_in_currency = abs(sum(credit_notes.mapped('amount_total_in_currency_signed')))
-            credit_note_amount_egp = abs(sum(credit_notes.mapped('amount_total_signed')))
+            credit_note_amount_in_currency = abs(sum(credit_notes.mapped('amount_currency')))
+            credit_note_amount_egp = abs(sum(credit_notes.mapped('balance')))
             grand_total_cost = total_cost + total_service_cost + landed_cost
             cells = [self.get_analytic_tags(rec),
                      self.get_analytic_account(rec),
