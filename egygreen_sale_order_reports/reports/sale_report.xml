@@ -27,17 +27,15 @@
         </record>
 
         <template id="sale_report_templates">
-            <t t-call="web.html_container">
+                       <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
                         <div class="header row" style="margin-top:0px;width:100%;">
-                            <div class = "col-6 text-left">
-                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(res_company.logo)"
-                                     style="max-height: 80px;"/>
+                            <div class="col-6 text-left">
+                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 80px;"/>
                             </div>
-                            <div class = "col-6 text-right">
-                                <img t-if="o.company_id.company_qr" t-att-src="image_data_uri(res_company.company_qr)"
-                                     style="max-height: 80px;"/>
+                            <div class="col-6 text-right">
+                                <img t-if="o.company_id.company_qr" t-att-src="image_data_uri(res_company.company_qr)" style="max-height: 80px;"/>
                             </div>
                         </div>
 
@@ -50,7 +48,7 @@
                                             <div class="row">
                                                 <div class="col-auto">
                                                     <strong>Date:</strong>
-                                                    <span t-field="o.date_order"/>
+                                                    <span t-field="o.date_order" t-options-widget = "'date'"/>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -86,21 +84,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
-                                   class="table table-sm table-bordered oe_inline">
+                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
                                 <t t-set="total_qty" t-value="0"/>
 
                                 <tr style="background-color:#c2d6d6;">
-                                    <td
-                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                    <td style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Bill To</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                    <td style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Consignee</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                    <td style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong>Notify</strong>
                                     </td>
 
@@ -131,8 +125,7 @@
                                             <span t-field="o.partner_id.continent"/>
                                         </t>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
+                                    <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <t t-foreach="o.partner_consignee_ids" t-as="cons">
                                             <span t-field="cons.street"/>
                                             <t t-if="cons.street2">
@@ -156,8 +149,7 @@
                                             </t>
                                         </t>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
+                                    <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <t t-foreach="o.partner_notify_ids" t-as="notify">
 
                                             <span t-field="notify.street"/>
@@ -187,16 +179,13 @@
                                 </tr>
                                 <br/>
                             </table>
-  <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
-                                   class="table table-sm table-bordered oe_inline">
+  <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
                                 <tr>
-                                    <td
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             Customer PO:
                                         </strong>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                             <t t-foreach="o.notify_partner_line" t-as="line_notify">
                                                 <t t-if="line_notify.notify_po">
                                                     <span t-field="line_notify.notify_po"/>,
@@ -205,13 +194,11 @@
 
                                         </td>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             Consignee PO:
                                         </strong>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                             <t t-foreach="o.consignee_partner_line" t-as="line_cons">
 
                                                 <span t-field="line_cons.consignee_po"/>
@@ -221,20 +208,14 @@
                                         </td>
                                     </td>
                                 </tr>
-                            </table>
 
-
-
-                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
-                                   class="table table-sm table-bordered oe_inline">
                                 <tr>
                                     <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             Incoterm:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.incoterm"/>
                                     </td>
                                     <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
@@ -242,8 +223,7 @@
                                             Final Destination:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.partner_id.country_id"/>
                                     </td>
 
@@ -254,8 +234,7 @@
                                             Country of Origin:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.origin_country_id"/>
                                     </td>
                                     <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
@@ -263,8 +242,7 @@
                                             Port of Discharge:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.discharge_city_id"/>
                                     </td>
                                 </tr>
@@ -274,8 +252,7 @@
                                             Port of Loading:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.port_loading_id"/>
                                     </td>
                                     <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
@@ -283,8 +260,7 @@
                                             Number of Pallets:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <!--                                            <span t-field="o.o.final_destination_country_id"/>-->
                                     </td>
                                 </tr>
@@ -294,8 +270,7 @@
                                             Shipping Line:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.shipment_line_id"/>
                                     </td>
                                     <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
@@ -303,24 +278,20 @@
                                             Data Logger:
                                         </strong>
                                     </td>
-                                    <td colspan="1"
-                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                    <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.data_loger"/>
                                     </td>
                                 </tr>
                             </table>
 
 
-                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
-                                   class="table table-sm table-bordered oe_inline">
+                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
                                 <tr>
-                                    <td colspan="2"
-                                        style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                    <td colspan="2" style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             Container / Equipment No:
                                         </strong>
-                                        <td colspan="6"
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                        <td colspan="6" style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             <span t-field="o.container_equipment_number"/>
                                         </td>
                                     </td>
@@ -331,45 +302,35 @@
                                 <t t-set="total_qty" t-value="0"/>
                                             <t t-set="qty_name" t-value="''"/>
                             
-                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
-                                   class="table table-sm table-bordered oe_inline">
+                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
 
                                 <tr style="background-color:#c2d6d6;">
-                                    <td
-                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:40%;">
+                                    <td style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:40%;">
                                         <strong>Item</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
+                                    <td style="background-color:#1f2a54;color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                         <strong>N.W</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
+                                    <td style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:2.5%;">
                                         <strong>G.W</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:5%;">
+                                    <td style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:5%;">
                                         <strong>Qty</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                    <td style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
                                         <strong>Cartons</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
                                         <strong>Total N.W
                                         </strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                    <td style="background-color:#1f2a54;color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
                                         <strong>Total G.W</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                    <td style="background-color:#1f2a54; color:white;text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
                                         <strong>Price</strong>
                                     </td>
-                                    <td
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:10%;">
                                         <strong>Amount</strong>
                                     </td>
                                 </tr>
@@ -377,78 +338,60 @@
                                 <tr t-foreach="o.order_line" t-as="line">
                                     <t t-if="not line.product_id.additional_service">
 
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <span t-field="line.product_id"/>
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
-                                                <span t-esc="line.net_weight_per_unit * float(line.no_of_cartons)"/>
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                                <span t-esc="line.net_weight_per_unit "/>
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
-                                                <span t-esc="line.gross_weight_per_unit * float(line.no_of_cartons)"/>
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                                <span t-esc="line.gross_weight_per_unit "/>
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <span t-esc="round(line.product_uom_qty,2)"/> <span t-field="line.product_uom"/>
                                             <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
                                             <t t-set="qty_name" t-value="line.product_uom.name"/>
                                             
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <span t-esc="line.no_of_cartons if qty_name != 'Units' else ''"/> <span t-esc="' Cartons' if qty_name != 'Units' else ''"/>
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
-                                                <span t-esc="'{0:,.2f}'.format(line.net_weight_per_unit * line.product_uom_qty * float(line.no_of_cartons))"/>
-                                                <!--                                            <span t-esc="sale_line.net_weight_per_unit * line.product_uom_qty"/>-->
-                                                <t t-set="total_net_weight"
-                                                   t-value="total_net_weight+(line.net_weight_per_unit * line.product_uom_qty * float(line.no_of_cartons))"/>
-                                               <t t-set="total_gross_weight"
-                                                   t-value="total_gross_weight+(line.gross_weight_per_unit * line.product_uom_qty * float(line.no_of_cartons))"/>
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                                <span t-esc="'{0:,.2f}'.format(line.net_weight_per_unit * line.product_uom_qty )"/>
+                                                <t t-set="total_net_weight" t-value="total_net_weight+(line.net_weight_per_unit * line.product_uom_qty )"/>
+                                               <t t-set="total_gross_weight" t-value="total_gross_weight+(line.gross_weight_per_unit * line.product_uom_qty )"/>
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
-                                            <!--                                            <span t-esc="total_gross_weight"/>-->
-                                                <span t-esc="'{0:,.2f}'.format(line.gross_weight_per_unit * line.product_uom_qty * float(line.no_of_cartons))"/>
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                                <span t-esc="'{0:,.2f}'.format(line.gross_weight_per_unit * line.product_uom_qty )"/>
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <span t-esc="round(line.price_unit,2)"/>
                                         </td>
-                                        <td
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                        <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <span t-field="line.price_subtotal"/>
                                         </td>
 
                                     </t>
                                 </tr>
                                     <tr>
-                                        <td colspan="3"
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                        <td colspan="3" style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 Grand Total
                                             </strong>
-                                            <td colspan="2"
-                                                style="text-align:center;border-width:1px;border-color:black;font-size:13px">
+                                            <td colspan="2" style="text-align:center;border-width:1px;border-color:black;font-size:13px">
                                                 <span t-esc="total_qty"/> <span t-esc="qty_name"/>
                                                 
                                             </td>
-                                            <td
-                                                    style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                            <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 <!--                                            <span t-esc="total_net_weight"/>-->
                                                 <span t-esc="'{0:,.2f}'.format(total_net_weight)"/> Kg
 
                                             </td>
-                                            <td
-                                                    style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                            <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 <!--                                            <span t-esc="total_gross_weight"/>-->
                                                 <span t-esc="'{0:,.2f}'.format(total_gross_weight)"/> Kg
                                             </td>
-                                            <td colspan="2"
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                            <td colspan="2" style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 <span t-field="o.amount_total"/>
                                             </td>
                                         </td>
@@ -459,26 +402,29 @@
                                         <!--                                            </td>-->
                                     </tr>
                                     <tr>
-                                        <td colspan="3"
-                                            style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                        <td colspan="3" style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 Amount Chargable
                                             </strong>
-                                            <td colspan="6"
-                                                style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                       </td>
+                                            <td colspan="6" style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 <span t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
-                                            </td>
-                                        </td>
-                                    </tr>
-
+                                       </td>
+                                   </tr>
+                                    <tr>
+                                       <td colspan="3" style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                           <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                               Payment Term
+                                            </strong>
+                                      </td>
+                                            <td colspan="6" style="text-align:left;border-width:1px;border-color:black;font-size:13px">
+                                               <span t-field="o.payment_term_id"/>
+                                      </td>
+                                 </tr>
                             </table>
-
-                             
-                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
-                                   class="table table-sm table-bordered oe_inline">
+                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
                                 <tr>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:50%;">
+                                    <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:50%;">
                                         <strong>Please make the payment in
                                             <span t-field="o.currency_id"/>
                                             to:
@@ -512,22 +458,14 @@
                                         <span t-field="o.partner_bank_id.acc_number"/>
                                         <br/>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
+                                    <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <br/>
-                                        <img class="img img-responsive"
-                                             src="/egygreen_sale_order_reports/static/src/img/logo.jpeg"
-                                             style="max-height:150px;max-width:200px;"
-                                        />
+                                        <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo.jpeg" style="max-height:150px;max-width:200px;"/>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
+                                    <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <br/>
                                         <br/>
-                                        <img class="img img-responsive"
-                                             src="/egygreen_sale_order_reports/static/src/img/sign.png"
-                                             style="max-height:150px;max-width:200px;"
-                                        />
+                                        <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/sign.png" style="max-height:150px;max-width:200px;"/>
                                     </td>
                                 </tr>
                             </table>

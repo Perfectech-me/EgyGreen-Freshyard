@@ -188,16 +188,16 @@
                 <xpath expr="//group[@name='order_details']" position="inside">
                     <field name="packing_place_id" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}"/>
 
-                    <field name="notify_partner_line"  attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}">
+                    <field name="notify_partner_line"  >
                         <tree editable="bottom" create="false">
-                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <!-- <field name="partner_id" readonly="1" force_save="1"/> -->
                             <field name="notify_po"/>
                         </tree>
                     </field>
 
-                    <field name="consignee_partner_line" attrs="{'invisible':[('state','in',['pro_quotation','to_approve'])]}">
+                    <field name="consignee_partner_line" >
                         <tree editable="bottom" create="false">
-                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <!-- <field name="partner_id" readonly="1" force_save="1"/> -->
                             <field name="consignee_po"/>
                         </tree>
                     </field>
