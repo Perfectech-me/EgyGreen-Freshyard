@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-auto">
-                                                    <strong>Final Proforma:</strong>
+                                                    <strong>Proforma Invoice:</strong>
                                                     <span t-field="o.name"/>
                                                 </div>
                                             </div>
