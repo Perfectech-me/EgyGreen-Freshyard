@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="page">
-                                                        <div class="row">
+                            <div class="row">
                                 <div class="col-7">
                                     <div style="width:100%">
                                         <div>
@@ -642,25 +642,25 @@
                                     </td>
                                 </tr>
                             </table>
-                            <p>
+                            <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                         No claims accepted after 72hours from port arrival and must be reported by 
                                         independence inspection company agreed by shipper. 
 
                                 </strong>
-                            </p>
-                            <p>
+                            </div>
+                            <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                     Signing the invoice Or confirmation from the customer is obligation on him to 
                                     recieve the shipment and pay the invoice. 
                                 </strong>
-                            </p>
-                            <p>
+                            </div>
+                            <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                     The interest for the late payment is applicable by 5% from total invoice on each 
                                     month delay from the agreed payment terms.
                                 </strong>
-                            </p>
+                            </div>
 
                         </div>
                     </t>

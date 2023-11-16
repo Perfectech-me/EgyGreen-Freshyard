@@ -55,12 +55,6 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-auto">
-                                                    <strong>Sales Order No:</strong>
-                                                    <span t-field="o.name"/>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-auto">
                                                     <strong>Final Proforma:</strong>
                                                     <span t-field="o.name"/>
                                                 </div>
@@ -142,20 +136,16 @@
                                         <t t-foreach="o.partner_consignee_ids" t-as="cons">
                                             <span t-field="cons.street"/>
                                             <t t-if="cons.street2">
-                                                <br/>
                                                 <span t-field="cons.street2"/>
                                             </t>
-                                            <br/>
                                             <t t-if="cons.city">
                                                 ,
                                                 <span t-field="cons.city"/>
                                             </t>
-                                            <br/>
                                             <t t-if="cons.state_id">
                                                 ,
                                                 <span t-field="cons.state_id"/>
                                             </t>
-                                            <br/>
                                             <t t-if="cons.country_id">
                                                 ,
                                                 <span t-field="cons.country_id"/>
@@ -238,14 +228,23 @@
                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
                                    class="table table-sm table-bordered oe_inline">
                                 <tr>
-                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;" colspan = '3'>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                        <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
+                                            Incoterm:
+                                        </strong>
+                                    </td>
+                                    <td colspan="1"
+                                        style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
+                                        <span t-field="o.incoterm"/>
+                                    </td>
+                                    <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             Final Destination:
                                         </strong>
                                     </td>
                                     <td colspan="1"
                                         style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
-                                                                               <span t-field="o.final_destination_country_id"/>
+                                        <span t-field="o.partner_id.country_id"/>
                                     </td>
 
                                 </tr>
@@ -533,25 +532,25 @@
                                 </tr>
                             </table>
 
-                            <p>
+                            <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                         No claims accepted after 72hours from port arrival and must be reported by 
                                         independence inspection company agreed by shipper. 
 
                                 </strong>
-                            </p>
-                            <p>
+                            </div>
+                            <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                     Signing the invoice Or confirmation from the customer is obligation on him to 
                                     recieve the shipment and pay the invoice. 
                                 </strong>
-                            </p>
-                            <p>
+                            </div>
+                            <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                     The interest for the late payment is applicable by 5% from total invoice on each 
                                     month delay from the agreed payment terms.
                                 </strong>
-                            </p>
+                            </div>
                             </div>
                         </div>
                     </t>
