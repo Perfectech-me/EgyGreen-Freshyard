@@ -99,9 +99,8 @@ class PartnerXlsx(models.AbstractModel):
         for line in rec.invoice_line_ids:
             for tag in line.analytic_tag_ids:
                 tags.append(tag.id)
-        sales_accounts_ids = self.env['account.journal'].search([('type','=','sale')]).mapped('default_account_id.id')
-        credit_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',tags),('move_id.state','=','posted'),('account_id','in',sales_accounts_ids),('debit','!=',0)])
-
+        credit_note_accounts_codes = ['40104','40107','40109','40106','40105']
+        credit_lines = self.env['account.move.line'].search([('analytic_tag_ids','in',tags),('move_id.state','=','posted'),('account_id.code','in',credit_note_accounts_codes),('debit','!=',0)])
         return credit_lines
     def get_cogs_debit(self,rec):
         cogs_accounts = []
