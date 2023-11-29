@@ -224,7 +224,7 @@
                                         </strong>
                                     </td>
                                     <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
-                                        <span t-field="o.partner_id.country_id"/>
+                                        <span t-field="o.final_destination_country_id"/>
                                     </td>
 
                                 </tr>
@@ -243,7 +243,7 @@
                                         </strong>
                                     </td>
                                     <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
-                                        <span t-field="o.discharge_city_id"/>
+                                        <span t-field="o.discharge_country_id"/>
                                     </td>
                                 </tr>
                                 <tr>
