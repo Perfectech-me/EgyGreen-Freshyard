@@ -10,6 +10,25 @@ import werkzeug.urls
 class res_pertner(models.Model):
     _inherit = "res.partner"
     credit_limit_currency = fields.Many2one('res.currency',default = lambda self : self.env.company.currency_id.id,required = True)
+    block_on_due = fields.Boolean()
+    credit_due = fields.Float(compute = '_get_credit_due')
+
+    @api.depends_context('company')
+    def _get_credit_due(self):
+        today = fields.Date().today()
+        for rec in self:
+            move_lines = self.env['account.move.line'].search([
+            ('parent_state', '=', 'posted'),
+            ('company_id', '=', self.env.company.id),
+            ('move_id.invoice_date_due','<=',today),
+            ('partner_id','=',rec.id),
+            ('account_id','=',rec.property_account_receivable_id.id),
+            ('reconciled','!=',True),
+            ('amount_residual','>',0)])
+            rec.credit_due = 0
+
+            for line in move_lines:
+                rec.credit_due += line.amount_residual
     is_company_currency = fields.Boolean(compute = '_set_is_company_currency')
     @api.depends('credit_limit_currency')
     def _set_is_company_currency(self):
@@ -112,6 +131,10 @@ class sale_order(models.Model):
     def _check_Blocking_limit(self):
         if self.partner_id.is_credit_limit and self.partner_id.Blocking_limit <= (self.total_receivable+self.amount_total):
             raise ValidationError(_("The Customer is in blocking stage "))
+    @api.constrains("partner_id")
+    def _check_Blocking_limit(self):
+        if self.partner_id.block_on_due and self.partner_id.credit_due > 0:
+            raise ValidationError(_("The Customer Has Due Amount "))
 
     @api.model
     def create(self, vals):
