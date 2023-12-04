@@ -8,6 +8,9 @@
                 <xpath expr="//group[@name='accounting_entries']" position="after">
                     <group name="customer_credit" string="Customer Credit">
                         <field name="is_credit_limit"/>
+                        <field name="block_on_due"/>
+                        <field name="credit_due"/>
+                        
                         <field name="credit_limit_currency"/>
                         <field name="is_company_currency" invisible = "1"/>
                         <field name="credit_limit_in_currency" attrs="{'invisible': [('is_credit_limit', '!=',True )]}"/>
