@@ -1,13 +1,13 @@
 # Copyright 2016 ACSONE SA/NV (<http://acsone.eu>)
 # Copyright 2021 Opener B.V. <stefan@opener.amsterdam>
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from dateutil.rrule import MONTHLY
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestDateRangeearchMixin(SavepointCase):
+class TestDateRangeearchMixin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -38,7 +38,7 @@ class TestDateRangeearchMixin(SavepointCase):
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
-        super().tearDownClass()
+        return super().tearDownClass()
 
     def test_01_search_view(self):
         """The search field is injected in the model's search view"""

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-01 02:44+0000\n"
-"PO-Revision-Date: 2023-11-16 12:36+0000\n"
+"PO-Revision-Date: 2023-05-09 13:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: date_range
 #: code:addons/date_range/models/date_range.py:0
 #, python-format
-msgid "%s is not a valid range (%s > %s)"
-msgstr "%s non è un intervallo valido (%s > %s)"
+msgid "%(name)s is not a valid range (%(date_start)s > %(date_end)s)"
+msgstr ""
 
 #. module: date_range
 #: code:addons/date_range/models/date_range.py:0
 #, python-format
-msgid "%s overlaps %s"
-msgstr "%s è sovrapposto a %s"
+msgid "%(thisname)s overlaps %(dtname)s"
+msgstr ""
 
 #. module: date_range
 #: model_terms:ir.ui.view,arch_db:date_range.date_range_generator_view_form
@@ -142,7 +142,7 @@ msgstr "Generatore intervallo data"
 #: model:ir.model,name:date_range.model_date_range_type
 #: model_terms:ir.ui.view,arch_db:date_range.view_date_range_type_form_view
 msgid "Date Range Type"
-msgstr "Tipo intervallo date"
+msgstr "Tipo di intervallo data"
 
 #. module: date_range
 #: model:ir.actions.act_window,name:date_range.date_range_type_action
@@ -174,7 +174,6 @@ msgstr ""
 #. module: date_range
 #: model:ir.model.fields,field_description:date_range.field_date_range__display_name
 #: model:ir.model.fields,field_description:date_range.field_date_range_generator__display_name
-#: model:ir.model.fields,field_description:date_range.field_date_range_search_mixin__display_name
 #: model:ir.model.fields,field_description:date_range.field_date_range_type__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
@@ -197,7 +196,7 @@ msgstr "Data finale"
 msgid ""
 "Evaluated expression. E.g. \"'FY%s' % date_start.strftime('%Y%m%d')\"\n"
 "You can use the Date types 'date_end' and 'date_start', as well as the "
-"'index' variable."
+"'index' variable, and also babel.dates.format_date method."
 msgstr ""
 
 #. module: date_range
@@ -220,7 +219,6 @@ msgstr ""
 #. module: date_range
 #: model:ir.model.fields,field_description:date_range.field_date_range__id
 #: model:ir.model.fields,field_description:date_range.field_date_range_generator__id
-#: model:ir.model.fields,field_description:date_range.field_date_range_search_mixin__id
 #: model:ir.model.fields,field_description:date_range.field_date_range_type__id
 msgid "ID"
 msgstr "ID"
@@ -252,7 +250,6 @@ msgstr ""
 #. module: date_range
 #: model:ir.model.fields,field_description:date_range.field_date_range____last_update
 #: model:ir.model.fields,field_description:date_range.field_date_range_generator____last_update
-#: model:ir.model.fields,field_description:date_range.field_date_range_search_mixin____last_update
 #: model:ir.model.fields,field_description:date_range.field_date_range_type____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
@@ -366,14 +363,6 @@ msgstr ""
 "devono corrispondere."
 
 #. module: date_range
-#: code:addons/date_range/models/date_range.py:0
-#, python-format
-msgid "The Company in the Date Range and in Date Range Type must be the same."
-msgstr ""
-"Le aziende nell'intervallo data e nel tipo di intervallo data devono "
-"corrispondere."
-
-#. module: date_range
 #: model:ir.model.fields,help:date_range.field_date_range_type__active
 msgid ""
 "The active field allows you to hide the date range type without removing it."
@@ -463,11 +452,26 @@ msgstr "settimane"
 msgid "years"
 msgstr "anni"
 
+#, python-format
+#~ msgid "%s is not a valid range (%s > %s)"
+#~ msgstr "%s non è un intervallo valido (%s > %s)"
+
+#, python-format
+#~ msgid "%s overlaps %s"
+#~ msgstr "%s è sovrapposto a %s"
+
 #~ msgid "Date range"
-#~ msgstr "Intervallo date"
+#~ msgstr "Intervallo data"
 
 #~ msgid "Date range type"
 #~ msgstr "Tipo di intervallo data"
+
+#, python-format
+#~ msgid ""
+#~ "The Company in the Date Range and in Date Range Type must be the same."
+#~ msgstr ""
+#~ "Le aziende nell'intervallo data e nel tipo di intervallo data devono "
+#~ "corrispondere."
 
 #~ msgid "Date Start"
 #~ msgstr "Data iniziale"

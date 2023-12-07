@@ -1,5 +1,5 @@
 # Copyright 2016 ACSONE SA/NV (<http://acsone.eu>)
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import MONTHLY, YEARLY

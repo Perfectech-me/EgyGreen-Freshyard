@@ -22,14 +22,14 @@ msgstr ""
 #. module: date_range
 #: code:addons/date_range/models/date_range.py:0
 #, python-format
-msgid "%s is not a valid range (%s > %s)"
-msgstr "%s is geen geldig bereik (%s > %s)"
+msgid "%(name)s is not a valid range (%(date_start)s > %(date_end)s)"
+msgstr ""
 
 #. module: date_range
 #: code:addons/date_range/models/date_range.py:0
 #, python-format
-msgid "%s overlaps %s"
-msgstr "%s overlapt %s"
+msgid "%(thisname)s overlaps %(dtname)s"
+msgstr ""
 
 #. module: date_range
 #: model_terms:ir.ui.view,arch_db:date_range.date_range_generator_view_form
@@ -176,7 +176,6 @@ msgstr ""
 #. module: date_range
 #: model:ir.model.fields,field_description:date_range.field_date_range__display_name
 #: model:ir.model.fields,field_description:date_range.field_date_range_generator__display_name
-#: model:ir.model.fields,field_description:date_range.field_date_range_search_mixin__display_name
 #: model:ir.model.fields,field_description:date_range.field_date_range_type__display_name
 msgid "Display Name"
 msgstr "weergavenaam"
@@ -199,7 +198,7 @@ msgstr "Einddatum"
 msgid ""
 "Evaluated expression. E.g. \"'FY%s' % date_start.strftime('%Y%m%d')\"\n"
 "You can use the Date types 'date_end' and 'date_start', as well as the "
-"'index' variable."
+"'index' variable, and also babel.dates.format_date method."
 msgstr ""
 
 #. module: date_range
@@ -222,7 +221,6 @@ msgstr ""
 #. module: date_range
 #: model:ir.model.fields,field_description:date_range.field_date_range__id
 #: model:ir.model.fields,field_description:date_range.field_date_range_generator__id
-#: model:ir.model.fields,field_description:date_range.field_date_range_search_mixin__id
 #: model:ir.model.fields,field_description:date_range.field_date_range_type__id
 msgid "ID"
 msgstr "ID"
@@ -254,7 +252,6 @@ msgstr ""
 #. module: date_range
 #: model:ir.model.fields,field_description:date_range.field_date_range____last_update
 #: model:ir.model.fields,field_description:date_range.field_date_range_generator____last_update
-#: model:ir.model.fields,field_description:date_range.field_date_range_search_mixin____last_update
 #: model:ir.model.fields,field_description:date_range.field_date_range_type____last_update
 msgid "Last Modified on"
 msgstr "Laatst gewijzigd op"
@@ -367,12 +364,6 @@ msgid ""
 msgstr ""
 
 #. module: date_range
-#: code:addons/date_range/models/date_range.py:0
-#, python-format
-msgid "The Company in the Date Range and in Date Range Type must be the same."
-msgstr ""
-
-#. module: date_range
 #: model:ir.model.fields,help:date_range.field_date_range_type__active
 #, fuzzy
 msgid ""
@@ -463,6 +454,14 @@ msgstr "weken"
 #: model:ir.model.fields.selection,name:date_range.selection__date_range_type__unit_of_time__0
 msgid "years"
 msgstr "jaren"
+
+#, python-format
+#~ msgid "%s is not a valid range (%s > %s)"
+#~ msgstr "%s is geen geldig bereik (%s > %s)"
+
+#, python-format
+#~ msgid "%s overlaps %s"
+#~ msgstr "%s overlapt %s"
 
 #~ msgid "Date range"
 #~ msgstr "Datumbereik"
