@@ -186,6 +186,7 @@ class sale_order(models.Model):
         else:
             self.is_warning = False
         self.update(vals)
+        super().onchange_partner_id()
 
     def action_confirm(self):
         if self.partner_id.is_credit_limit == False:
