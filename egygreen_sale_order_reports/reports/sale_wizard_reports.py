@@ -13,9 +13,6 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         header_format_lines = workbook.add_format(
             {'bold': True, 'align': 'center', 'valign': 'vcenter'})
 
-        format_total_lines = workbook.add_format(
-            {'bold': True, 'align': 'center', 'valign': 'vcenter', 'bg_color': '#b3b3b3', 'color': 'white'})
-
         worksheet = workbook.add_worksheet('Sale Order')
 
         worksheet.set_column('A:A', 22)
@@ -51,65 +48,11 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         worksheet.set_column('AE:AE', 22)
 
         domain = [('date_order', '>=', partners.date_from), ('date_order', '<=', partners.date_to)]
-
-        if partners.company_id:
-            domain.append(('company_id', '=', partners.company_id.id))
-
-        if partners.invoice_status:
-            domain.append(('invoice_status', '=', partners.invoice_status))
-
-        if partners.partner_ids:
-            domain.append(('partner_id', 'in', partners.partner_ids.ids))
-
-        if partners.continent:
-            domain.append(('partner_id.continent', '=', partners.continent))
-
-        if partners.country_ids:
-            domain.append(('partner_id.country_id', '=', partners.country_ids.ids))
-
-        if partners.order_category:
-            domain.append(('order_category', '=', partners.order_category))
-
-        if partners.export_type:
-            domain.append(('export_type', '=', partners.export_type))
-
-        if partners.packing_place_id:
-            domain.append(('packing_place_id', '=', partners.packing_place_id.id))
-
-        if partners.analytic_account_id:
-            domain.append(('analytic_account_id', '=', partners.analytic_account_id.id))
-
-        if partners.discharge_country_id:
-            domain.append(('discharge_city_id', '=', partners.discharge_country_id.id))
-
-        if partners.incoterm_id:
-            domain.append(('incoterm_id', '=', partners.incoterm_id.id))
-
-        if partners.pricelist_id:
-            domain.append(('pricelist_id', '=', partners.pricelist_id.id))
-
-        if partners.partner_shipping_ids:
-            domain.append(('partner_shipping_ids', 'in', partners.partner_shipping_ids.ids))
-
-        if partners.partner_clearance_ids:
-            domain.append(('partner_clearance_ids', 'in', partners.partner_clearance_ids.ids))
-
-        if partners.partner_insurance_ids:
-            domain.append(('partner_insurance_ids', 'in', partners.partner_insurance_ids.ids))
-
-        if partners.shipping_type:
-            domain.append(('shipping_type', '=', partners.shipping_type))
-
-        if partners.sales_person_user_ids:
-            domain.append(('sales_person_user_id', 'in', partners.sales_person_user_ids.ids))
-
-        if partners.product_type:
-            domain.append(('product_type', '=', partners.product_type))
+        sale_order = self.env['sale.order'].search(domain)
 
         row = 1
         col = 0
 
-        sale_order = self.env['sale.order'].search(domain)
         cells = ['Sales Order', 'Customer Name', ]
         if partners.report_type == 'f':
             cells.extend(['Continent', 'Country', 'Order Category', 'Order Type', 'Product Type', 'Order Type'])
@@ -122,6 +65,8 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         if partners.report_type in ['f', 's']:
             cells.extend(['ETA'])
         cells.extend(['Container / Equipment Quantity', 'Container Equipment Number'])  # Adjusted columns
+        container_quantity_position = cells.index('Container / Equipment Quantity')
+
         if partners.report_type in ['f']:
             cells.extend(['Container / Equipment Type', 'total net weight / KG', 'total gross weight / KG'])
         if partners.report_type in ['f', 's']:
@@ -145,6 +90,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
             cells.extend(['B/L NUM', 'FORM 13'])
         if partners.report_type in ['f', 's', 't']:
             cells.extend(['Final Invoice No'])
+
         ic = 0
         for cell in cells:
             worksheet.write(row, col + ic, cell, header_format)
@@ -167,9 +113,8 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
             if partners.report_type in ['f', 's']:
                 cells.extend([str(line.commitment_date) or ""])
             cells.extend([str(line.container_number) or ""])
-            total_container_quantity += float(
-                line.container_number) if line.container_number else 0  # Update total quantity
-            cells.extend([line.order_line[0]['container_equipment_number']])  # Adjusted column position
+            cells.extend([line.container_equipment_number or ""])  # Fetching from SaleOrderInherit model
+            total_container_quantity += float(line.container_number) if line.container_number else 0
             if partners.report_type in ['f']:
                 cells.extend([str(line.container_type_id.name) or "",
                               sum(rec.net_weight_per_unit * rec.product_uom_qty for rec in line.order_line) or "",
@@ -185,7 +130,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                 name_insurance += insurance.name + ""
             if partners.report_type in ['f', 's']:
                 cells.extend([line.pricelist_id.name + "(" + line.pricelist_id.currency_id.name + ")" or "",
-                              line.amount_total, line.total_amount_egp])
+                              line.amount_total or 0, line.total_amount_egp or 0])
             if partners.report_type in ['f', 's']:
                 cells.extend([line.sudo().payment_term_id.name or ""])
             cells.extend([name_freight])
@@ -207,7 +152,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                 cells.extend([str(line.deprture_date) or "", ])
             invoice = self.env['account.move'].search([('id', 'in', line.invoice_ids.ids)], limit=1)
             if partners.report_type in ['f']:
-                cells.extend([invoice.state])
+                cells.extend([invoice.state or ""])
             if partners.report_type in ['f', 's']:
                 cells.extend([invoice.bl_awb or '', invoice.form13number or ''])
             if partners.report_type in ['f', 's', 't']:
@@ -219,4 +164,6 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
 
             row += 1
 
-        worksheet.write(row, col + 15, total_container_quantity, header_format_lines)
+        worksheet.write(row, col + container_quantity_position, total_container_quantity, header_format_lines)
+
+
