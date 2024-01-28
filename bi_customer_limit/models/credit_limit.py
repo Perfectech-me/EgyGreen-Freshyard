@@ -139,10 +139,12 @@ class sale_order(models.Model):
     @api.constrains('amount_total')
     def _check_credit_limit(self):
         if self.partner_id.is_credit_limit:
-                if self.partner_id.credit_limit < self.amount_total:
+                if self.partner_id.credit_limit < (self.amount_total + self.partner_id.credit_due):
                     raise ValidationError(_("The Customer Has Due Amount. credit_due: " + str(
                 self.partner_id.credit_due) + " His credit limit is: " + str(self.partner_id.credit_limit)
-                                            + " amount_total is: " + str(self.amount_total)))
+                                            + " this amount_total is: " + str(self.amount_total)
+                                            + " all (due+this)total is: " + str(self.amount_total+self.partner_id.credit_due)))
+
     # **********************************************
     @api.model
     def create(self, vals):
