@@ -149,7 +149,7 @@ class sale_order(models.Model):
         if 'partner_id' in vals:
             partner_id = self.env['res.partner'].browse(vals['partner_id'])
 
-        if self.partner_id.block_on_due and partner_id.Blocking_limit != 0.0:
+        if partner_id.block_on_due and partner_id.Blocking_limit != 0.0:
             if partner_id.Blocking_limit < partner_id.customer_due_amt:
                 # raise ValidationError(_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt)))
                 raise ValidationError(_('The Customer has exceeded his due date'))
