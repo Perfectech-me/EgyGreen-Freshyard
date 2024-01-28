@@ -135,7 +135,13 @@ class sale_order(models.Model):
     def _check_Blocking_limit(self):
         if self.partner_id.block_on_due and self.partner_id.credit_due > 0:
             raise ValidationError(_("The Customer Has Due Amount "))
-
+    # *********************************************
+    @api.constrains("partner_id")
+    def _check_credit_limit(self):
+        if self.partner_id.is_credit_limit and self.partner_id.credit_due > self.partner_id.credit_limit:
+            raise ValidationError(_("The Customer Has Due Amount. Total due: " + str(
+                self.partner_id.credit_due) + " His credit limit is: " + str(self.partner_id.credit_limit)))
+    # **********************************************
     @api.model
     def create(self, vals):
         partner_id= False
