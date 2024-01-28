@@ -136,14 +136,11 @@ class sale_order(models.Model):
         if self.partner_id.block_on_due and self.partner_id.credit_due > 0:
             raise ValidationError(_("The Customer Has Due Amount "))
     # *********************************************
-    @api.constrains('amount_total')
+    @api.constrains("total_receivable", "partner_id",'amount_total')
     def _check_credit_limit(self):
-        if self.partner_id.is_credit_limit:
-                if self.partner_id.credit_limit < (self.amount_total + self.partner_id.credit_due):
-                    raise ValidationError(_("The Customer Has Due Amount. credit_due: " + str(
-                self.partner_id.credit_due) + " His credit limit is: " + str(self.partner_id.credit_limit)
-                                            + " this amount_total is: " + str(self.amount_total)
-                                            + " all (due+this)total is: " + str(self.amount_total+self.partner_id.credit_due)))
+        if self.partner_id.is_credit_limit and self.partner_id.credit_limit < (self.total_receivable+self.amount_total):
+            raise ValidationError(_("The Customer Has Due Amount. credit_due: " + str(
+                self.partner_id.credit_due) + " His credit limit is: " + str(self.partner_id.credit_limit)))
 
     # **********************************************
     @api.model
@@ -154,7 +151,8 @@ class sale_order(models.Model):
 
         if partner_id.Blocking_limit != 0.0:
             if partner_id.Blocking_limit < partner_id.customer_due_amt:
-                raise ValidationError(_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt)))
+                # raise ValidationError(_('The Customer is in blocking stage and has to pay '+str(partner_id.customer_due_amt)))
+                raise ValidationError(_('The Customer has exceeded his due date'))
         result = super(sale_order, self).create(vals)
         return result
 
