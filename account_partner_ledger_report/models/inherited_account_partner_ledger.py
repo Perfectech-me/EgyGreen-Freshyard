@@ -174,6 +174,7 @@ class report_account_partner_ledger(models.AbstractModel):
             'caret_options': caret_type,
             'level': 2,
         }
+
     def get_currency_id(self,options):
         currency_id = 0
         for c in options['currency']:
