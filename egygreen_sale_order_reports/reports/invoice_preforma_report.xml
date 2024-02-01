@@ -252,7 +252,7 @@
                                     </td>
                                     <td colspan="1"
                                         style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
-                                        <span t-field="o.discharge_country_id"/>
+                                        <span t-field="o.discharge_city_id"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -280,7 +280,7 @@
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                             Shipping Line:
                                         </strong>
-                                    </td>z
+                                    </td>
                                     <td colspan="1"
                                         style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <span t-field="o.sales_order_id.shipment_line_id"/>
