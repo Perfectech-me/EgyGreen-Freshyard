@@ -172,23 +172,9 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                             credit = line.amount_currency if line.amount_currency > 0 else line.amount_currency * -1
 
                         account_move_line_initial_balance = self.env['account.move.line'].search(
-                            [('date', '<', partners.date_from), ('partner_id', '=', line.partner_id.id),
-                             ('date_maturity', '!=', False)],limit = 1, order='date_maturity asc')
+                            [('date', '<', partners.date_from),('partner_id','=',line.partner_id.id),('move_id.state','=','posted')])
                         if account_move_line_initial_balance and count == 0:
-
-                            if partners.account_type == 'receivable' and account_move_line_initial_balance.account_id.user_type_id.id == self.env.ref(
-                                    'account.data_account_type_receivable').id:
-                                initial_balance = account_move_line_initial_balance.balance
-
-                            elif partners.account_type == 'payable' and account_move_line_initial_balance.account_id.user_type_id.id == self.env.ref(
-                                    'account.data_account_type_payable').id:
-                                initial_balance = account_move_line_initial_balance.balance
-
-
-                            elif partners.account_type == False and account_move_line_initial_balance.account_id.user_type_id.id in account_type:
-
-                                initial_balance = account_move_line_initial_balance.balance
-
+                            initial_balance = sum(account_move_line_initial_balance.mapped('balance'))
                         if debit > 0 and credit == 0:
                             balance = debit + initial_balance
                         elif credit > 0 and debit == 0:
