@@ -68,7 +68,7 @@ class PartnerReportLedgerCustom(models.TransientModel):
             domain.append(('account_id.user_type_id.id', 'in', account_type))
 
 
-        account_move_line_record = self.env['account.move.line'].search(domain,order='id asc')
+        account_move_line_record = self.env['account.move.line'].search(domain,order='date asc')
 
         total_debit = 0.0
         total_credit = 0.0
@@ -94,11 +94,30 @@ class PartnerReportLedgerCustom(models.TransientModel):
                         elif line.credit:
                             credit=line.amount_currency if line.amount_currency>0 else line.amount_currency*-1
 
+                        domain_init = [('date', '<', self.date_from),('partner_id','=',line.partner_id.id),('move_id.state','=','posted')]
+                        if self.analytic_tag_ids:
+                            domain_init.append(('analytic_tag_ids', 'in', self.analytic_tag_ids.ids))
+                
+                
+                        if self.currency_ids:
+                            domain_init.append(('currency_id', 'in', self.currency_ids.ids))
+                
+                        if self.analytic_account_ids:
+                            domain_init.append(('analytic_account_id', 'in', self.analytic_account_ids.ids))
+                
+                
+                        if self.account_type == 'receivable':
+                            domain_init.append(('account_id.user_type_id.id', '=', self.env.ref('account.data_account_type_receivable').id))
+                        elif self.account_type == 'payable':
+                            domain_init.append(('account_id.user_type_id.id', '=', self.env.ref('account.data_account_type_payable').id))
+                
+                        else:
+                            domain_init.append(('account_id.user_type_id.id', 'in', account_type))
                         account_move_line_initial_balance = self.env['account.move.line'].search(
-                            [('date', '<', self.date_from),('partner_id','=',line.partner_id.id),('move_id.state','=','posted')])
+                            domain_init,order = "date")
 
-                        if account_move_line_initial_balance and counter==0:
-                            initial_balance = sum(account_move_line_initial_balance.mapped('balance'))
+                        if account_move_line_initial_balance and counter == 0:
+                            initial_balance = sum([l.amount_currency for l in account_move_line_initial_balance]) 
                         if debit>0 and credit==0:
                             balance=debit+initial_balance
                         elif credit>0 and debit==0:
