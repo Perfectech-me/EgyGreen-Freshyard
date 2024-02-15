@@ -60,7 +60,7 @@ class report_account_partner_ledger(models.AbstractModel):
             partner_total_currency = 0
             is_unfolded = 'partner_%s' % (partner.id if partner else 0) in options['unfolded_lines']
             cur_lines = results.get('lines',[])
-            if not cur_lines:
+            if not cur_lines and partner is not None:
                 query, params = self._get_query_amls(options, expanded_partner=partner)
                 self._cr.execute(query, params)
                 for res in self._cr.dictfetchall():
