@@ -157,7 +157,7 @@ class report_account_partner_ledger(models.AbstractModel):
         }
     def get_currency_id(self,options):
         currency_id = 0
-        for c in options['currency']:
+        for c in options.get('currency',[]):
             if c['selected']:
                 currency_id = c['id']
         currency = self.env.company.currency_id
@@ -168,7 +168,7 @@ class report_account_partner_ledger(models.AbstractModel):
     def _get_options_domain(self, options):
         domain = super(report_account_partner_ledger, self)._get_options_domain(options)
         currency_id = 0
-        for c in options['currency']:
+        for c in options.get('currency',[]):
             if c['selected']:
                 currency_id = c['id']
         if currency_id:
