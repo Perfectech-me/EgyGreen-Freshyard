@@ -462,7 +462,7 @@
                                     <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <br/>
                                         <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg" style="max-height:150px;max-width:250px;transform: rotate(-10deg);margin-top: 10px;"/>
+                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg" style="max-height:150px;max-width:350px;"/>
                                         </t>
                                         <t t-else="">
                                             <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo.jpeg" style="max-height:150px;max-width:200px;"/>
