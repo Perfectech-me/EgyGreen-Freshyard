@@ -262,6 +262,7 @@
                                     </td>
                                     <td colspan="1" style="text-align:left;border-width:1px;border-color:black;font-size:15px;width:25%;">
                                         <!--                                            <span t-field="o.o.final_destination_country_id"/>-->
+                                        <span t-field="o.no_of_pallets"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -461,7 +462,7 @@
                                     <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <br/>
                                         <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg" style="max-height:150px;max-width:200px;"/>
+                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg" style="max-height:150px;max-width:250px;transform: rotate(-10deg);margin-top: 10px;"/>
                                         </t>
                                         <t t-else="">
                                             <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo.jpeg" style="max-height:150px;max-width:200px;"/>
