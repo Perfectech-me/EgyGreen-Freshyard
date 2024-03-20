@@ -554,7 +554,7 @@
                                         <t t-if="o.env.company.id==1">
                                             <img class="img img-responsive"
                                                  src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg"
-                                                 style="max-height:150px;max-width:350px;"
+                                                 style="max-height:150px;max-width:250px;"
                                             />
                                         </t>
 
