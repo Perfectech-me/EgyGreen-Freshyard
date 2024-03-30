@@ -101,7 +101,7 @@
                                     <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <t t-set = "partner" t-value = "o.partner_id.id"/>
                                         <t t-set = "partner" t-value = "o.env['res.partner'].browse(partner)"/>
-                                        <span t-esc="partner.name"/>,
+                                        <span t-esc="partner.name"/>,<br/>
                                         <span t-esc="partner.street"/>
                                         <t t-esc="partner.street2">
                                             ,
@@ -127,7 +127,8 @@
                                     <td
                                             style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <t t-foreach="o.sales_order_id.partner_consignee_ids" t-as="cons">
-                                            <span t-field="cons.street"/>
+                                            <span style="color:red;" t-field="cons.name"/><br/>
+                                            <span style="color:green;" t-field="cons.street"/>
                                             <t t-if="cons.street2">
                                                 <span t-field="cons.street2"/>
                                             </t>
@@ -152,8 +153,8 @@
                                     <td
                                             style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
                                         <t t-foreach="o.sales_order_id.partner_notify_ids" t-as="notify">
-
-                                            <span t-field="notify.street"/>
+                                            <span style="color:red;" t-field="notify.name"/><br/>
+                                            <span style="color:green;" t-field="notify.street"/>
                                             <t t-if="notify.street2">
                                                 ,
                                                 <span t-field="notify.street2"/>
