@@ -5,7 +5,7 @@ from datetime import date, datetime, time, timedelta
 from pytz import timezone
 import xlsxwriter
 
-
+from odoo.exceptions import ValidationError
 class PartnerLedgerReportXlsx(models.AbstractModel):
     _name = 'report.account_partner_ledger_report.print_partner_report_xlsx'
     _inherit = 'report.report_xlsx.abstract'
@@ -147,7 +147,7 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
         else:
             domain.append(('account_id.user_type_id.id', 'in', account_type))
 
-        account_move_line_record = self.env['account.move.line'].search(domain, order='id asc')
+        account_move_line_record = self.env['account.move.line'].search(domain, order='date asc')
 
         number = 1
         row = 10
@@ -170,25 +170,30 @@ class PartnerLedgerReportXlsx(models.AbstractModel):
                             debit = line.amount_currency if line.amount_currency > 0 else line.amount_currency * -1
                         elif line.credit:
                             credit = line.amount_currency if line.amount_currency > 0 else line.amount_currency * -1
-
+                        domain_init = [('date', '<', partners.date_from),('partner_id','=',line.partner_id.id),('move_id.state','=','posted')]
+                        if partners.analytic_tag_ids:
+                            domain_init.append(('analytic_tag_ids', 'in', partners.analytic_tag_ids.ids))
+                
+                
+                        if partners.currency_ids:
+                            domain_init.append(('currency_id', 'in', partners.currency_ids.ids))
+                
+                        if partners.analytic_account_ids:
+                            domain_init.append(('analytic_account_id', 'in', partners.analytic_account_ids.ids))
+                
+                
+                        if partners.account_type == 'receivable':
+                            domain_init.append(('account_id.user_type_id.id', '=', self.env.ref('account.data_account_type_receivable').id))
+                        elif partners.account_type == 'payable':
+                            domain_init.append(('account_id.user_type_id.id', '=', self.env.ref('account.data_account_type_payable').id))
+                
+                        else:
+                            domain_init.append(('account_id.user_type_id.id', 'in', account_type))
                         account_move_line_initial_balance = self.env['account.move.line'].search(
-                            [('date', '<', partners.date_from), ('partner_id', '=', line.partner_id.id),
-                             ('date_maturity', '!=', False)],limit = 1, order='date_maturity asc')
+                            domain_init,order = "date")
+
                         if account_move_line_initial_balance and count == 0:
-
-                            if partners.account_type == 'receivable' and account_move_line_initial_balance.account_id.user_type_id.id == self.env.ref(
-                                    'account.data_account_type_receivable').id:
-                                initial_balance = account_move_line_initial_balance.balance
-
-                            elif partners.account_type == 'payable' and account_move_line_initial_balance.account_id.user_type_id.id == self.env.ref(
-                                    'account.data_account_type_payable').id:
-                                initial_balance = account_move_line_initial_balance.balance
-
-
-                            elif partners.account_type == False and account_move_line_initial_balance.account_id.user_type_id.id in account_type:
-
-                                initial_balance = account_move_line_initial_balance.balance
-
+                            initial_balance = sum([l.amount_currency for l in account_move_line_initial_balance])                            
                         if debit > 0 and credit == 0:
                             balance = debit + initial_balance
                         elif credit > 0 and debit == 0:

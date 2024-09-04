@@ -36,10 +36,10 @@
 
 
                 <div style="float:right;text-align:right;width:100%">
-                    <div style="float:right;text-align:right;font-size:14px;width:100%;padding-right:32px;">
+                    <div style="float:right;text-align:right;font-size:14px;width:100%;padding-right:32px;margin-top : 10px;">
                         <span t-esc="o.cheque_date" style="float:right;text-align:right;"/>
                     </div>
-                    <div style="float:right;text-align:right;padding-right:55px;width:100%;" name="payee">
+                    <div style="float:right;text-align:right;padding-right:55px;width:100%;margin-top :0px;" name="payee">
                         <br/>
                         <span t-field="o.beneficiary_name"/>
                     </div>
@@ -58,7 +58,7 @@
 
                 </div>
 
-                <div style="float:right;text-align:right;width:100%;padding-top:15px;padding-left:30px;font-size:14px;">
+                <div style="float:right;text-align:right;width:100%;padding-top:20px;padding-left:30px;font-size:14px;">
 
                     <!--#<span t-field="o.amount" style="float:right;text-align:right;padding-left:100px;"/>#-->
                     #<span t-field="o.amount"/>#

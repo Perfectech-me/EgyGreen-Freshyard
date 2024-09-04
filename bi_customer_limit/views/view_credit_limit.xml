@@ -36,6 +36,12 @@
                 <field name="payment_term_id" position="after">
                     <field name="credit_limit_id" />
                 </field>
+                <field name="partner_invoice_id" position="attributes">
+                    <attribute name = "force_save">1</attribute>
+                </field>
+                <field name="partner_shipping_id" position="attributes">
+                    <attribute name = "force_save">1</attribute>
+                </field>
                 <field name="credit_limit_id" position="after">
                     <field name="total_receivable" />
                     <field name="is_confirm" invisible='1'/>
