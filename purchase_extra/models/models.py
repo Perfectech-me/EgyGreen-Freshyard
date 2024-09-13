@@ -1,4 +1,3 @@
-
 import logging
 from odoo import api, fields, models, _
 from odoo.tools.misc import format_date
@@ -13,6 +12,7 @@ from odoo.tools.misc import format_date
 
 _logger = logging.getLogger(__name__)
 
+
 class ResPartner(models.Model):
     _name = 'res.partner'
     _inherit = 'res.partner'
@@ -25,13 +25,13 @@ class ResPartner(models.Model):
 
     # sssss = fields.Char(string='Field3')
 
-
-
     # date_localization = fields.Date(string='Geolocation Date')
+
+
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    state =fields.Selection(selection_add=[('to_approve','To Approve'),('purchase',)])
+    state = fields.Selection(selection_add=[('to_approve', 'To Approve'), ('purchase',)])
 
     def button_to_confirm(self):
         # self.write({
@@ -41,7 +41,7 @@ class PurchaseOrder(models.Model):
         # return res
         for order in self:
             if order.state in ['draft', 'sent']:
-                order.state='to_approve'
+                order.state = 'to_approve'
             # order._add_supplier_to_product()
             # Deal with double validation process
             # if order._approval_allowed():
@@ -51,10 +51,9 @@ class PurchaseOrder(models.Model):
             # if order.partner_id not in order.message_partner_ids:
             #     order.message_subscribe([order.partner_id.id])
         return True
+
     def button_to_approve(self):
         # res = super(PurchaseOrder, self).button_approve(force=force)
-
-
 
         view_id = self.env.ref('purchase_extra.wizard_view_form').id
         name = _(' ')
@@ -76,28 +75,28 @@ class PurchaseOrder(models.Model):
             ('partner_id', '=', self.partner_id.id),
 
         ])
-        total_balance=0
+        total_balance = 0
         for r in balance:
-            total_balance=total_balance+r.amount_total_signed
+            total_balance = total_balance + r.amount_total_signed
 
-        print("total_payment",total_balance,self.partner_id.total_invoiced)
+        print("total_payment", total_balance, self.partner_id.total_invoiced)
 
         for line in self.order_line:
             print('product', line.product_id)
             order = self.env['purchase.order.line'].search([
                 # ('partner_id', '=', line.partner_id.id),
                 ('product_id', '=', line.product_id.id),
-                ('order_id','!=',self.id)
+                ('order_id', '!=', self.id)
             ], limit=1)
-            print(order.price_unit,'sssss')
+            print(order.price_unit, 'sssss')
 
             wizard_line_ids.append((0, 0, {
                 'product_id': line.product_id.id,
                 'purchase_id': order.order_id.id,
 
                 'price_unit': order.price_unit,
-                'product_quantity':line.product_id.qty_available,
-                'balance':total_balance
+                'product_quantity': line.product_id.qty_available,
+                'balance': total_balance
 
             }))
         return {
@@ -111,43 +110,39 @@ class PurchaseOrder(models.Model):
             'context': {
                 'default_vendor': self.partner_id.id,
                 'default_purchase_id': self.id,
-                'default_order_lines':wizard_line_ids
+                'default_order_lines': wizard_line_ids
             }}
-            # return {
-            #     'name': 'name',
-            #     'type': 'ir.actions.act_window',
-            #     'view_mode': 'form',
-            #     'res_model': 'choose.delivery.carrier',
-            #     'view_id': view_id,
-            #     'views': [(view_id, 'form')],
-            #     'target': 'new',
-            #     'context': {
-            #         'default_vendor': self.id,
-            #         # 'default_carrier_id': carrier.id,
-            #     }
-
-
+        # return {
+        #     'name': 'name',
+        #     'type': 'ir.actions.act_window',
+        #     'view_mode': 'form',
+        #     'res_model': 'choose.delivery.carrier',
+        #     'view_id': view_id,
+        #     'views': [(view_id, 'form')],
+        #     'target': 'new',
+        #     'context': {
+        #         'default_vendor': self.id,
+        #         # 'default_carrier_id': carrier.id,
+        #     }
 
         # return res
-
 
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    product_qty_percentage = fields.Float('Qty percentage',compute='get_product_qty_percentage')
+    product_qty_percentage = fields.Float('Qty percentage', compute='get_product_qty_percentage')
     estimate_unit_price = fields.Float('Estimate price')
     estimate_subtotal = fields.Float('Estimate subtotal')
 
-    @api.depends('order_id','product_id','product_qty')
+    @api.depends('order_id', 'product_id', 'product_qty')
     def get_product_qty_percentage(self):
         for rec in self:
-            rec.product_qty_percentage=0
+            rec.product_qty_percentage = 0
             qty_total = sum(line.product_qty for line in rec.order_id.order_line)
             for order in rec.order_id.order_line:
                 if qty_total > 0:
                     order.product_qty_percentage = order.product_qty / qty_total
-
 
     def _prepare_account_move_line(self, move=False):
         self.ensure_one()
@@ -160,8 +155,10 @@ class PurchaseOrderLine(models.Model):
             'product_id': self.product_id.id,
             'product_uom_id': self.product_uom.id,
             'quantity': self.qty_to_invoice,
-            'estimate_unit_price':self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date, round=False),
-            'estimate_subtotal':self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date, round=False)*self.qty_to_invoice,
+            'estimate_unit_price': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date,
+                                                             round=False),
+            'estimate_subtotal': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date,
+                                                           round=False) * self.qty_to_invoice,
             'price_unit': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date, round=False),
             'tax_ids': [(6, 0, self.taxes_id.ids)],
             'analytic_account_id': self.account_analytic_id.id,
@@ -184,42 +181,45 @@ class PurchaseOrderLine(models.Model):
         })
         return res
 
-
-    
-    @api.onchange('estimate_unit_price','product_qty')
+    @api.onchange('estimate_unit_price', 'product_qty')
     def _compute_percentage(self):
-        qty_total=0
+        qty_total = 0
         # for order in self:
-        self.estimate_subtotal= self.estimate_unit_price * self.product_qty
+        self.estimate_subtotal = self.estimate_unit_price * self.product_qty
+
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    bill_description=fields.Text('Bill Description')
-    vendor_invoice=fields.Selection([('copy', 'Copy'), ('original', 'Original')],
-                              string='Vendor Invoice', default='copy')
-    bill_type=fields.Selection([('actual', 'Actual'), ('estimate', 'Estimate')],
-                              string='Bill Type', default='estimate')
+    bill_description = fields.Text('Bill Description')
+    vendor_invoice = fields.Selection([('copy', 'Copy'), ('original', 'Original')],
+                                      string='Vendor Invoice', default='copy')
+    bill_type = fields.Selection([('actual', 'Actual'), ('estimate', 'Estimate')],
+                                 string='Bill Type', default='estimate')
 
+    ref = fields.Char(string='Bill Reference', copy=False)
+
+    _sql_constraints = [
+        ('ref_unique', 'unique(ref)', 'The Bill Reference must be unique!'),
+    ]
 
     @api.onchange('invoice_line_ids')
     def _bill_type(self):
         for rec in self:
-            rec.bill_type='actual'
-
+            rec.bill_type = 'actual'
 
     @api.model_create_multi
     def create(self, vals_list):
         # OVERRIDE
         for r in vals_list:
-            print("rrrrrrrrrrrrrrrr",r)
+            print("rrrrrrrrrrrrrrrr", r)
 
         vals_list = self._move_autocomplete_invoice_lines_create(vals_list)
         return super(AccountMove, self).create(vals_list)
 
+
 class AccountPartnerLedger(models.AbstractModel):
     _inherit = 'account.partner.ledger'
-
 
     def _get_columns_name(self, options):
         columns = [
@@ -240,7 +240,6 @@ class AccountPartnerLedger(models.AbstractModel):
         columns.append({'name': _('Balance'), 'class': 'number'})
 
         return columns
-
 
     @api.model
     def _get_report_line_move_line(self, options, partner, aml, cumulated_init_balance, cumulated_balance):
@@ -263,9 +262,8 @@ class AccountPartnerLedger(models.AbstractModel):
 
         # bill_des=a['bill_description']
         for a in aml_id:
-
-        # print('ididid',aml_id.bill_description)
-        # bill_description = aml_id.bill_description or ''
+            # print('ididid',aml_id.bill_description)
+            # bill_description = aml_id.bill_description or ''
             columns = [
                 {'name': aml['journal_code']},
                 {'name': aml['account_code']},
@@ -295,6 +293,7 @@ class AccountPartnerLedger(models.AbstractModel):
             'caret_options': caret_type,
             'level': 2,
         }
+
     #
     # @api.model
     # def _get_report_line_move_line(self, options, partner, aml, cumulated_init_balance, cumulated_balance):
@@ -400,8 +399,10 @@ class AccountPartnerLedger(models.AbstractModel):
     #         if r.credit>0:
     #             r.credit=subtotal
     #         print("rrrrrr",r.debit)
-        # res = super(AccountMove, self).action_post()
-        # return res
+    # res = super(AccountMove, self).action_post()
+    # return res
+
+
 class AccountMoveLine(models.Model):
     """ Override AccountInvoice_line to add the link to the purchase order line it is related to"""
     _inherit = 'account.move.line'
