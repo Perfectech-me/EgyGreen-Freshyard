@@ -631,7 +631,7 @@ class account_cheque(models.Model):
                 rec.sudo().unlink()
             else:
                 raise ValidationError('This Cheque Cannot be Canceled Because of its Posted JE')
-        self.status = 'draft'
+        self.status = 'cancel'
         self.journal_items_count = 0
         self.current_state_date = datetime.today().strftime('%Y-%m-%d')
 
