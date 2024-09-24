@@ -9,7 +9,7 @@ class StockMoveLine(models.Model):
     in_qty_available = fields.Float(string='IN', compute='_compute_qty_available')
     out_qty_available = fields.Float(string='OUT', compute='_compute_qty_available')
     qty_on_date = fields.Float(compute='_compute_qty_available', )
-    balance_amount = fields.Float(compute='_compute_balance_amount')
+    balance_amount = fields.Float(compute='_compute_balance_amount', string='Balance')
 
     @api.depends('product_id', 'date')
     def _compute_qty_available(self):
