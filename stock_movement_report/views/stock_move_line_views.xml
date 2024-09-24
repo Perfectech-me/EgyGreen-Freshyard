@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+
+        <record id="view_stock_move_in_out_tree" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move.line</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Move Lines" create="0" default_order="date">
+                    <field name="date"/>
+                    <field name="reference" string="Reference"
+                           invisible="context.get('no_reference', False)"/>
+                    <field name="product_id"/>
+                    <field name="lot_id" groups="stock.group_production_lot"/>
+                    <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="location_dest_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="qty_done" string="Quantity Done"/>
+                    <field name="product_uom_id" options="{'no_open': True, 'no_create': True}" string="Unit of Measure"
+                           groups="uom.group_uom"/>
+                    <field name="company_id" groups="base.group_multi_company" force_save="1"/>
+                    <field name="in_qty_available"/>
+                    <field name="out_qty_available"/>
+                    <field name="qty_on_date"/>
+                    <field name="balance_amount"/>
+                    <field name="state" widget='badge' decoration-success="state == 'done'"
+                           decoration-info="state not in ('done', 'cancel')"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stock_move_in_out_action" model="ir.actions.act_window">
+            <field name="name">Stock IN/OUT Moves</field>
+            <field name="res_model">stock.move.line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_id" ref="view_stock_move_in_out_tree"/>
+            <field name="context">{'search_default_done': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No stock move found
+                </p>
+                <p>
+                    This menu gives you the full traceability of inventory
+                    operations on a specific product. You can filter on the product
+                    to see all the past or future movements for the product.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+                id="stock_in_out_move_report"
+                name="Stock In/Out Report"
+                parent="stock.menu_warehouse_report"
+                action="stock_move_in_out_action"/>
+    </data>
+</odoo>
