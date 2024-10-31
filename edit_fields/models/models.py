@@ -15,3 +15,16 @@ class ResPartner(models.Model):
     company_id = fields.Many2one('res.company', 'Company', index=True,required=True)
 
 
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    def _create_exchange_difference_move(self):
+        res = super()._create_exchange_difference_move()
+        if res:
+            for move in res:
+                for line in move.line_ids:
+                    line.analytic_tag_ids = self.analytic_tag_ids
+                    print('AAASSDD ',line)
+
+        return res
