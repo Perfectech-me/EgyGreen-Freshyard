@@ -200,13 +200,13 @@ class AccountMove(models.Model):
 
     ref = fields.Char(string='Bill Reference', copy=False)
 
-    @api.constrains('ref')
-    def _check_unique_ref(self):
-        for record in self:
-            if record.ref:
-                existing_move = self.search([('ref', '=', record.ref), ('id', '!=', record.id)], limit=1)
-                if existing_move:
-                    raise ValidationError("The Bill Reference must be unique")
+    # @api.constrains('ref')
+    # def _check_unique_ref(self):
+    #     for record in self:
+    #         if record.ref:
+    #             existing_move = self.search([('ref', '=', record.ref), ('id', '!=', record.id)], limit=1)
+    #             if existing_move:
+    #                 raise ValidationError("The Bill Reference must be unique")
 
     @api.onchange('invoice_line_ids')
     def _bill_type(self):
