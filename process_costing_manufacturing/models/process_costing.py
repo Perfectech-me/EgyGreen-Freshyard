@@ -398,8 +398,17 @@ class MrpProduction(models.Model):
             overhead_total += line.total_cost
             overhead_actual_total += line.total_actual_cost
 
-        self.total_material_cost = material_total
-        self.total_actual_material_cost = material_actual_total
+        self.total_material_cost = 0.0
+        for line in self.move_raw_ids:
+            print('*********** product_id.name', line.product_id.name)
+            print('*********** product_id.standard_price', line.product_id.standard_price)
+            print('*********** quantity_done', line.quantity_done)
+
+            self.total_material_cost += line.product_id.standard_price * line.quantity_done
+            print('#### total_material_cost', self.total_material_cost)
+
+        # self.total_material_cost = material_total
+        self.total_actual_material_cost = self.total_material_cost
 
         self.total_labour_cost = labour_total
         self.total_actual_labour_cost = labour_actual_total
