@@ -2,7 +2,7 @@ from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 from datetime import timedelta, datetime
 
-import pandas as pd
+# import pandas as pd
 # import datetime
 import time
 from dateutil.rrule import rrule, MONTHLY
