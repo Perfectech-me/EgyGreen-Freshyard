@@ -4,8 +4,8 @@
         <record id="paperformat_print_cheque" model="report.paperformat">
             <field name="name">Paper Agricole Check</field>
             <field name="format">custom</field>
-            <field name="page_height">173</field>
-            <field name="page_width">80</field>
+            <field name="page_height">180</field>
+            <field name="page_width">60</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">34</field>
             <field name="margin_right">0</field>
@@ -18,7 +18,7 @@
         <record id="paperformat_print_cib_cheque" model="report.paperformat">
             <field name="name">Paper Cib Cheque</field>
             <field name="format">custom</field>
-            <field name="page_height">160</field>
+            <field name="page_height">180</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">35</field>
@@ -31,7 +31,7 @@
         <record id="paperformat_print_epe_cheque" model="report.paperformat">
             <field name="name">Paper EPE Cheque</field>
             <field name="format">custom</field>
-            <field name="page_height">170</field>
+            <field name="page_height">180</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">34</field>
@@ -44,7 +44,7 @@
         <record id="paperformat_print_wafa_cheque" model="report.paperformat">
             <field name="name">Paper Wafa Cheque</field>
             <field name="format">custom</field>
-            <field name="page_height">160</field>
+            <field name="page_height">180</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">35</field>
@@ -57,7 +57,7 @@
          <record id="paperformat_print_alexbank_cheque" model="report.paperformat">
             <field name="name">Paper AlexBank Cheque</field>
             <field name="format">custom</field>
-            <field name="page_height">160</field>
+            <field name="page_height">180</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">35</field>
@@ -70,7 +70,7 @@
          <record id="paperformat_print_ebank_cheque" model="report.paperformat">
             <field name="name">Paper E-Bank Cheque</field>
             <field name="format">custom</field>
-            <field name="page_height">160</field>
+            <field name="page_height">180</field>
             <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">35</field>
