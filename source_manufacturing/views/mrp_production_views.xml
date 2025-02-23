@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="mrp_production_form_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.form.view.inherit</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/notebook/page[@name='miscellaneous']/group/group" position="inside">
+                    <field name="origin_id" string="Source Origin"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

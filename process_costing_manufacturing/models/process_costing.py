@@ -225,6 +225,14 @@ class MrpBomOverheadCost(models.Model):
 class MrpProduction(models.Model):
     _inherit = "mrp.production"
 
+    origin_id = fields.Many2one(
+        'account.analytic.tag',
+        string='Source',
+        copy=False,
+        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        help="Reference of the document that generated this production order request."
+    )
+
     def _create_journal_entries(self):
         self.ensure_one()
         today = fields.Datetime.now()

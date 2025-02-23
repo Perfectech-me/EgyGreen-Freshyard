@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="view_move_line_form_inherit" model="ir.ui.view">
+            <field name="name">view.move.line.form.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/group/field[@name='origin']" position="after">
+                    <field name="origin_id" string="Source Origin"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
