@@ -9,9 +9,9 @@
                 <span t-esc="o.cheque_date"/>
             </div>
             <!-- الصورة -->
-            <div class="col-8">
-                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo"/>
-            </div>
+           <div class="col-4" style="float: left; text-align: left;">
+    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" style="max-width: 100px; max-height: 50px;"/>
+</div>
         </xpath>
 
         <!--        <xpath expr="//div[2][1]" position="replace">-->
