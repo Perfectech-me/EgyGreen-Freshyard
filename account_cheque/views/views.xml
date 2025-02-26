@@ -303,6 +303,7 @@
                     <field name="to_date"/>
                 </group>
                 <group>
+                    <field name="currency_id"/>
                     <field name="payer_user_id"/>
                     <field name="status"/>
                 </group>
