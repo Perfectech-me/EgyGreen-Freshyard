@@ -1,0 +1,30 @@
+<odoo>
+    <template id="cib_report_edit" inherit_id="account_cheque.print_cib_cheque_temp">
+
+       <xpath expr="//div[@style='float:left;text-align:left;font-size:14px;width:100%;padding-left:20px;padding-top:11px;']" position="replace">
+
+                <!-- التاريخ -->
+                <div style="float:right;width:50%;text-align:right; font-size:14px; padding-right:20px;padding-top:15px;">
+                    <span t-esc="o.cheque_date"/>
+                </div>
+                <!-- الصورة -->
+                <div style="float:left;width:50%;text-align:left; padding-left:20px;padding-top:15px;">
+                       <img src="\account_cheque_report_edit\static\description\logo_egy.jpg" style="max-height: 100px; max-width: 100px;" alt="My Image"/>
+                </div>
+
+        </xpath>
+
+<!--        <xpath expr="//div[2][1]" position="replace">-->
+<!--            <div style="float:right;text-align:right;font-size:14px;width:50%;padding-right:20px;padding-top:11px;">-->
+<!--                <span t-esc="o.cheque_date"/>-->
+<!--            </div>-->
+<!--        </xpath>-->
+
+<!--        <xpath expr="//div[2][1]" position="replace">-->
+<!--            <div style="float:left;text-align:left;font-size:14px;width:100%;padding-left:20px;padding-top:11px;">-->
+<!--                <img t-if="company_id.logo" t-att-src="image_data_uri(company_id.logo)" alt="Logo"/>-->
+<!--            </div>-->
+<!--            -->
+<!--        </xpath>-->
+    </template>
+</odoo>
