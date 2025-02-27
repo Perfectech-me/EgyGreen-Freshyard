@@ -16,11 +16,14 @@ class account_move_report_wizard(models.Model):
     from_date = fields.Date(string="From", required=True, )
     to_date = fields.Date(string="To", required=True, )
 
-
+    currency_id = fields.Many2one(comodel_name='res.currency')
     status = fields.Selection(string="",
                               selection=[('draft', 'Draft'), ('registered', 'Registered'), ('bank', 'Bank Repository'),
                                          ('bounced', 'Bounced'),
-                                         ('done', 'Done'), ('cancel', 'Cancel'), ], required=False)
+                                         ('done', 'Done'),
+                                         ('cancel', 'Cancel'),
+                                         ('not_done', 'Not Done'),
+                                         ], required=False)
     type = fields.Selection(string="", selection=[('incoming', 'incoming'), ('outgoing', 'outgoing'), ],
                             required=True )
 
@@ -81,8 +84,16 @@ class account_move_report_wizard(models.Model):
 
         if self.payer_user_id:
             domain.append(('payer_user_id', '=', self.payer_user_id.id))
+
+        if self.currency_id:
+            domain.append(('currency_id', '=', self.currency_id.id))
+
         if self.status:
-            domain.append(('status', '=', self.status))
+            if self.status == 'not_done':
+                domain.append(('status', 'not in', ['done','cancel']))
+            else:
+                domain.append(('status', '=', self.status))
+
         if self.payee_user_id:
             domain.append(('payee_user_id', '=', self.payee_user_id.id))
 
