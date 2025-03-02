@@ -23,7 +23,6 @@ class account_move_report_wizard(models.Model):
                                          ('done', 'Done'),
                                          ('cancel', 'Cancel'),
                                          ('not_done', 'Not Done'),
-                                         ('not_cancel', 'Not Cancel'),
                                          ], required=False)
     type = fields.Selection(string="", selection=[('incoming', 'incoming'), ('outgoing', 'outgoing'), ],
                             required=True )
@@ -91,9 +90,7 @@ class account_move_report_wizard(models.Model):
 
         if self.status:
             if self.status == 'not_done':
-                domain.append(('status', '!=', 'done'))
-            elif self.status == 'not_cancel':
-                domain.append(('status', '!=', 'cancel'))
+                domain.append(('status', 'not in', ['done','cancel']))
             else:
                 domain.append(('status', '=', self.status))
 
