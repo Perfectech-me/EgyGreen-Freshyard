@@ -17,6 +17,7 @@
         'views/account_move.xml',
         'views/container_type.xml',
         'views/stock_valuation._ayer.xml',
+        'views/account_invoice_report_views.xml',
         'wizard/approve_credit_limit.xml',
         'wizard/refuse_credit_limit.xml',
     ],

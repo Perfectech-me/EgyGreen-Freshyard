@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_account_invoice_report_search_inherit_salesperson">
+            <field name="name">account.invoice.report.search.salesperson</field>
+            <field name="model">account.invoice.report</field>
+            <field name="inherit_id" ref="account.view_account_invoice_report_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_user_id']" position="after">
+                    <field name="invoice_person_user_id" />
+                </xpath>
+                <xpath expr="//group/filter[@name='user']" position="after">
+                    <filter string="Sales person" name='sales_person' context="{'group_by':'invoice_person_user_id'}"/>
+                </xpath>
+
+                <xpath expr="//group/filter[@name='user']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
