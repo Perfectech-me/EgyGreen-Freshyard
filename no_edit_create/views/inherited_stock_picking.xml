@@ -1,0 +1,36 @@
+<odoo>
+    <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="partner_id" nolabel="1" options="{'no_quick_create':True,'no_create_edit':True}"/>
+
+            </xpath>
+
+            <xpath expr="//field[@name='picking_type_id']" position="replace">
+                <field name="picking_type_id"
+                       attrs="{'invisible': [('hide_picking_type', '=', True)], 'readonly': [('state', '!=', 'draft')]}"
+                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+
+
+            </xpath>
+
+
+            <xpath expr="//field[@name='move_ids_without_package']//field[@name='product_id']" position="replace">
+                <field name="product_id" required="1" context="{'default_detailed_type': 'product'}"
+                       attrs="{'readonly': ['|', '&amp;', ('state', '!=', 'draft'), ('additional', '=', False), ('move_lines_count', '&gt;', 0)]}"
+                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids_without_package']//field[@name='product_packaging_id']"
+                   position="replace">
+                <field name="product_packaging_id" groups="product.group_stock_packaging"
+                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
