@@ -6,14 +6,14 @@
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='partner_id']" position="replace">
-                <field name="partner_id" nolabel="1" options="{'no_quick_create':True,'no_create_edit':True}"/>
+                <field name="partner_id" nolabel="1" options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
 
             </xpath>
 
             <xpath expr="//field[@name='picking_type_id']" position="replace">
                 <field name="picking_type_id"
                        attrs="{'invisible': [('hide_picking_type', '=', True)], 'readonly': [('state', '!=', 'draft')]}"
-                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
 
 
             </xpath>
@@ -22,14 +22,14 @@
             <xpath expr="//field[@name='move_ids_without_package']//field[@name='product_id']" position="replace">
                 <field name="product_id" required="1" context="{'default_detailed_type': 'product'}"
                        attrs="{'readonly': ['|', '&amp;', ('state', '!=', 'draft'), ('additional', '=', False), ('move_lines_count', '&gt;', 0)]}"
-                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
 
             </xpath>
 
             <xpath expr="//field[@name='move_ids_without_package']//field[@name='product_packaging_id']"
                    position="replace">
                 <field name="product_packaging_id" groups="product.group_stock_packaging"
-                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
             </xpath>
         </field>
     </record>
