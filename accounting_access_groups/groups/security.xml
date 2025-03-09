@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="group_partner_create" model="res.groups">
+            <field name="name">Can Create Partner</field>
+        </record>
+    </data>
+</odoo>
