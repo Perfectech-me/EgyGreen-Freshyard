@@ -343,7 +343,7 @@ class AccountMove(models.Model):
         context['check_move_validity'] = False
         context['partner_id'] = vals.get('partner_id')
         move = super(AccountMove, self.with_context(context)).create(vals)
-        move._check_balanced(container=None)
+        move._check_balanced()
         return move
 
     def _centralise(self, mode):
