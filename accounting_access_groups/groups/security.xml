@@ -3,5 +3,8 @@
         <record id="group_partner_create" model="res.groups">
             <field name="name">Can Create Partner</field>
         </record>
+         <record id="group_partner_edit" model="res.groups">
+            <field name="name">Can Edit Partner</field>
+        </record>
     </data>
 </odoo>
