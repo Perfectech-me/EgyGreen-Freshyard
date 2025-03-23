@@ -619,8 +619,11 @@ class AccountMoveLine(models.Model):
         if context.get('account_ids'):
             domain += [('account_id', 'in', context['account_ids'].ids)]
 
-        if context.get('analytic_tag_ids'):
-            domain += [('analytic_tag_ids', 'in', context['analytic_tag_ids'].ids)]
+        if context.get('account_tag_ids'):
+            account_tag_ids = context['account_tag_ids']
+            if isinstance(account_tag_ids, (list, tuple)):
+                account_tag_ids = self.env['account.account.tag'].browse(account_tag_ids)
+            domain += [('account_id.tag_ids', 'in', account_tag_ids.ids)]
 
         if context.get('analytic_account_ids'):
             domain += [('analytic_account_id', 'in', context['analytic_account_ids'].ids)]
