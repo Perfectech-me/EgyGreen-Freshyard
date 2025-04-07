@@ -38,8 +38,8 @@ class MrpBom(models.Model):
 
         # bom_material_cost_ids = fields.One2many("mrp.bom.material.cost","mrp_bom_material_id","Material Cost")
 
-    bom_labour_cost_ids = fields.One2many("mrp.bom.labour.cost", "mrp_bom_labour_id", "Labour Cost")
-    bom_overhead_cost_ids = fields.One2many("mrp.bom.overhead.cost", "mrp_bom_overhead_id", "Overhead Cost")
+    bom_labour_cost_ids = fields.One2many("mrp.bom.labour.cost", "mrp_bom_labour_id", "labour cost")
+    bom_overhead_cost_ids = fields.One2many("mrp.bom.overhead.cost", "mrp_bom_overhead_id", "overhead cost")
     # single page total cost
     # bom_total_material_cost = fields.Float(compute='_compute_total_cost',string="Total Material Cost",default=0.0)
     bom_total_labour_cost = fields.Float(compute='_compute_total_cost', string="Total Labour Cost", default=0.0)
