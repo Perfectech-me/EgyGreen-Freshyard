@@ -13,9 +13,13 @@ class AccountPaymentTermLine(models.Model):
         ('day_following_month', "Of the following month"),
         ('day_current_month', "Of the current month"),
         ('eta_delivery_date', "Delivery Date (ETA)"),
+        ('actual_eta', "Actual ETA Date"),
     ], default='day_after_invoice_date', required=True, string='Options')
+
+
 class AccountPaymentTermLine(models.Model):
     _inherit = "account.move"
+
     def _recompute_payment_terms_lines(self):
         ''' Compute the dynamic payment term lines of the journal entry.'''
         self.ensure_one()
@@ -53,7 +57,8 @@ class AccountPaymentTermLine(models.Model):
                 # Search new account.
                 domain = [
                     ('company_id', '=', self.company_id.id),
-                    ('internal_type', '=', 'receivable' if self.move_type in ('out_invoice', 'out_refund', 'out_receipt') else 'payable'),
+                    ('internal_type', '=',
+                     'receivable' if self.move_type in ('out_invoice', 'out_refund', 'out_receipt') else 'payable'),
                     ('deprecated', '=', False),
                 ]
                 return self.env['account.account'].search(domain, limit=1)
@@ -67,13 +72,17 @@ class AccountPaymentTermLine(models.Model):
             :return:                        A list <to_pay_company_currency, to_pay_invoice_currency, due_date>.
             '''
             if self.invoice_payment_term_id:
-                to_compute = self.invoice_payment_term_id.compute(total_balance, date_ref=date, currency=self.company_id.currency_id,eta = self.sales_order_id.commitment_date)#changes here
+                to_compute = self.invoice_payment_term_id.compute(total_balance, date_ref=date,
+                                                                  currency=self.company_id.currency_id,
+                                                                  eta=self.sales_order_id.commitment_date)  # changes here
                 if self.currency_id == self.company_id.currency_id:
                     # Single-currency.
                     return [(b[0], b[1], b[1]) for b in to_compute]
                 else:
                     # Multi-currencies.
-                    to_compute_currency = self.invoice_payment_term_id.compute(total_amount_currency, date_ref=date, currency=self.currency_id,eta = self.sales_order_id.commitment_date)#changes here
+                    to_compute_currency = self.invoice_payment_term_id.compute(total_amount_currency, date_ref=date,
+                                                                               currency=self.currency_id,
+                                                                               eta=self.sales_order_id.commitment_date)  # changes here
                     return [(b[0], b[1], ac[1]) for b, ac in zip(to_compute, to_compute_currency)]
             else:
                 return [(fields.Date.to_string(date), total_balance, total_amount_currency)]
@@ -108,7 +117,8 @@ class AccountPaymentTermLine(models.Model):
                     })
                 else:
                     # Create new line.
-                    create_method = in_draft_mode and self.env['account.move.line'].new or self.env['account.move.line'].create
+                    create_method = in_draft_mode and self.env['account.move.line'].new or self.env[
+                        'account.move.line'].create
                     candidate = create_method({
                         'name': self.payment_reference or '',
                         'debit': balance < 0.0 and -balance or 0.0,
@@ -127,8 +137,10 @@ class AccountPaymentTermLine(models.Model):
                     candidate.update(candidate._get_fields_onchange_balance(force_computation=True))
             return new_terms_lines
 
-        existing_terms_lines = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))
-        others_lines = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type not in ('receivable', 'payable'))
+        existing_terms_lines = self.line_ids.filtered(
+            lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))
+        others_lines = self.line_ids.filtered(
+            lambda line: line.account_id.user_type_id.type not in ('receivable', 'payable'))
         company_currency_id = (self.company_id or self.env.company).currency_id
         total_balance = sum(others_lines.mapped(lambda l: company_currency_id.round(l.balance)))
         total_amount_currency = sum(others_lines.mapped('amount_currency'))
@@ -148,21 +160,27 @@ class AccountPaymentTermLine(models.Model):
         if new_terms_lines:
             self.payment_reference = new_terms_lines[-1].name or ''
             self.invoice_date_due = new_terms_lines[-1].date_maturity
+
+
 class AccountPaymentTerm(models.Model):
     _inherit = "account.payment.term"
 
-    def compute(self, value, date_ref=False, currency=None,eta = False):
+    def compute(self, value, date_ref=False, currency=None, eta=False, actual_eta=False):
         self.ensure_one()
+
         date_ref_eta = eta or date_ref or fields.Date.context_today(self)
         date_ref = date_ref or fields.Date.context_today(self)
-        
+        date_ref_actual = actual_eta or date_ref or fields.Date.context_today(self)
+
         amount = value
         sign = value < 0 and -1 or 1
         result = []
+
         if not currency and self.env.context.get('currency_id'):
             currency = self.env['res.currency'].browse(self.env.context['currency_id'])
         elif not currency:
             currency = self.env.company.currency_id
+
         for line in self.line_ids:
             if line.value == 'fixed':
                 amt = sign * currency.round(line.value_amount)
@@ -170,9 +188,10 @@ class AccountPaymentTerm(models.Model):
                 amt = currency.round(value * (line.value_amount / 100.0))
             elif line.value == 'balance':
                 amt = currency.round(amount)
+
             next_date_eta = fields.Date.from_string(date_ref_eta)
             next_date = fields.Date.from_string(date_ref)
-            
+            next_date_actual = fields.Date.from_string(date_ref_actual)
 
             if line.option == 'eta_delivery_date':
                 next_date_eta += relativedelta(days=line.days)
@@ -180,19 +199,29 @@ class AccountPaymentTerm(models.Model):
                     months_delta = (line.day_of_the_month < next_date_eta.day) and 1 or 0
                     next_date_eta += relativedelta(day=line.day_of_the_month, months=months_delta)
                 next_date = next_date_eta
-            else:
-                if line.option == 'day_after_invoice_date':
-                    next_date += relativedelta(days=line.days)
-                    if line.day_of_the_month > 0:
-                        months_delta = (line.day_of_the_month < next_date.day) and 1 or 0
-                        next_date += relativedelta(day=line.day_of_the_month, months=months_delta)
-                elif line.option == 'after_invoice_month':
-                    next_first_date = next_date + relativedelta(day=1, months=1)  # Getting 1st of next month
-                    next_date = next_first_date + relativedelta(days=line.days - 1)
-                elif line.option == 'day_following_month':
-                    next_date += relativedelta(day=line.days, months=1)
-                elif line.option == 'day_current_month':
-                    next_date += relativedelta(day=line.days, months=0)
+
+            elif line.option == 'actual_eta':
+                next_date_actual += relativedelta(days=line.days)
+                if line.day_of_the_month > 0:
+                    months_delta = (line.day_of_the_month < next_date_actual.day) and 1 or 0
+                    next_date_actual += relativedelta(day=line.day_of_the_month, months=months_delta)
+                next_date = next_date_actual
+
+            elif line.option == 'day_after_invoice_date':
+                next_date += relativedelta(days=line.days)
+                if line.day_of_the_month > 0:
+                    months_delta = (line.day_of_the_month < next_date.day) and 1 or 0
+                    next_date += relativedelta(day=line.day_of_the_month, months=months_delta)
+
+            elif line.option == 'after_invoice_month':
+                next_first_date = next_date + relativedelta(day=1, months=1)
+                next_date = next_first_date + relativedelta(days=line.days - 1)
+
+            elif line.option == 'day_following_month':
+                next_date += relativedelta(day=line.days, months=1)
+
+            elif line.option == 'day_current_month':
+                next_date += relativedelta(day=line.days, months=0)
 
             result.append((fields.Date.to_string(next_date), amt))
             amount -= amt
