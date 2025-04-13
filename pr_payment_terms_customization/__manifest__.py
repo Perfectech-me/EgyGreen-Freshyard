@@ -7,7 +7,8 @@
     'license': 'LGPL-3',
     'depends': ['sale', 'account', 'base', 'product', 'analytic'],
     'data': [
-        'views/payment_terms_view.xml'
+        'views/payment_terms_view.xml',
+        'views/inherited_account_move.xml',
     ],
     'installable': True,
     'auto_install': False,

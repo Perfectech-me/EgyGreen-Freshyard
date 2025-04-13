@@ -20,6 +20,8 @@ class AccountPaymentTermLine(models.Model):
 class AccountPaymentTermLine(models.Model):
     _inherit = "account.move"
 
+    actual_eta = fields.Date("Actual ETA Date")
+
     def _recompute_payment_terms_lines(self):
         ''' Compute the dynamic payment term lines of the journal entry.'''
         self.ensure_one()
@@ -74,7 +76,9 @@ class AccountPaymentTermLine(models.Model):
             if self.invoice_payment_term_id:
                 to_compute = self.invoice_payment_term_id.compute(total_balance, date_ref=date,
                                                                   currency=self.company_id.currency_id,
-                                                                  eta=self.sales_order_id.commitment_date)  # changes here
+                                                                  eta=self.sales_order_id.commitment_date,
+                                                                  actual_eta=self.actual_eta,
+                                                                  )  # changes here
                 if self.currency_id == self.company_id.currency_id:
                     # Single-currency.
                     return [(b[0], b[1], b[1]) for b in to_compute]
@@ -82,7 +86,9 @@ class AccountPaymentTermLine(models.Model):
                     # Multi-currencies.
                     to_compute_currency = self.invoice_payment_term_id.compute(total_amount_currency, date_ref=date,
                                                                                currency=self.currency_id,
-                                                                               eta=self.sales_order_id.commitment_date)  # changes here
+                                                                               eta=self.sales_order_id.commitment_date,
+                                                                               actual_eta=self.actual_eta,
+                                                                               )  # changes here
                     return [(b[0], b[1], ac[1]) for b, ac in zip(to_compute, to_compute_currency)]
             else:
                 return [(fields.Date.to_string(date), total_balance, total_amount_currency)]
