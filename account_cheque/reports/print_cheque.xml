@@ -18,8 +18,8 @@
         <record id="paperformat_print_cib_cheque" model="report.paperformat">
             <field name="name">Paper Cib Cheque</field>
             <field name="format">custom</field>
-            <field name="page_height">250</field>
-            <field name="page_width">150</field>
+            <field name="page_height">180</field>
+            <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">35</field>
             <field name="margin_right">0</field>
