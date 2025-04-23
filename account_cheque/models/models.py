@@ -105,6 +105,32 @@ class account_cheque(models.Model):
 
                 rec.total_amount_arabic_word = amount_text
 
+    def get_amount_in_words(self, amount):
+        currency = self.currency_id
+        amount_text = currency.with_context({'lang': 'ar_001'}).amount_to_text(amount)
+        amount_text = str(amount_text).replace('مئة', 'مائة')
+        amount_text = str(amount_text).replace('الف', 'الفا')
+        amount_text = str(amount_text).replace('جنية', 'جنيها')
+        amount_text = str(amount_text).replace('قرش', 'قرشا')
+        amount_text = str(amount_text).replace('تسعة مائة', 'تسعمائة')
+        amount_text = str(amount_text).replace('ثمانية مائة', 'ثمانمائة')
+        amount_text = str(amount_text).replace('سبعة مائة', 'سبعمائة')
+        amount_text = str(amount_text).replace('ستة مائة', 'ستمائة')
+        amount_text = str(amount_text).replace('خمسة مائة', 'خمسمائة')
+        amount_text = str(amount_text).replace('أربعة مائة', 'اربعمائة')
+        amount_text = str(amount_text).replace('ثلاثة مائة', 'ثلاثمائة')
+        amount_text = str(amount_text).replace('مئتين', 'مئاتان')
+        amount_text = str(amount_text).replace('Euros', 'يورو')
+        amount_text = str(amount_text).replace('Pound', 'جنية مصري')
+        amount_text = str(amount_text).replace('Riyal', 'ريال')
+        amount_text = str(amount_text).replace('Halala', 'هللة')
+        amount_text = str(amount_text).replace('Dollars', 'دولار')
+        amount_text = str(amount_text).replace('Piastres', 'قرش')
+        amount_text = str(amount_text).replace('Cent', 'قرش')
+        amount_text = str(amount_text).replace('Cents', 'قرش')
+        amount_text = str(amount_text).replace('s', '')
+
+        return amount_text + ' فقط لا غير  '
     def _get_report_base_filename(self):
         return self.name
 
