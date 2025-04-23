@@ -132,4 +132,10 @@ class SaleOrderLineInherit(models.Model):
     service_provider_partner_id = fields.Many2one(comodel_name="res.partner", string="Service Provider" )
     partners_ids = fields.Many2many(comodel_name="res.partner",string="Partners",related='product_id.partners_ids')
 
-
+    # -----------------
+    def copy_data(self, default=None):
+        default = dict(default or {})
+        default.update({
+            'analytic_tag_ids': [(6, 0, [])],
+        })
+        return super(SaleOrderLineInherit, self).copy_data(default)
