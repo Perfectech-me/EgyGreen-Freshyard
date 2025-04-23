@@ -1,25 +1,27 @@
 <odoo>
 
-        <template id="print_cib_cheque_temp">
-
-            <div t-attf-class="header " t-att-style="report_header_style">
+    <template id="print_cib_cheque_temp">
+        <div t-attf-class="header " t-att-style="report_header_style">
             <t t-set="o" t-value="o.with_context(lang=lang)"/>
             <div dir="rtl">
-                <div style="float:left;text-align:left;font-size:14px;width:100%;padding-left:20px;padding-top:11px;">
+
+                <div style="text-align:right;padding-right:20px;padding-top:5px;font-size:12px;">
                     <span t-esc="o.cheque_date"/>
                 </div>
-                <div style="float:right;text-align:right;padding-right:130px;width:100%;padding-top:11px;" name="payee">
+
+
+                <div style="font-size:11px;float:right;text-align:right;padding-right:110px;width:100%;padding-top:10px;"
+                     name="payee">
                     <span t-field="o.beneficiary_name"/>
                 </div>
 
 
-                <div style="float:right;text-align:right;width:32%;padding-top:26px;font-size:14px;">
-                    <!--<span t-field="o.amount" style="float:right;text-align:right;"/>-->
+                <div style="float:right;text-align:right;width:32%;padding-top:30px;font-size:11px;">
                     #<span t-field="o.amount"/>#
                 </div>
 
 
-                <div style="float:left;text-align:right;font-size:11px;width:68%;padding-top:25px;padding-right:45px;">
+                <div style="float:left;text-align:right;font-size:9px;width:68%;padding-top:40px;">
 
                     <span class="font-weight-bold">فقط:</span>
                     <span class="font-weight-bold" t-field="o.total_amount_arabic_word"/>
@@ -28,28 +30,16 @@
                 </div>
 
 
-                <div style="float:right;text-align:right;width:100%;padding-top:8px;">
-
-
-                    <br/>
-
-                    <span style="float:left;text-align:right;padding-left:200px;padding-top:30px;">غير قابل للتظهير
+                <div style="width: 100%; padding-top: 8px; text-align: right;">
+                    <span style="display: inline-block; padding-right: 45%; padding-top: 10px;">
+                        غير قابل للتظهير
                     </span>
-
                 </div>
 
 
             </div>
-
-
         </div>
-
     </template>
-
-
-
-
-
 
 
     <template id="print_cib_cheque">

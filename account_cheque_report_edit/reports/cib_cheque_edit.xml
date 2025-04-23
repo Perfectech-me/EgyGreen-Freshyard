@@ -5,13 +5,13 @@
                position="replace">
 
             <!-- التاريخ -->
-            <div style="float:right;width:50%;text-align:right; font-size:14px; padding-right:20px;padding-top:15px;">
+            <div style="float:right;width:20%;text-align:right; font-size:14px; padding-right:1px;padding-top:1px;">
                 <span t-esc="o.cheque_date"/>
             </div>
             <!-- الصورة -->
-<!--           <div class="col-4" style="float: left; text-align: left;">-->
-<!--    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" style="max-width: 100px; max-height: 50px;"/>-->
-<!--</div>-->
+            <!--           <div class="col-4" style="float: left; text-align: left;">-->
+            <!--    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" style="max-width: 100px; max-height: 50px;"/>-->
+            <!--</div>-->
         </xpath>
 
         <!--        <xpath expr="//div[2][1]" position="replace">-->

@@ -5,7 +5,7 @@
             <field name="name">Paper Agricole Check</field>
             <field name="format">custom</field>
             <field name="page_height">180</field>
-            <field name="page_width">60</field>
+            <field name="page_width">80</field>
             <field name="orientation">Landscape</field>
             <field name="margin_top">34</field>
             <field name="margin_right">0</field>

@@ -199,6 +199,7 @@ class AccountMove(models.Model):
                                  string='Bill Type', default='estimate')
 
     ref = fields.Char(string='Bill Reference', copy=False)
+    due_amount = fields.Char()
 
     @api.constrains('ref')
     def _check_unique_ref(self):

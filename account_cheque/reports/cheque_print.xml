@@ -36,10 +36,12 @@
 
 
                 <div style="float:right;text-align:right;width:100%">
-                    <div style="float:right;text-align:right;font-size:14px;width:100%;padding-right:32px;margin-top : 10px;">
+                    <div style="float:right;text-align:right;font-size:14px;width:100%;padding-right:1px;margin-top : 1px;">
                         <span t-esc="o.cheque_date" style="float:right;text-align:right;"/>
                     </div>
-                    <div style="float:right;text-align:right;padding-right:55px;width:100%;margin-top :0px;" name="payee">
+                    <div style="float:right;text-align:right;padding-right:20px;width:100%;margin-top :0px;"
+                         name="payee">
+                        <br/>
                         <br/>
                         <span t-field="o.beneficiary_name"/>
                     </div>
@@ -50,27 +52,26 @@
                 <!--</div>-->
 
 
-                <div class="col text-right" style="padding-right:75px;font-size:11px;width:100%;padding-top:68px;">
-                    <br/>
+                <div class="col text-right" style="padding-right:40px;font-size:11px;width:100%;padding-top:40px;">
                     <span class="font-weight-bold">فقط:</span>
                     <span class="font-weight-bold" t-field="o.total_amount_arabic_word"/>
                     <span class="font-weight-bold">لاغير</span>
 
                 </div>
 
-                <div style="float:right;text-align:right;width:100%;padding-top:20px;padding-left:30px;font-size:14px;">
-
+                <div style="float:right;text-align:right;width:100%;padding-top:40px;padding-right:1px;font-size:14px;">
+                    <br/>
                     <!--#<span t-field="o.amount" style="float:right;text-align:right;padding-left:100px;"/>#-->
                     #<span t-field="o.amount"/>#
                 </div>
 
-                <div style="float:right;text-align:right;width:100%;padding-top:20px;">
+                <div style="float:right;text-align:right;width:100%;padding-top:30px;">
 
                     <!--<span style="float:right;text-align:right;width:100%;">أحمد يحيي حنفى أحمد</span>-->
                     <!--<br/>-->
                     <br/>
 
-                    <span style="float:left;text-align:right;padding-left:130px;padding-top:10px;">غير قابل للتظهير
+                    <span style="float:left;text-align:right;padding-left:200px;padding-top:10px;">غير قابل للتظهير
                     </span>
 
                 </div>

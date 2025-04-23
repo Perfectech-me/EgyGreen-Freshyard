@@ -46,12 +46,13 @@ class ResPartner(models.Model):
 
     def _compute_for_followup(self):
         """
-        Compute the fields 'total_due', 'total_overdue' , 'next_reminder_date' and 'followup_status'
+        Compute the fields 'total_due', 'total_overdue', 'next_reminder_date', and 'followup_status'
         """
         for record in self:
             total_due = 0
             total_overdue = 0
             today = fields.Date.today()
+
             for am in record.invoice_list:
                 if am.company_id == self.env.company:
                     amount = am.amount_residual
@@ -60,21 +61,23 @@ class ResPartner(models.Model):
                     is_overdue = today > am.invoice_date_due if am.invoice_date_due else today > am.date
                     if is_overdue:
                         total_overdue += amount or 0
+
             min_date = record.get_min_date()
-            action = record.action_after()
+            action = record.action_after() or 0  # Ensure action is an integer
+
             if min_date:
                 date_reminder = min_date + timedelta(days=action)
-                if date_reminder:
-                    record.next_reminder_date = date_reminder
-            else:
-                date_reminder = today
                 record.next_reminder_date = date_reminder
-            if total_overdue > 0 and date_reminder > today:
+            else:
+                record.next_reminder_date = today
+
+            if total_overdue > 0 and record.next_reminder_date > today:
                 followup_status = "with_overdue_invoices"
-            elif total_due > 0 and date_reminder <= today:
+            elif total_due > 0 and record.next_reminder_date <= today:
                 followup_status = "in_need_of_action"
             else:
                 followup_status = "no_action_needed"
+
             record.total_due = total_due
             record.total_overdue = total_overdue
             record.followup_status = followup_status
