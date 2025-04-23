@@ -179,8 +179,14 @@ class SaleOrderInherit(models.Model):
                     'partner_id': lin._origin.id,
                 }))
         self.update({'consignee_partner_line': lines})
-
-
+    # --------------------------
+    def copy(self, default=None):
+        default = dict(default or {})
+        default.update({
+            'order_line': False,  # امسح الخطوط عند النسخ
+        })
+        return super(SaleOrderInherit, self).copy(default)
+    # ----------------------------
 class ResPartnerNotify(models.Model):
     _name = 'res.partner.notify'
 
