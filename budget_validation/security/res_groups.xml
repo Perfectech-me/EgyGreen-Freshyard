@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="confirmation_bill_button_group" model="res.groups">
+            <field name="name">Confirmation Bill Button group</field>
+        </record>
+    </data>
+</odoo>
