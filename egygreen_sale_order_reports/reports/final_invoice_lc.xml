@@ -621,41 +621,60 @@
                                         <span t-field="o.partner_bank_id.acc_number"/>
                                         <br/>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
-                                        <br/>
-                                        <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg"
-                                                 style="max-height:150px;max-width:250px;"
-                                            />
-                                        </t>
-                                        <t t-else="">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/logo.jpeg"
-                                                 style="max-height:150px;max-width:200px;"
-                                            />
-                                        </t>
 
+                                    <!-- ختم الشركة -->
+                                    <td style="text-align:left; border-width:1px; border-color:black; font-size:13px; width:25%;">
+                                        <br/>
+                                        <t t-if="o.company_id.stamp_image">
+                                            <img t-att-src="'data:image/png;base64,%s' % o.company_id.stamp_image"
+                                                 style="max-height:150px; max-width:200px;" class="img img-responsive"/>
+                                        </t>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
-                                        <br/>
-                                        <br/>
-                                        <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/sign_egy.png"
-                                                 style="max-height:150px;max-width:200px;"
-                                            />
-                                        </t>
-                                        <t t-else="">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/sign.png"
-                                                 style="max-height:150px;max-width:200px;"
-                                            />
-                                        </t>
 
+                                    <!-- الإمضاء -->
+                                    <td style="text-align:left; border-width:1px; border-color:black; font-size:13px; width:25%;">
+                                        <br/><br/>
+                                        <t t-if="o.company_id.signature_image">
+                                            <img t-att-src="'data:image/png;base64,%s' % o.company_id.signature_image"
+                                                 style="max-height:150px; max-width:200px;" class="img img-responsive"/>
+                                        </t>
                                     </td>
+
+<!--                                    <td-->
+<!--                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">-->
+<!--                                        <br/>-->
+<!--                                        <t t-if="o.env.company.id==1">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg"-->
+<!--                                                 style="max-height:150px;max-width:250px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/logo.jpeg"-->
+<!--                                                 style="max-height:150px;max-width:200px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+
+<!--                                    </td>-->
+<!--                                    <td-->
+<!--                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <t t-if="o.env.company.id==1">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/sign_egy.png"-->
+<!--                                                 style="max-height:150px;max-width:200px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/sign.png"-->
+<!--                                                 style="max-height:150px;max-width:200px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+
+<!--                                    </td>-->
                                 </tr>
                             </table>
                             <div>

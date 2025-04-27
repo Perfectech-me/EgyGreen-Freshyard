@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="page">
-                            
+
                             <div class="row">
                                 <div class="col-7">
                                     <div style="width:100%">
@@ -349,7 +349,7 @@
                             <t t-set="total_gross_weight" t-value="0"/>
                                 <t t-set="total_qty" t-value="0"/>
                                             <t t-set="qty_name" t-value="''"/>
-                            
+
                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
                                    class="table table-sm table-bordered oe_inline">
 
@@ -417,7 +417,7 @@
                                             <span t-esc="round(line.quantity,2)"/> <span t-field="line.product_uom_id"/>
                                             <t t-set="total_qty" t-value="total_qty + line.quantity"/>
                                             <t t-set="qty_name" t-value="line.product_uom_id.name"/>
-                                            
+
                                         </td>
                                         <td
                                                 style="text-align:left;border-width:1px;border-color:black;font-size:13px">
@@ -461,7 +461,7 @@
                                             <td colspan="2"
                                                 style="text-align:center;border-width:1px;border-color:black;font-size:13px">
                                                 <span t-esc="total_qty"/> <span t-esc="qty_name"/>
-                                                
+
                                             </td>
                                             <td
                                                     style="text-align:left;border-width:1px;border-color:black;font-size:13px">
@@ -549,58 +549,77 @@
                                         <span t-field="o.partner_bank_id.acc_number"/>
                                         <br/>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
-                                        <br/>
-                                        <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg"
-                                                 style="max-height:150px;max-width:250px;"
-                                            />
-                                        </t>
 
-                                        <t t-else="">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/logo.jpeg"
-                                                 style="max-height:150px;max-width:200px;"
-                                            />
+                                    <!-- ختم الشركة -->
+                                    <td style="text-align:left; border-width:1px; border-color:black; font-size:13px; width:25%;">
+                                        <br/>
+                                        <t t-if="o.company_id.stamp_image">
+                                            <img t-att-src="'data:image/png;base64,%s' % o.company_id.stamp_image"
+                                                 style="max-height:150px; max-width:200px;" class="img img-responsive"/>
                                         </t>
                                     </td>
-                                    <td
-                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
-                                        <br/>
-                                        <br/>
-                                        <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/sign_egy.png"
-                                                 style="max-height:150px;max-width:200px;"
-                                            />
-                                        </t>
-                                        <t t-else="">
-                                            <img class="img img-responsive"
-                                                 src="/egygreen_sale_order_reports/static/src/img/sign.png"
-                                                 style="max-height:150px;max-width:200px;"
-                                            />
+
+                                    <!-- الإمضاء -->
+                                    <td style="text-align:left; border-width:1px; border-color:black; font-size:13px; width:25%;">
+                                        <br/><br/>
+                                        <t t-if="o.company_id.signature_image">
+                                            <img t-att-src="'data:image/png;base64,%s' % o.company_id.signature_image"
+                                                 style="max-height:150px; max-width:200px;" class="img img-responsive"/>
                                         </t>
                                     </td>
+
+<!--                                    <td-->
+<!--                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">-->
+<!--                                        <br/>-->
+<!--                                        <t t-if="o.env.company.id==1">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg"-->
+<!--                                                 style="max-height:150px;max-width:250px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+
+<!--                                        <t t-else="">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/logo.jpeg"-->
+<!--                                                 style="max-height:150px;max-width:200px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td-->
+<!--                                            style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <t t-if="o.env.company.id==1">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/sign_egy.png"-->
+<!--                                                 style="max-height:150px;max-width:200px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                            <img class="img img-responsive"-->
+<!--                                                 src="/egygreen_sale_order_reports/static/src/img/sign.png"-->
+<!--                                                 style="max-height:150px;max-width:200px;"-->
+<!--                                            />-->
+<!--                                        </t>-->
+<!--                                    </td>-->
                                 </tr>
                             </table>
                              <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
                                         No claims accepted after 72hours from port arrival and must be reported by
-                                        independence inspection company agreed by shipper. 
+                                        independence inspection company agreed by shipper.
 
                                 </strong>
                             </div>
                             <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
-                                    Signing the invoice Or confirmation from the customer is obligation on him to 
-                                    recieve the shipment and pay the invoice. 
+                                    Signing the invoice Or confirmation from the customer is obligation on him to
+                                    recieve the shipment and pay the invoice.
                                 </strong>
                             </div>
                             <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
-                                    The interest for the late payment is applicable by 5% from total invoice on each 
+                                    The interest for the late payment is applicable by 5% from total invoice on each
                                     month delay from the agreed payment terms.
                                 </strong>
                             </div>
