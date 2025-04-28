@@ -180,6 +180,13 @@ class SaleOrderInherit(models.Model):
                 }))
         self.update({'consignee_partner_line': lines})
 
+        def copy(self, default=None):
+            default = dict(default or {})
+            default.update({
+                'order_line': False,
+            })
+            return super(SaleOrderInherit, self).copy(default)
+
 
 class ResPartnerNotify(models.Model):
     _name = 'res.partner.notify'
