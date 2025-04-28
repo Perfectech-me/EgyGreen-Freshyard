@@ -18,16 +18,14 @@
             <field name="name">PRO-FORMA INVOICE</field>
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">egygreen_sale_order_reports.sale_report_templates</field>
-            <field name="report_file">egygreen_sale_order_reports.sale_report_templates</field>
+            <field name="report_name">egygreen_sale_order_reports.sale_report_templatessss</field>
+            <field name="report_file">egygreen_sale_order_reports.sale_report_templatessss</field>
             <field name="binding_model_id" ref="sale.model_sale_order"/>
-            <field name="paperformat_id"
-                   ref="egygreen_sale_order_reports.paperformat_print_sale_order_proforma_invoice"/>
-
+            <field name="paperformat_id" ref="egygreen_sale_order_reports.paperformat_print_sale_order_proforma_invoice"/>
         </record>
 
-        <template id="sale_report_templates">
-                       <t t-call="web.html_container">
+        <template id="sale_report_templatessss">
+            <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
                         <div class="header row" style="margin-top:0px;width:100%;">
@@ -180,7 +178,7 @@
                                 </tr>
                                 <br/>
                             </table>
-  <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
+                            <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
                                 <tr>
                                     <td style="background-color:#1f2a54; color:white; text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
                                         <strong style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:20%;">
@@ -303,7 +301,7 @@
                             <t t-set="total_gross_weight" t-value="0"/>
                                 <t t-set="total_qty" t-value="0"/>
                                             <t t-set="qty_name" t-value="''"/>
-                            
+
                             <table style="width:100%;border-width:1px;border-color:black;font-size:12px;" class="table table-sm table-bordered oe_inline">
 
                                 <tr style="background-color:#c2d6d6;">
@@ -353,7 +351,7 @@
                                             <span t-esc="round(line.product_uom_qty,2)"/> <span t-field="line.product_uom"/>
                                             <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
                                             <t t-set="qty_name" t-value="line.product_uom.name"/>
-                                            
+
                                         </td>
                                         <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                             <span t-esc="line.no_of_cartons if qty_name != 'Units' else ''"/> <span t-esc="' Cartons' if qty_name != 'Units' else ''"/>
@@ -382,7 +380,7 @@
                                             </strong>
                                             <td colspan="2" style="text-align:center;border-width:1px;border-color:black;font-size:13px">
                                                 <span t-esc="total_qty"/> <span t-esc="qty_name"/>
-                                                
+
                                             </td>
                                             <td style="text-align:left;border-width:1px;border-color:black;font-size:13px">
                                                 <!--                                            <span t-esc="total_net_weight"/>-->
@@ -460,49 +458,52 @@
                                         <span t-field="o.partner_bank_id.acc_number"/>
                                         <br/>
                                     </td>
-                                    <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
-                                        <br/>
-                                        <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo_egy.jpg" style="max-height:150px;max-width:250px;"/>
-                                        </t>
-                                        <t t-else="">
-                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/logo.jpeg" style="max-height:150px;max-width:200px;"/>
-                                        </t>
 
+                                    <!-- stamp image -->
+                                    <td style="text-align:left; border-width:1px; border-color:black; font-size:13px; width:25%;">
+                                        <br/>
+                                        <t t-if="o.company_id.stamp_image">
+                                           <img t-if="o.company_id.stamp_image"
+                                                t-att-src="image_data_uri(o.company_id.stamp_image)"
+                                                style="max-height:150px;max-width:250px;"
+                                                alt="stamp_image"/>
+                                        </t>
                                     </td>
-                                    <td style="text-align:left;border-width:1px;border-color:black;font-size:13px;width:25%;">
-                                        <br/>
-                                        <br/>
-                                        <t t-if="o.env.company.id==1">
-                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/sign_egy.png" style="max-height:150px;max-width:200px;"/>
-                                        </t>
-                                        <t t-else="">
-                                            <img class="img img-responsive" src="/egygreen_sale_order_reports/static/src/img/sign.png" style="max-height:150px;max-width:200px;"/>
-                                        </t>
 
+                                    <!-- signature image -->
+                                    <td style="text-align:left; border-width:1px; border-color:black; font-size:13px; width:25%;">
+                                        <br/><br/>
+                                        <t t-if="o.company_id.signature_image">
+                                            <img t-if="o.company_id.signature_image"
+                                                 t-att-src="image_data_uri(o.company_id.signature_image)"
+                                                 style="max-height:150px;max-width:200px;"
+                                                 alt="signature_image"/>
+                                            </t>
                                     </td>
+
                                 </tr>
                             </table>
 
                             <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
-                                        No claims accepted after 72hours from port arrival and must be reported by 
-                                        independence inspection company agreed by shipper. 
+                                        No claims accepted after 72hours from port arrival and must be reported by
+                                        independence inspection company agreed by shipper.
 
                                 </strong>
                             </div>
                             <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
-                                    Signing the invoice Or confirmation from the customer is obligation on him to 
-                                    recieve the shipment and pay the invoice. 
+                                    Signing the invoice Or confirmation from the customer is obligation on him to
+                                    recieve the shipment and pay the invoice.
                                 </strong>
                             </div>
                             <div>
                                 <strong style="background-color:#1f2a54; color:white;font-size:12px;">
-                                    The interest for the late payment is applicable by 5% from total invoice on each 
+                                    The interest for the late payment is applicable by 5% from total invoice on each
                                     month delay from the agreed payment terms.
                                 </strong>
                             </div>
+
                             </div>
                         </div>
                     </t>

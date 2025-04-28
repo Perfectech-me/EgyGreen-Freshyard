@@ -24,17 +24,16 @@ class AccountAccountType(models.Model):
 class AccountInvoice(models.Model):
     _inherit = "account.move"
 
-    @api.depends('invoice_date', 'date','company_id')
+    @api.depends('invoice_date', 'date', 'company_id')
     def _compute_get_period(self):
         for record in self:
             if record.invoice_date or record.date:
                 today = record.invoice_date or record.date
                 company_enabled = record.company_id.id
                 period_ids = self.env['account.period'].search(
-                    [('date_start', '<=', today), ('date_stop', '>=', today) ,('company_id', '=', company_enabled)],
+                    [('date_start', '<=', today), ('date_stop', '>=', today), ('company_id', '=', company_enabled)],
                     limit=1)
                 record.period_id = period_ids
-                
 
     period_id = fields.Many2one('account.period', string='Force Period',
                                 store=True,
@@ -77,7 +76,8 @@ class AccountInvoice(models.Model):
             name = inv.name or ''
             if inv.payment_term_id:
                 totlines = \
-                inv.payment_term_id.with_context(currency_id=company_currency.id).compute(total, inv.invoice_date)[0]
+                    inv.payment_term_id.with_context(currency_id=company_currency.id).compute(total, inv.invoice_date)[
+                        0]
                 res_amount_currency = total_currency
                 for i, t in enumerate(totlines):
                     if inv.currency_id != company_currency:
@@ -303,9 +303,9 @@ class AccountMove(models.Model):
         ))
 
         # if copied_am.is_invoice(include_receipts=True):
-            # Make sure to recompute payment terms. This could be necessary if the date is different for example.
-            # Also, this is necessary when creating a credit note because the current invoice is copied.
-            # copied_am._recompute_payment_terms_lines()
+        # Make sure to recompute payment terms. This could be necessary if the date is different for example.
+        # Also, this is necessary when creating a credit note because the current invoice is copied.
+        # copied_am._recompute_payment_terms_lines()
 
         return copied_am
 
@@ -323,7 +323,7 @@ class AccountMove(models.Model):
             self.period_id = period_id.id
         self.line_ids._onchange_amount_currency()
 
-    @api.constrains('date', 'period_id','state')
+    @api.constrains('date', 'period_id', 'state')
     def check_period(self):
         for record in self:
             if record.period_id.state == 'done':
@@ -475,7 +475,7 @@ class AccountMove(models.Model):
                             line.account_id.currency_id.id != line.account_id.company_id.currency_id.id):
                         raise UserError(
                             _("""Couldn't create move with currency different from the secondary currency of the account "%s - %s". Clear the secondary currency field of the account definition if you want to accept all currencies.""") % (
-                            line.account_id.code, line.account_id.name))
+                                line.account_id.code, line.account_id.name))
             if abs(amount) < 10 ** -5:
                 # If the move is balanced
                 # Add to the list of valid moves
@@ -551,6 +551,7 @@ class AccountMoveLine(models.Model):
     def _onchange_amount_currency(self):
         # Your implementation here
         pass
+
     def _update_journal_check(self, journal_id, period_id):
         journal_obj = self.env['account.journal']
         period_obj = self.env['account.period']
@@ -563,7 +564,7 @@ class AccountMoveLine(models.Model):
         for (state,) in result:
             if state == 'done':
                 raise UserError(_('You can not add/modify entries in a closed period %s of journal %s.') % (
-                period.name, journal.name))
+                    period.name, journal.name))
         if not result:
             jour_period_obj.create({
                 'name': (journal.code or journal.name) + ':' + (period.name or ''),
@@ -619,8 +620,11 @@ class AccountMoveLine(models.Model):
         if context.get('account_ids'):
             domain += [('account_id', 'in', context['account_ids'].ids)]
 
-        if context.get('analytic_tag_ids'):
-            domain += [('analytic_tag_ids', 'in', context['analytic_tag_ids'].ids)]
+        if context.get('account_tag_ids'):
+            account_tag_ids = context['account_tag_ids']
+            if isinstance(account_tag_ids, (list, tuple)):
+                account_tag_ids = self.env['account.account.tag'].browse(account_tag_ids)
+            domain += [('account_id.tag_ids', 'in', account_tag_ids.ids)]
 
         if context.get('analytic_account_ids'):
             domain += [('analytic_account_id', 'in', context['analytic_account_ids'].ids)]
